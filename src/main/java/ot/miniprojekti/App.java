@@ -3,6 +3,9 @@
  */
 package ot.miniprojekti;
 
+import java.util.Scanner;
+import ot.miniprojekti.ui.TextUserInterface;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +13,9 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        
+        Scanner reader = new Scanner(System.in);
+        TextUserInterface textUserInterface = new TextUserInterface(reader);
+        textUserInterface.start();
     }
 }
