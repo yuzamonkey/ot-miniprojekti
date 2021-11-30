@@ -12,7 +12,7 @@
 [Projektin backlog](https://docs.google.com/spreadsheets/d/1_9Cdh7jeI5BNhq2ehOIAos2kMRqyZfJPkbvNDel6HRg/edit#gid=0)
 
 ## Asennus- ja käyttöohje
-Ohjelma toimii komentoriviltä. Ohjeet on kirjoitettu Linux-käyttöjärjestelmälle.
+Ohjelma toimii komentoriviltä. Ohjeet on kirjoitettu Linux-käyttöjärjestelmälle. 
 
 ### Asennus
 Mene kansioon johon haluat ohjelman luoda. 
@@ -21,8 +21,6 @@ Anna komento:
 git clone git@github.com:yuzamonkey/ot-miniprojekti.git
 ```
 Komento luo nykyiseen kansioosi uuden kansion **ot-miniprojekti**.
-
-*Tähän vielä gradlen asennus*
 
 ### Käyttö
 Mene kansioon **ot-miniprojekti**, jonka loit asennuksen yhteydessä. 
