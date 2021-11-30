@@ -9,29 +9,25 @@ import ot.miniprojekti.domain.Bookmark;
 import static org.junit.Assert.*;
 
 public class Stepdefs {
-    @Then("dummy test")
-    public void dummyTest() {
-        assertTrue(true);
-    }
-
     Bookmark bm;
-    int value = 0;
 
     @Given("Bookmark is initialized")
     public void bookmarkIsInitialized() {
-        String title = "Foo";
-        String author = "Bar";
-        bm = new Bookmark(title, author);
+        bm = new Bookmark("Foobar");
     }
 
-    @When("method is called")
-    public void callMethod() {
-        value = bm.returnSomething();
+    @Then("text should be correct")
+    public void textShouldBeCorrect() {
+        assertEquals("Foobar", bm.getText());
     }
 
-    @Then("the value should be 1")
-    public void valueShouldBeOne() {
-        assertEquals(1, value);
+    @When("text is updated")
+    public void updateText() {
+        bm.setText("Barfoo");
     }
 
+    @Then("text should be updated")
+    public void updatedTextShouldBeCorrect() {
+        assertEquals("Barfoo", bm.getText());
+    }
 }

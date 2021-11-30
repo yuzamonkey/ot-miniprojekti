@@ -1,6 +1,10 @@
 Feature: As a user I want to have the tests working
 
-    Scenario: Return 1
+    Scenario: Adding bookmark adds correct text
         Given Bookmark is initialized
-        When method is called
-        Then the value should be 1
+        Then text should be correct
+
+    Scenario: Updating text updates text
+        Given Bookmark is initialized
+        When text is updated
+        Then text should be updated
