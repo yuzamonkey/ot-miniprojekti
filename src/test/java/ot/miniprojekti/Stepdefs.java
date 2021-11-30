@@ -19,7 +19,9 @@ public class Stepdefs {
 
     @Given("Bookmark is initialized")
     public void bookmarkIsInitialized() {
-        bm = new Bookmark();
+        String title = "Foo";
+        String author = "Bar";
+        bm = new Bookmark(title, author);
     }
 
     @When("method is called")
