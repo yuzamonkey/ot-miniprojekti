@@ -49,7 +49,7 @@ jacocoTestReport {
     }
     afterEvaluate {
     classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: ['ot/miniprojekti/ui/**', 'ot/miniprojekti/App.java/*'])
+        fileTree(dir: it, exclude: ['ot/miniprojekti/ui/**', 'ot/miniprojekti/App*'])
     }))
     }
 }
