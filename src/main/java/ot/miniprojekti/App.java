@@ -4,12 +4,16 @@
 package ot.miniprojekti;
 
 import java.util.Scanner;
+import ot.miniprojekti.logic.BookmarkManager;
 import ot.miniprojekti.ui.TextUserInterface;
 
 public class App {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
-        TextUserInterface textUserInterface = new TextUserInterface(reader);
+        
+        BookmarkManager bookmarkManager = new BookmarkManager();
+        
+        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader);
         textUserInterface.start();
     }
 }

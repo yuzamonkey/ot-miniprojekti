@@ -1,16 +1,16 @@
 package ot.miniprojekti.ui;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import ot.miniprojekti.domain.Bookmark;
+import ot.miniprojekti.logic.BookmarkManager;
 
 public class TextUserInterface {
 
-    private List<String> names;
+    private BookmarkManager bookmarkManager;
     private Scanner reader;
 
-    public TextUserInterface(Scanner reader) {
-        this.names = new ArrayList<>();
+    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader) {
+        this.bookmarkManager = bookmarkManager;
         this.reader = reader;
     }
 
@@ -25,24 +25,24 @@ public class TextUserInterface {
             String answer = reader.nextLine();
 
             if (answer.equals("1")) {
-                addReadingTip();
+                addBookmark();
             } else if (answer.equals("2")) {
-                printTips();
+                printBookmarks();
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }
         }
     }
 
-    private void addReadingTip() {
+    private void addBookmark() {
         System.out.print("Nimi: ");
         String name = reader.nextLine();
-        names.add(name);
+        this.bookmarkManager.addBookmark(name);
     }
 
-    private void printTips() {
-        for (String tip : names) {
-            System.out.println(tip);
+    private void printBookmarks() {
+        for (Bookmark bookmark : bookmarkManager.getBookmarks()) {
+            System.out.println(bookmark.getText());
         }
     }
 }
