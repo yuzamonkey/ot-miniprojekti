@@ -3,18 +3,22 @@ package ot.miniprojekti.ui;
 import java.util.Scanner;
 import ot.miniprojekti.domain.Bookmark;
 import ot.miniprojekti.logic.BookmarkManager;
+import ot.miniprojekti.dao.Books;
+import java.sql.SQLException;
 
 public class TextUserInterface {
 
     private BookmarkManager bookmarkManager;
     private Scanner reader;
+    private Books books;
 
-    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader) {
+    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader, Books books) {
         this.bookmarkManager = bookmarkManager;
         this.reader = reader;
+        this.books = books; 
     }
 
-    public void start() {
+    public void start() throws SQLException {
         while (true) {
             System.out.println("Valitse toiminto");
             System.out.println("[1] Lisää vinkki");
@@ -34,10 +38,15 @@ public class TextUserInterface {
         }
     }
 
-    private void addBookmark() {
-        System.out.print("Nimi: ");
-        String name = reader.nextLine();
-        this.bookmarkManager.addBookmark(name);
+    private void addBookmark() throws SQLException {
+//        System.out.print("Kirjoittaja: ");
+//        String author = reader.nextLine();
+        System.out.print("Otsikko: ");
+        String title = reader.nextLine();
+//        System.out.println("ISBN: ");
+//        String isbn = reader.nextLine();
+//        this.books.add(author, title, isbn);
+        this.bookmarkManager.addBookmark(title);
     }
 
     private void printBookmarks() {

@@ -6,14 +6,19 @@ package ot.miniprojekti;
 import java.util.Scanner;
 import ot.miniprojekti.logic.BookmarkManager;
 import ot.miniprojekti.ui.TextUserInterface;
+import ot.miniprojekti.dao.Books;
+import java.sql.SQLException;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner reader = new Scanner(System.in);
         
         BookmarkManager bookmarkManager = new BookmarkManager();
         
-        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader);
+        Books books = new Books("books.db");
+        
+        
+        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader, books);
         textUserInterface.start();
     }
 }
