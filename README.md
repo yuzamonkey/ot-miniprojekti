@@ -7,6 +7,8 @@
 - Uusilla ominaisuuksilla on testit
 - Uudet ominaisuudet ovat onnistuneesti integroitu vanhaan
 - Ohjelma käynnistyy ja toimii kaatumatta
+- Käyttöjärjestelmä ilmoittaa virhetilanteesta tulostamalla virheen
+- Demoon päätyy vain valmiit osat (sprintit)
 
 ## Backlog
 [Projektin backlog](https://docs.google.com/spreadsheets/d/1_9Cdh7jeI5BNhq2ehOIAos2kMRqyZfJPkbvNDel6HRg/edit#gid=0)
