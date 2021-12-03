@@ -4,6 +4,7 @@ import java.util.Scanner;
 import ot.miniprojekti.domain.Bookmark;
 import ot.miniprojekti.logic.BookmarkManager;
 import ot.miniprojekti.dao.Books;
+import ot.miniprojekti.dao.Podcasts;
 import java.sql.SQLException;
 
 public class TextUserInterface {
@@ -11,11 +12,13 @@ public class TextUserInterface {
     private BookmarkManager bookmarkManager;
     private Scanner reader;
     private Books books;
+    private Podcasts podcasts;
 
-    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader, Books books) {
+    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader, Books books, Podcasts podcasts) {
         this.bookmarkManager = bookmarkManager;
         this.reader = reader;
-        this.books = books; 
+        this.books = books;
+        this.podcasts = podcasts;
     }
 
     public void start() throws SQLException {
@@ -29,7 +32,18 @@ public class TextUserInterface {
             String answer = reader.nextLine();
 
             if (answer.equals("1")) {
-                addBookmark();
+                System.out.println("[1] Lisää kirja");
+                System.out.println("[2] Lisää Podcast");
+                
+                System.out.print("> ");
+                String addType = reader.nextLine();
+                
+                if (addType.equals("1")) {
+                    addBookmark();
+                } else if (addType.equals("2")) {
+                    addPodcast();
+                } 
+                
             } else if (answer.equals("2")) {
                 printBookmarks();
             } else if (answer.equals("x") || answer.equals("")) {
@@ -47,6 +61,16 @@ public class TextUserInterface {
         String isbn = reader.nextLine();
         this.books.add(author, title, isbn);
 //        this.bookmarkManager.addBookmark(title);
+    }
+
+    private void addPodcast() throws SQLException {
+        System.out.print("Tekijän nimi: ");
+        String name = reader.nextLine();
+        System.out.print("Otsikko: ");
+        String title = reader.nextLine();
+        System.out.println("Kuvaus: ");
+        String description = reader.nextLine();
+        this.podcasts.add(name, title, description);
     }
 
     private void printBookmarks() {

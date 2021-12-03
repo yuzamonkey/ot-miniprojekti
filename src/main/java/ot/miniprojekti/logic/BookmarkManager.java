@@ -9,7 +9,7 @@ public class BookmarkManager {
     private List<Bookmark> bookmarks;
 
     public BookmarkManager() {
-        this.bookmarks = new ArrayList<>();
+        this.bookmarks = new ArrayList<Bookmark>();
     }
     
     public void addBookmark(String name) {

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import ot.miniprojekti.logic.BookmarkManager;
 import ot.miniprojekti.ui.TextUserInterface;
 import ot.miniprojekti.dao.Books;
+import ot.miniprojekti.dao.Podcasts;
 import java.sql.SQLException;
 
 public class App {
@@ -16,9 +17,9 @@ public class App {
         BookmarkManager bookmarkManager = new BookmarkManager();
         
         Books books = new Books("books.db");
+        Podcasts podcasts = new Podcasts("podcasts.db");
         
-        
-        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader, books);
+        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader, books, podcasts);
         textUserInterface.start();
     }
 }

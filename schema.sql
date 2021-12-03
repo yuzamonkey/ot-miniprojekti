@@ -21,7 +21,6 @@ CREATE TABLE blogposts (
 
 CREATE TABLE podcasts (
     id SERIAL PRIMARY KEY,
-    author TEXT,
     name TEXT,
     title TEXT,
     description TEXT
