@@ -39,14 +39,14 @@ public class TextUserInterface {
     }
 
     private void addBookmark() throws SQLException {
-//        System.out.print("Kirjoittaja: ");
-//        String author = reader.nextLine();
+        System.out.print("Kirjoittaja: ");
+        String author = reader.nextLine();
         System.out.print("Otsikko: ");
         String title = reader.nextLine();
-//        System.out.println("ISBN: ");
-//        String isbn = reader.nextLine();
-//        this.books.add(author, title, isbn);
-        this.bookmarkManager.addBookmark(title);
+        System.out.println("ISBN: ");
+        String isbn = reader.nextLine();
+        this.books.add(author, title, isbn);
+//        this.bookmarkManager.addBookmark(title);
     }
 
     private void printBookmarks() {
