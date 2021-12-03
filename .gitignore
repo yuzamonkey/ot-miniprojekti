@@ -6,3 +6,5 @@ build
 # Ignore database
 books.db
 podcasts.db
+blogposts.db
+videos.db
