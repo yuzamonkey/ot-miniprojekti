@@ -5,4 +5,4 @@ build
 .vscode
 # Ignore database
 books.db
-
+podcasts.db
