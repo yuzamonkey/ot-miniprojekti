@@ -14,6 +14,22 @@ public class Video {
         this.comment = comment;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
     @Override
     public String toString() {
         String s = (id + 1) + ". " + title + "\n" + "url: " + url + "\n" + "kommentti: " + comment + "\n";

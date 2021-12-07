@@ -14,6 +14,22 @@ public class Blog {
         this.url = url;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
     @Override
     public String toString() {
         String s = (id + 1) + ". " + title + "\n" + "tekijä: " + author + "\n" + "url: " + url + "\n";

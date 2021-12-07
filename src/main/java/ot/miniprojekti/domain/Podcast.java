@@ -11,6 +11,18 @@ public class Podcast {
         this.description = description;
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
     @Override
     public String toString() {
         String s = title + "\n" + "tekijä: " + name + "\n" + "kuvaus: " + description + "\n";
