@@ -10,13 +10,15 @@ public class PodcastTest {
 
     @Before
     public void setUp() {
-        this.p = new Podcast(0, "otsikko", "nimi", "kuvaus");
+        this.p = new Podcast("otsikko", "nimi", "kuvaus");
     }
 
     @Test
     public void toStringTest() {
         String result = p.toString();
-        String expected = p.toString();
+        String expected = "otsikko\n"
+                + "tekijä: nimi\n"
+                + "kuvaus: kuvaus\n";
 
         assertEquals(result, expected);
     }
