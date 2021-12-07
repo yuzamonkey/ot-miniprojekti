@@ -6,6 +6,7 @@ import ot.miniprojekti.logic.BookmarkManager;
 import ot.miniprojekti.dao.Books;
 import ot.miniprojekti.dao.Podcasts;
 import java.sql.SQLException;
+import ot.miniprojekti.domain.Podcast;
 
 public class TextUserInterface {
 
@@ -46,6 +47,7 @@ public class TextUserInterface {
                 
             } else if (answer.equals("2")) {
                 printBookmarks();
+                printPodcasts();
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }
@@ -76,6 +78,13 @@ public class TextUserInterface {
     private void printBookmarks() {
         for (Bookmark bookmark : bookmarkManager.getBookmarks()) {
             System.out.println(bookmark.getText());
+        }
+    }
+    
+    private void printPodcasts() throws SQLException {
+        System.out.println("Podcastit");
+        for (Podcast p : podcasts.getAll()) {
+            System.out.println(p.toString());
         }
     }
 }
