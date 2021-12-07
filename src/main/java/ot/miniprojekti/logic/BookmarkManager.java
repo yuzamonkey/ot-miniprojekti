@@ -2,9 +2,11 @@ package ot.miniprojekti.logic;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import ot.miniprojekti.dao.Blogs;
 import ot.miniprojekti.dao.Books;
 import ot.miniprojekti.dao.Podcasts;
+import ot.miniprojekti.dao.Tags;
 import ot.miniprojekti.dao.Videos;
 import ot.miniprojekti.domain.Blog;
 import ot.miniprojekti.domain.Book;
@@ -17,12 +19,14 @@ public class BookmarkManager {
     private Videos videos;
     private Blogs blogs;
     private Podcasts podcasts;
+    private Tags tags;
 
-    public BookmarkManager(Books books, Videos videos, Blogs blogs, Podcasts podcasts) {
+    public BookmarkManager(Books books, Videos videos, Blogs blogs, Podcasts podcasts, Tags tags) {
         this.books = books;
         this.videos = videos;
         this.blogs = blogs;
         this.podcasts = podcasts;
+        this.tags = tags;
     }
 
     public void addBook(String author, String title, String isbn) throws SQLException {
@@ -41,8 +45,10 @@ public class BookmarkManager {
         this.podcasts.add(name, title, description);
     }
 
-    public void addTag() {
-
+    public void addTag(String tag) throws SQLException {
+        // splits a comma-separated string into a list of tags
+        // and removes whitespace characters before and after the commas
+        this.tags.addTag(Arrays.asList(tag.split("[ ]*,[ ]*")));
     }
 
     public ArrayList<Book> getBooks() throws SQLException {

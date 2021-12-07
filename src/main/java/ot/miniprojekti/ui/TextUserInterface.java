@@ -69,6 +69,7 @@ public class TextUserInterface {
         String title = reader.nextLine();
         System.out.print("ISBN: ");
         String isbn = reader.nextLine();
+        addTag();
         this.bookmarkManager.addBook(author, title, isbn);
     }
 
@@ -79,6 +80,7 @@ public class TextUserInterface {
         String url = reader.nextLine();
         System.out.print("Kommentti: ");
         String comment = reader.nextLine();
+        addTag();
         this.bookmarkManager.addVideo(title, url, comment);
     }
 
@@ -89,6 +91,7 @@ public class TextUserInterface {
         String author = reader.nextLine();
         System.out.print("Url: ");
         String url = reader.nextLine();
+        addTag();
         this.bookmarkManager.addBlog(title, author, url);
     }
 
@@ -99,7 +102,14 @@ public class TextUserInterface {
         String title = reader.nextLine();
         System.out.print("Kuvaus: ");
         String description = reader.nextLine();
+        addTag();
         this.bookmarkManager.addPodcast(name, title, description);
+    }
+    
+    private void addTag() throws SQLException {
+        System.out.print("Tagit: ");
+        String tag = reader.nextLine();
+        this.bookmarkManager.addTag(tag);
     }
 
     private void printBooks() throws SQLException {

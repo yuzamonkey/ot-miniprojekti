@@ -1,6 +1,7 @@
 package ot.miniprojekti.dao;
 
 import java.sql.*;
+import java.util.List;
 
 public class Tags {
 
@@ -29,10 +30,13 @@ public class Tags {
         }
     }
 
-    public void addTag(String name) throws SQLException {
+    public void addTag(List<String> tags) throws SQLException {
         PreparedStatement stmt = this.db.prepareStatement("INSERT INTO tags (name) VALUES (?)");
-        stmt.setString(1, name);
-        stmt.executeUpdate();
+        for (String tag : tags) {
+            stmt.setString(1, tag);
+            stmt.addBatch();
+        }
+        stmt.executeBatch();
         stmt.close();
     }
 
