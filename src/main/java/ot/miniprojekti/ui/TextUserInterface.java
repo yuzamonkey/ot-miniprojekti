@@ -1,10 +1,7 @@
 package ot.miniprojekti.ui;
 
 import java.util.Scanner;
-import ot.miniprojekti.domain.Bookmark;
 import ot.miniprojekti.logic.BookmarkManager;
-import ot.miniprojekti.dao.Books;
-import ot.miniprojekti.dao.Podcasts;
 import java.sql.SQLException;
 import ot.miniprojekti.domain.Podcast;
 
@@ -12,14 +9,10 @@ public class TextUserInterface {
 
     private BookmarkManager bookmarkManager;
     private Scanner reader;
-    private Books books;
-    private Podcasts podcasts;
 
-    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader, Books books, Podcasts podcasts) {
+    public TextUserInterface(BookmarkManager bookmarkManager, Scanner reader) {
         this.bookmarkManager = bookmarkManager;
         this.reader = reader;
-        this.books = books;
-        this.podcasts = podcasts;
     }
 
     public void start() throws SQLException {
@@ -35,18 +28,18 @@ public class TextUserInterface {
             if (answer.equals("1")) {
                 System.out.println("[1] Lisää kirja");
                 System.out.println("[2] Lisää Podcast");
-                
+
                 System.out.print("> ");
                 String addType = reader.nextLine();
-                
+
                 if (addType.equals("1")) {
                     addBookmark();
                 } else if (addType.equals("2")) {
                     addPodcast();
-                } 
-                
+                }
+
             } else if (answer.equals("2")) {
-                printBookmarks();
+                printBooks();
                 printPodcasts();
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
@@ -61,8 +54,7 @@ public class TextUserInterface {
         String title = reader.nextLine();
         System.out.println("ISBN: ");
         String isbn = reader.nextLine();
-        this.books.add(author, title, isbn);
-//        this.bookmarkManager.addBookmark(title);
+        this.bookmarkManager.addBook(author, title, isbn);
     }
 
     private void addPodcast() throws SQLException {
@@ -72,18 +64,21 @@ public class TextUserInterface {
         String title = reader.nextLine();
         System.out.println("Kuvaus: ");
         String description = reader.nextLine();
-        this.podcasts.add(name, title, description);
+        this.bookmarkManager.addPodcast(name, title, description);
     }
 
-    private void printBookmarks() {
-        for (Bookmark bookmark : bookmarkManager.getBookmarks()) {
-            System.out.println(bookmark.getText());
-        }
-    }
-    
+    // private void printBooks() {
+    //     System.out.println("Kirjat");
+    //     // for (Podcast p : podcasts.getAll()) {
+    //     for (Podcast b : bookmarkManager.getBooks()) {
+    //         System.out.println(b.toString());
+    //     }
+    // }
+
     private void printPodcasts() throws SQLException {
         System.out.println("Podcastit");
-        for (Podcast p : podcasts.getAll()) {
+        // for (Podcast p : podcasts.getAll()) {
+        for (Podcast p : bookmarkManager.getPodcasts()) {
             System.out.println(p.toString());
         }
     }

@@ -14,12 +14,11 @@ public class App {
     public static void main(String[] args) throws SQLException {
         Scanner reader = new Scanner(System.in);
         
-        BookmarkManager bookmarkManager = new BookmarkManager();
-        
         Books books = new Books("books.db");
         Podcasts podcasts = new Podcasts("podcasts.db");
+        BookmarkManager bookmarkManager = new BookmarkManager(books, podcasts);
         
-        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader, books, podcasts);
+        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader);
         textUserInterface.start();
     }
 }
