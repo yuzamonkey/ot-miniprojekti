@@ -12,6 +12,18 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getISBN() {
+        return this.isbn;
+    }
+
     @Override
     public String toString() {
         String s = title + "\n" + "tekijä: " + author + "\n" + "isbn: " + isbn + "\n";
