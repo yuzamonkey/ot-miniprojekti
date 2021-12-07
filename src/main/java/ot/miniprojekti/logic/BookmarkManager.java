@@ -31,6 +31,10 @@ public class BookmarkManager {
     public void addVideo() {
     }
 
+    public void addTag() {
+        
+    }
+
     public ArrayList<Book> getBooks() throws SQLException {
         return this.books.getAll();
     }
