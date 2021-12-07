@@ -8,6 +8,7 @@ import ot.miniprojekti.logic.BookmarkManager;
 import ot.miniprojekti.ui.TextUserInterface;
 import ot.miniprojekti.dao.Books;
 import ot.miniprojekti.dao.Podcasts;
+import ot.miniprojekti.dao.Tags;
 import java.sql.SQLException;
 
 public class App {
@@ -18,6 +19,7 @@ public class App {
         
         Books books = new Books("books.db");
         Podcasts podcasts = new Podcasts("podcasts.db");
+        Tags tags = new Tags("tags.db");
         
         TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader, books, podcasts);
         textUserInterface.start();
