@@ -50,4 +50,14 @@ public class Podcasts {
 
         return podcasts;
     }
+    
+    public void dropTable() {
+        try {
+            PreparedStatement stmt = db.prepareStatement("DROP TABLE podcasts");
+            stmt.executeQuery();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }

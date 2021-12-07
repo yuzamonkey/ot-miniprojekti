@@ -46,4 +46,14 @@ public class Blogs {
 
         return blogs;
     }
+    
+    public void dropTable() {
+        try {
+            PreparedStatement stmt = db.prepareStatement("DROP TABLE blogposts");
+            stmt.executeQuery();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }
