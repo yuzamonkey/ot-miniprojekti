@@ -1,6 +1,7 @@
 package ot.miniprojekti.domain;
 
 public class Podcast {
+    
     private String title;
     private String name;
     private String description;
