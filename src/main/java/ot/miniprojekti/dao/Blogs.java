@@ -1,11 +1,12 @@
 package ot.miniprojekti.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import ot.miniprojekti.domain.Blog;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Blogs {
+
     private Connection db;
 
     public Blogs(String data) throws SQLException {
@@ -26,5 +27,23 @@ public class Blogs {
         stmt.setString(3, url);
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public ArrayList<Blog> getAll() throws SQLException {
+        ArrayList<Blog> blogs = new ArrayList<Blog>();
+
+        PreparedStatement stmt = db.prepareStatement("SELECT * FROM blogposts");
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            int id = result.getInt("id");
+            String title = result.getString("title");
+            String author = result.getString("author");
+            String url = result.getString("url");
+            blogs.add(new Blog(id, title, author, url));
+        }
+        db.close();
+
+        return blogs;
     }
 }

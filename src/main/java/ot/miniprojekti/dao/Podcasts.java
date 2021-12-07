@@ -1,9 +1,9 @@
 package ot.miniprojekti.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import ot.miniprojekti.domain.Podcast;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Podcasts {
 
@@ -27,6 +27,24 @@ public class Podcasts {
         stmt.setString(3, description);
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public ArrayList<Podcast> getAll() throws SQLException {
+        ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+
+        PreparedStatement stmt = db.prepareStatement("SELECT * FROM podcasts");
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            int id = result.getInt("id");
+            String name = result.getString("name");
+            String title = result.getString("title");
+            String description = result.getString("description");
+            podcasts.add(new Podcast(id, title, name, description));
+        }
+        db.close();
+
+        return podcasts;
     }
 
 }

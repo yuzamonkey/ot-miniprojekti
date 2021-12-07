@@ -1,13 +1,12 @@
-
 package ot.miniprojekti.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import ot.miniprojekti.domain.Video;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Videos {
-    
+
     private Connection db;
 
     public Videos(String data) throws SQLException {
@@ -20,7 +19,7 @@ public class Videos {
             System.out.println("Error: " + e.getMessage());
         }
     }
-    
+
     public void add(String title, String url, String comment) throws SQLException {
         PreparedStatement stmt = db.prepareStatement("INSERT INTO videos (title, url, comment) VALUES (?, ?, ?)");
         stmt.setString(2, title);
@@ -28,5 +27,23 @@ public class Videos {
         stmt.setString(3, comment);
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public ArrayList<Video> getAll() throws SQLException {
+        ArrayList<Video> videos = new ArrayList<Video>();
+
+        PreparedStatement stmt = db.prepareStatement("SELECT * FROM videos");
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            int id = result.getInt("id");
+            String title = result.getString("title");
+            String url = result.getString("url");
+            String comment = result.getString("comment");
+            videos.add(new Video(id, title, url, comment));
+        }
+        db.close();
+
+        return videos;
     }
 }
