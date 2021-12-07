@@ -24,15 +24,17 @@ public class Podcasts {
 
     public void add(String name, String title, String description) throws SQLException {
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
-        PreparedStatement stmt = db.prepareStatement("INSERT INTO podcasts (name, title, description) VALUES (?, ?, ?)");
+        PreparedStatement stmt = db
+        .prepareStatement("INSERT INTO podcasts (name, title, description) VALUES (?, ?, ?)");
         stmt.setString(1, name);
         stmt.setString(2, title);
         stmt.setString(3, description);
         stmt.executeUpdate();
         stmt.close();
     }
-
+    
     public ArrayList<Podcast> getAll() throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
         ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
 
         PreparedStatement stmt = db.prepareStatement("SELECT * FROM podcasts");

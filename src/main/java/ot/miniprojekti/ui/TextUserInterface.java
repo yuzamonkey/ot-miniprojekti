@@ -3,6 +3,8 @@ package ot.miniprojekti.ui;
 import java.util.Scanner;
 import ot.miniprojekti.logic.BookmarkManager;
 import java.sql.SQLException;
+
+import ot.miniprojekti.domain.Book;
 import ot.miniprojekti.domain.Podcast;
 
 public class TextUserInterface {
@@ -67,13 +69,13 @@ public class TextUserInterface {
         this.bookmarkManager.addPodcast(name, title, description);
     }
 
-    // private void printBooks() {
-    //     System.out.println("Kirjat");
-    //     // for (Podcast p : podcasts.getAll()) {
-    //     for (Podcast b : bookmarkManager.getBooks()) {
-    //         System.out.println(b.toString());
-    //     }
-    // }
+    private void printBooks() throws SQLException {
+        System.out.println("Kirjat");
+        // for (Podcast p : podcasts.getAll()) {
+        for (Book b : bookmarkManager.getBooks()) {
+            System.out.println(b.toString());
+        }
+    }
 
     private void printPodcasts() throws SQLException {
         System.out.println("Podcastit");
