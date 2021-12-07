@@ -9,8 +9,8 @@ import ot.miniprojekti.logic.BookmarkManager;
 
 public class Stepdefs {
 
-    BookmarkManager manager;
-    Bookmark bm;
+    private BookmarkManager manager;
+    private Bookmark bm;
 
     @Given("Bookmark is initialized")
     public void bookmarkIsInitialized() {
