@@ -11,7 +11,10 @@ plugins {
     id 'application'
     id 'jacoco'
     id 'checkstyle'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
 }
+
+mainClassName = 'ot.miniprojekti.App'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -51,5 +54,11 @@ jacocoTestReport {
     classDirectories.setFrom(files(classDirectories.files.collect {
         fileTree(dir: it, exclude: ['ot/miniprojekti/ui/**', 'ot/miniprojekti/App*'])
     }))
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ot.miniprojekti.App'
     }
 }

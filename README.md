@@ -32,3 +32,15 @@ Ohjelma käynnistyy komennolla
 ./gradlew -q --console plain run
 ```
 Voit valita aukeavasta valikosta toimintoja syöttämällä ensin haluamasi toiminnon numeron ja painamalla *enter*. Ohjelma sulkeutuu syötteellä *x*, tai  virhetilanteessa painamalla näppäimiä Ctrl+c.
+
+### Jar tiedosto
+
+Ohjelmasta voi generoida suoritettavan jar-tiedoston. Sen voi tehdä kansiossa **ot-miniprojekti** komennolla
+```
+./gradlew shadowJar
+```
+
+Jar tiedosto tallentuu kansioon **build/libs/**. Sen voi käynnistää kansiossa **ot-miniprojekti** komennolla
+```
+java -jar build/libs/ot-miniprojekti-all.jar
+```
