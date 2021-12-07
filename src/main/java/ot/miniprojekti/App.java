@@ -15,13 +15,15 @@ public class App {
     public static void main(String[] args) throws SQLException {
         Scanner reader = new Scanner(System.in);
         
-        BookmarkManager bookmarkManager = new BookmarkManager();
-        
         Books books = new Books("books.db");
         Podcasts podcasts = new Podcasts("podcasts.db");
+<<<<<<< HEAD
         Tags tags = new Tags("tags.db");
+=======
+        BookmarkManager bookmarkManager = new BookmarkManager(books, podcasts);
+>>>>>>> 89dc481cc92c4fb579cdc35a4295207a03615716
         
-        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader, books, podcasts);
+        TextUserInterface textUserInterface = new TextUserInterface(bookmarkManager, reader);
         textUserInterface.start();
     }
 }
