@@ -4,17 +4,17 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import static org.junit.Assert.assertEquals;
-import ot.miniprojekti.domain.Bookmark;
+import ot.miniprojekti.domain.Book;
 import ot.miniprojekti.logic.BookmarkManager;
 
 public class Stepdefs {
 
     private BookmarkManager manager;
-    private Bookmark bm;
+    private Book bm;
 
     @Given("Bookmark is initialized")
     public void bookmarkIsInitialized() {
-        bm = new Bookmark("Foobar");
+        bm = new Book("Foobar");
     }
 
     @Then("text should be correct")

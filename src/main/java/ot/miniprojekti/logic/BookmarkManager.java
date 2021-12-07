@@ -3,6 +3,7 @@ package ot.miniprojekti.logic;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import ot.miniprojekti.domain.Podcast;
+import ot.miniprojekti.domain.Book;
 import ot.miniprojekti.dao.Books;
 import ot.miniprojekti.dao.Podcasts;
 
@@ -28,6 +29,10 @@ public class BookmarkManager {
     }
 
     public void addVideo() {
+    }
+
+    public ArrayList<Book> getBooks() throws SQLException {
+        return this.books.getAll();
     }
 
     public ArrayList<Podcast> getPodcasts() throws SQLException {
