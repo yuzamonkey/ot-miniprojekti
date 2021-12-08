@@ -13,11 +13,11 @@ public class Tags {
         this.db = DriverManager.getConnection("jdbc:sqlite:" + data);
         try {
             PreparedStatement stmt = db.prepareStatement("CREATE TABLE IF NOT EXISTS tags \n"
-                    + "(id SERIAL PRIMARY KEY, name TEXT)");
+                    + "(id INTEGER PRIMARY KEY, name TEXT)");
             stmt.executeUpdate();
 
             stmt = db.prepareStatement("CREATE TABLE IF NOT EXISTS tagconnections \n"
-                    + "(id SERIAL PRIMARY KEY,"
+                    + "(id INTEGER PRIMARY KEY,"
                     + "tag_id INTEGER REFERENCES tags DEFAULT NULL,"
                     + "book_id INTEGER REFERENCES books DEFAULT NULL,"
                     + "video_id INTEGER REFERENCES videos DEFAULT NULL,"
@@ -40,45 +40,44 @@ public class Tags {
         stmt.close();
     }
 
+    public int tagIdByName(String name) throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
+        PreparedStatement stmt = db.prepareStatement("SELECT id FROM tags WHERE name='" + name + "' LIMIT 1");
+        ResultSet result = stmt.executeQuery();
+        int id = result.getInt("id");
+        db.close();
+        return id;
+    }
+
     public void addBookConnection(String bookmark, int bookmarkId, int tagId) throws SQLException {
-        PreparedStatement stmt = this.db.prepareStatement("INSERT INTO tagconnections (tag_id, " 
-            + bookmark + "_id) VALUES (?, ?)");
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
+        PreparedStatement stmt = db.prepareStatement("INSERT INTO tagconnections (tag_id, "
+                + bookmark + "_id) VALUES (?, ?)");
         stmt.setInt(1, tagId);
         stmt.setInt(2, bookmarkId);
         stmt.executeUpdate();
         stmt.close();
     }
 
-    // public void tagIdByName(String name) {
-    //     db = DriverManager.getConnection("jdbc:sqlite:" + data);
-    //     ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+    // public void findBookByTagName(String name) throws SQLException {
+    // int tagId = tagIdByName(name);
 
-    //     PreparedStatement stmt = db.prepareStatement("SELECT id FROM tags WHERE name = " + name);
-    //     ResultSet result = stmt.executeQuery();
-    //     stmt.close();
-    //     db.close();
-    //     System.out.println(result)
-    //     return result.nextInteger()
+    // db = DriverManager.getConnection("jdbc:sqlite:" + data);
+    // ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+
+    // PreparedStatement stmt = db.prepareStatement("SELECT * FROM tagconnections
+    // WHERE book_id = " + tagId);
+    // ResultSet result = stmt.executeQuery();
+
+    // while (result.next()) {
+    // String author = result.getString("author");
+    // String title = result.getString("title");
+    // String isbn = result.getString("isbn");
+    // books.add(new Book(author, title, isbn));
     // }
 
-    // public void findBookByTagName(String name) throws SQLException {
-    //     int tagId = tagIdByName(name);
+    // db.close();
 
-    //     db = DriverManager.getConnection("jdbc:sqlite:" + data);
-    //     ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
-
-    //     PreparedStatement stmt = db.prepareStatement("SELECT * FROM tagconnections WHERE book_id = " + tagId);
-    //     ResultSet result = stmt.executeQuery();
-
-    //     while (result.next()) {
-    //         String author = result.getString("author");
-    //         String title = result.getString("title");
-    //         String isbn = result.getString("isbn");
-    //         books.add(new Book(author, title, isbn));
-    //     }
-
-    //     db.close();
-
-    //     return books;
+    // return books;
     // }
 }
