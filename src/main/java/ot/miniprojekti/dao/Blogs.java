@@ -25,8 +25,8 @@ public class Blogs {
     public void add(String title, String author, String url) throws SQLException {
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
         PreparedStatement stmt = db.prepareStatement("INSERT INTO blogposts (title, author, url) VALUES (?, ?, ?)");
-        stmt.setString(2, title);
-        stmt.setString(1, author);
+        stmt.setString(1, title);
+        stmt.setString(2, author);
         stmt.setString(3, url);
         stmt.executeUpdate();
         stmt.close();
