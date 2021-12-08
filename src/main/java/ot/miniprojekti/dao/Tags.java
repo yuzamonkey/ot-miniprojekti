@@ -57,7 +57,10 @@ public class Tags {
     }
 
     public void addBookmarkConnection(String bookmark, int tagId) throws SQLException {
-        if (bookmark.equals("blogs") || bookmark.isEmpty()) return;
+        if (bookmark.equals("blogs") || bookmark.isEmpty()) {
+            return;
+        }
+        
         db = DriverManager.getConnection("jdbc:sqlite:" + bookmark + ".db");
         PreparedStatement stmt1 = this.db.prepareStatement("SELECT id FROM " + bookmark + " ORDER BY id DESC LIMIT 1");
         ResultSet result = stmt1.executeQuery();
