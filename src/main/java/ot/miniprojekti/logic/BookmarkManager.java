@@ -45,10 +45,22 @@ public class BookmarkManager {
         this.podcasts.add(name, title, description);
     }
 
-    public void addTag(String tag) throws SQLException {
-        // splits a comma-separated string into a list of tags
-        // and removes whitespace characters before and after the commas
-        this.tags.addTag(Arrays.asList(tag.split("[ ]*,[ ]*")));
+    public void addTag(String tag, String type) throws SQLException {
+        if (!tag.isEmpty()) {
+            String bookmark = "";
+            if (type.equals("1")) {
+                bookmark = "books";
+            } else if (type.equals("2")) {
+                bookmark = "videos";
+            } else if (type.equals("3")) {
+                bookmark = "blogs";
+            } else if (type.equals("4")) {
+                bookmark = "podcasts";
+            }
+            // splits a comma-separated string into a list of tags
+            // and removes whitespace characters before and after the commas
+            this.tags.addTag(Arrays.asList(tag.split("[ ]*,[ ]*")), bookmark);
+        }
     }
 
     public ArrayList<Book> getBooks() throws SQLException {

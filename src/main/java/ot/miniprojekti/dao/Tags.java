@@ -30,14 +30,19 @@ public class Tags {
         }
     }
 
-    public void addTag(List<String> tags) throws SQLException {
-        PreparedStatement stmt = this.db.prepareStatement("INSERT INTO tags (name) VALUES (?)");
+    public void addTag(List<String> tags, String bookmark) throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
         for (String tag : tags) {
-            stmt.setString(1, tag);
-            stmt.addBatch();
+            PreparedStatement stmt1 = this.db.prepareStatement("INSERT INTO tags (name) VALUES (?)");
+            stmt1.setString(1, tag);
+            stmt1.executeUpdate();
+            PreparedStatement stmt2 = this.db.prepareStatement("SELECT last_insert_rowid() AS tag_id");
+            ResultSet result = stmt2.executeQuery();
+            int tagId = Integer.parseInt(result.getString("tag_id"));
+            stmt1.close();
+            stmt2.close();
+            addBookmarkConnection(bookmark, tagId);
         }
-        stmt.executeBatch();
-        stmt.close();
     }
 
     public int tagIdByName(String name) throws SQLException {
@@ -49,14 +54,21 @@ public class Tags {
         return id;
     }
 
-    public void addBookConnection(String bookmark, int bookmarkId, int tagId) throws SQLException {
+    public void addBookmarkConnection(String bookmark, int tagId) throws SQLException {
+        if (bookmark.equals("blogs")) return;
+        db = DriverManager.getConnection("jdbc:sqlite:" + bookmark + ".db");
+        PreparedStatement stmt1 = this.db.prepareStatement("SELECT id FROM " + bookmark + " ORDER BY id DESC LIMIT 1");
+        ResultSet result = stmt1.executeQuery();
+        int bookmarkId = Integer.parseInt(result.getString("id"));
+        stmt1.close();
+
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
-        PreparedStatement stmt = db.prepareStatement("INSERT INTO tagconnections (tag_id, "
-                + bookmark + "_id) VALUES (?, ?)");
-        stmt.setInt(1, tagId);
-        stmt.setInt(2, bookmarkId);
-        stmt.executeUpdate();
-        stmt.close();
+        PreparedStatement stmt2 = db.prepareStatement("INSERT INTO tagconnections (tag_id, "
+                + bookmark.substring(0, bookmark.length() - 1) + "_id) VALUES (?, ?)");
+        stmt2.setInt(1, tagId);
+        stmt2.setInt(2, bookmarkId);
+        stmt2.executeUpdate();
+        stmt2.close();
     }
 
     // public void findBookByTagName(String name) throws SQLException {

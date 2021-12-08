@@ -15,7 +15,7 @@ public class Videos {
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
         try {
             PreparedStatement stmt = db.prepareStatement("CREATE TABLE IF NOT EXISTS videos \n"
-                    + "(id SERIAL PRIMARY KEY, title TEXT, url TEXT, comment TEXT)");
+                    + "(id INTEGER PRIMARY KEY, title TEXT, url TEXT, comment TEXT)");
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());

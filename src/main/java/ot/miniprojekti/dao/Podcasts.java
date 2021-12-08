@@ -15,7 +15,7 @@ public class Podcasts {
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
         try {
             PreparedStatement stmt = db.prepareStatement("CREATE TABLE IF NOT EXISTS podcasts \n"
-                    + "(id SERIAL PRIMARY KEY, name TEXT, title TEXT, description TEXT)");
+                    + "(id INTEGER PRIMARY KEY, name TEXT, title TEXT, description TEXT)");
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());

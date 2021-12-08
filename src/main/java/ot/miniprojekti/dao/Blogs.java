@@ -15,7 +15,7 @@ public class Blogs {
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
         try {
             PreparedStatement stmt = db.prepareStatement("CREATE TABLE IF NOT EXISTS blogposts \n"
-                    + "(id SERIAL PRIMARY KEY, title TEXT, author TEXT, url TEXT)");
+                    + "(id INTEGER PRIMARY KEY, title TEXT, author TEXT, url TEXT)");
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
