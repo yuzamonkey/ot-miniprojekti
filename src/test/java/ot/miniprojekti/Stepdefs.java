@@ -163,7 +163,7 @@ public class Stepdefs {
     public void tagIsAddedToDatabase() throws SQLException {
         ArrayList<String> list = new ArrayList<>();
         list.add("testTag1");
-        tags.addTag(list, "books");
+        tags.addTag(list, "");
     }
     
     @Then("tag should be saved to database")
