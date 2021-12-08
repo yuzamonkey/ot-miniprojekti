@@ -4,9 +4,4 @@
 build
 .vscode
 # Ignore database
-books.db
-podcasts.db
-blogposts.db
-videos.db
-tags.db
-blogs.db
+*.db

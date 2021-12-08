@@ -1,14 +1,12 @@
 package ot.miniprojekti;
 
 import java.sql.SQLException;
-import java.io.FileInputStream;
-import java.util.Properties;
-import java.sql.SQLException;
-import io.cucumber.java.After;
+import java.util.ArrayList;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 //import ot.miniprojekti.logic.BookmarkManager;
 
@@ -21,7 +19,7 @@ import ot.miniprojekti.dao.Blogs;
 import ot.miniprojekti.dao.Books;
 import ot.miniprojekti.dao.Podcasts;
 import ot.miniprojekti.dao.Videos;
-//import ot.miniprojekti.dao.Tags;
+import ot.miniprojekti.dao.Tags;
 
 public class Stepdefs {
 
@@ -34,7 +32,7 @@ public class Stepdefs {
     private Books books;
     private Podcasts podcasts;
     private Videos videos;
-//    private Tags tags;
+    private Tags tags;
     
     @Given("blog is initialized")
     public void blogIsInitialized() {
@@ -127,14 +125,16 @@ public class Stepdefs {
 
     @When("podcast is added to database")
     public void podcastIsAddedToDatabase() throws SQLException {
-        podcasts.add("Podcast about vegetables", "How carrots grow", "In this episode experts dig deep into the world of carrots.");
+        podcasts.add("Podcast about vegetables", "How carrots grow",
+             "In this episode experts dig deep into the world of carrots.");
     }
     
     @Then("podcast should be saved to database")
     public void podcastShouldBeSavedToDatabase() throws SQLException {
         assertEquals("Podcast about vegetables", podcasts.getAll().get(0).getName());
         assertEquals("How carrots grow", podcasts.getAll().get(0).getTitle());
-        assertEquals("In this episode experts dig deep into the world of carrots.", podcasts.getAll().get(0).getDescription());
+        assertEquals("In this episode experts dig deep into the world of carrots.",
+             podcasts.getAll().get(0).getDescription());
     }
     
     @Given("videos is initialized")
@@ -152,6 +152,23 @@ public class Stepdefs {
         assertEquals("Washing dishes", videos.getAll().get(0).getTitle());
         assertEquals("A nice video about washing dishes", videos.getAll().get(0).getComment());
         assertEquals("www.videos.com/washing_dishes", videos.getAll().get(0).getUrl());
+    }
+
+    @Given("tags is initialized")
+    public void tagsIsInitialized() throws SQLException {
+        tags = new Tags("test.db");
+    }
+
+    @When("tag is added to database")
+    public void tagIsAddedToDatabase() throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("testTag1");
+        tags.addTag(list);
+    }
+    
+    @Then("tag should be saved to database")
+    public void tagShouldBeSavedToDatabase() throws SQLException {
+        assertNotNull(tags.tagIdByName("testTag1"));
     }
     
     // @Given("BookmarkManager is initialized")
