@@ -132,8 +132,8 @@ public class Stepdefs {
     
     @Then("podcast should be saved to database")
     public void podcastShouldBeSavedToDatabase() throws SQLException {
-        assertEquals("Podcast about vegetables", podcasts.getAll().get(0).getTitle());
-        assertEquals("How carrots grow", podcasts.getAll().get(0).getName());
+        assertEquals("Podcast about vegetables", podcasts.getAll().get(0).getName());
+        assertEquals("How carrots grow", podcasts.getAll().get(0).getTitle());
         assertEquals("In this episode experts dig deep into the world of carrots.", podcasts.getAll().get(0).getDescription());
     }
     
@@ -144,7 +144,7 @@ public class Stepdefs {
 
     @When("video is added to database")
     public void videoIsAddedToDatabase() throws SQLException {
-        videos.add("Washing dishes", "A nice video about washing dishes", "www.videos.com/washing_dishes");
+        videos.add("Washing dishes", "www.videos.com/washing_dishes", "A nice video about washing dishes");
     }
     
     @Then("video should be saved to database")
@@ -170,12 +170,4 @@ public class Stepdefs {
     // assertEquals("bm1", manager.getBookmarks().get(0).getText());
     // assertEquals("bm2", manager.getBookmarks().get(1).getText());
     // }
-    
-    @After
-    public void tearDown() {
-        blogs.dropTable();
-        books.dropTable();
-        podcasts.dropTable();
-        videos.dropTable();
-    }
 }

@@ -25,8 +25,8 @@ public class Videos {
     public void add(String title, String url, String comment) throws SQLException {
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
         PreparedStatement stmt = db.prepareStatement("INSERT INTO videos (title, url, comment) VALUES (?, ?, ?)");
-        stmt.setString(2, title);
-        stmt.setString(1, url);
+        stmt.setString(1, title);
+        stmt.setString(2, url);
         stmt.setString(3, comment);
         stmt.executeUpdate();
         stmt.close();
