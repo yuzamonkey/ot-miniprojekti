@@ -3,8 +3,7 @@ package ot.miniprojekti;
 import java.io.FileInputStream;
 import java.util.Properties;
 import java.sql.SQLException;
-import io.cucumber.java.en.Before;
-import io.cucumber.java.en.After;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -100,7 +99,7 @@ public class Stepdefs {
     public void bookShouldBeSavedToDatabase() {
         assertEquals("Arthur the Author", books.getAll().get(0).getAuthor());
         assertEquals("How to write a book", books.getAll().get(0).getTitle());
-        assertEquals("951-98548-9-4", books.getAll().get(0).getIsbn());
+        assertEquals("951-98548-9-4", books.getAll().get(0).getISBN());
     }
     
     @Given("blogs is initialized")
@@ -133,7 +132,7 @@ public class Stepdefs {
     @Then("podcast should be saved to database")
     public void podcastShouldBeSavedToDatabase() {
         assertEquals("Podcast about vegetables", podcasts.getAll().get(0).getTitle());
-        assertEquals("How carrots grow", podcasts.getAll().get(0).getAuthor());
+        assertEquals("How carrots grow", podcasts.getAll().get(0).getName());
         assertEquals("In this episode experts dig deep into the world of carrots.", podcasts.getAll().get(0).getDescription());
     }
     
