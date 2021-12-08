@@ -1,5 +1,10 @@
 package ot.miniprojekti;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.sql.SQLException;
+import io.cucumber.java.en.Before;
+import io.cucumber.java.en.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +17,12 @@ import ot.miniprojekti.domain.Book;
 import ot.miniprojekti.domain.Podcast;
 import ot.miniprojekti.domain.Video;
 
+import ot.miniprojekti.dao.Blogs;
+import ot.miniprojekti.dao.Books;
+import ot.miniprojekti.dao.Podcasts;
+import ot.miniprojekti.dao.Videos;
+//import ot.miniprojekti.dao.Tags;
+
 public class Stepdefs {
 
     // private BookmarkManager manager;
@@ -19,7 +30,12 @@ public class Stepdefs {
     private Book book;
     private Podcast podcast;
     private Video video;
-
+    private Blogs blogs;
+    private Books books;
+    private Podcasts podcasts;
+    private Videos videos;
+//    private Tags tags;
+    
     @Given("blog is initialized")
     public void blogIsInitialized() {
         blog = new Blog(123, "Overreacted", "Dan Abramov", "https://overreacted.io/");
@@ -69,7 +85,75 @@ public class Stepdefs {
         assertEquals("https://www.youtube.com/watch?v=l9AzO1FMgM8", video.getUrl());
         assertEquals("Good vid", video.getComment());
     }
+    
+    @Given("books is initialized")
+    public void booksIsInitialized() {
+        books = new Books("test.db");
+    }
 
+    @When("book is added to database")
+    public void bookIsAddedToDatabase() {
+        books.add("Arthur the Author", "How to write a book", "951-98548-9-4");
+    }
+    
+    @Then("book should be saved to database")
+    public void bookShouldBeSavedToDatabase() {
+        assertEquals("Arthur the Author", books.getAll().get(0).getAuthor());
+        assertEquals("How to write a book", books.getAll().get(0).getTitle());
+        assertEquals("951-98548-9-4", books.getAll().get(0).getIsbn());
+    }
+    
+    @Given("blogs is initialized")
+    public void blogsIsInitialized() {
+        blogs = new Blogs("test.db");
+    }
+
+    @When("blog is added to database")
+    public void blogIsAddedToDatabase() {
+        blogs.add("Writing a blog", "Beatrice the Blogger", "www.blogs.com/beatricesblog");
+    }
+    
+    @Then("blog should be saved to database")
+    public void blogShouldBeSavedToDatabase() {
+        assertEquals("Writing a blog", blogs.getAll().get(0).getTitle());
+        assertEquals("Beatrice the Blogger", blogs.getAll().get(0).getAuthor());
+        assertEquals("www.blogs.com/beatricesblog", blogs.getAll().get(0).getUrl());
+    }
+    
+    @Given("podcasts is initialized")
+    public void podcastsIsInitialized() {
+        podcasts = new Podcasts("test.db");
+    }
+
+    @When("podcast is added to database")
+    public void podcastIsAddedToDatabase() {
+        podcasts.add("Podcast about vegetables", "How carrots grow", "In this episode experts dig deep into the world of carrots.");
+    }
+    
+    @Then("podcast should be saved to database")
+    public void podcastShouldBeSavedToDatabase() {
+        assertEquals("Podcast about vegetables", podcasts.getAll().get(0).getTitle());
+        assertEquals("How carrots grow", podcasts.getAll().get(0).getAuthor());
+        assertEquals("In this episode experts dig deep into the world of carrots.", podcasts.getAll().get(0).getDescription());
+    }
+    
+    @Given("videos is initialized")
+    public void videosIsInitialized() {
+        videos = new Videos("test.db");
+    }
+
+    @When("video is added to database")
+    public void videoIsAddedToDatabase() {
+        videos.add("Washing dishes", "A nice video about washing dishes", "www.videos.com/washing_dishes");
+    }
+    
+    @Then("video should be saved to database")
+    public void videoShouldBeSavedToDatabase() {
+        assertEquals("Washing dishes", videos.getAll().get(0).getTitle());
+        assertEquals("A nice video about washing dishes", videos.getAll().get(0).getComment());
+        assertEquals("www.videos.com/washing_dishes", videos.getAll().get(0).getUrl());
+    }
+    
     // @Given("BookmarkManager is initialized")
     // public void bookmarkManagerIsInitialized() {
     // manager = new BookmarkManager();
@@ -86,4 +170,12 @@ public class Stepdefs {
     // assertEquals("bm1", manager.getBookmarks().get(0).getText());
     // assertEquals("bm2", manager.getBookmarks().get(1).getText());
     // }
+    
+    @After
+    public void tearDown() {
+        blogs.dropTable();
+        books.dropTable();
+        podcasts.dropTable();
+        videos.dropTable();
+    }
 }
