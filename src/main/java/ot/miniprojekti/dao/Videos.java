@@ -8,8 +8,10 @@ import java.util.ArrayList;
 public class Videos {
 
     private Connection db;
+    private String data;
 
     public Videos(String data) throws SQLException {
+        this.data = data;
         db = DriverManager.getConnection("jdbc:sqlite:" + data);
         try {
             PreparedStatement stmt = db.prepareStatement("CREATE TABLE IF NOT EXISTS videos \n"
@@ -21,6 +23,7 @@ public class Videos {
     }
 
     public void add(String title, String url, String comment) throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
         PreparedStatement stmt = db.prepareStatement("INSERT INTO videos (title, url, comment) VALUES (?, ?, ?)");
         stmt.setString(2, title);
         stmt.setString(1, url);
@@ -30,6 +33,7 @@ public class Videos {
     }
 
     public ArrayList<Video> getAll() throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
         ArrayList<Video> videos = new ArrayList<Video>();
 
         PreparedStatement stmt = db.prepareStatement("SELECT * FROM videos");

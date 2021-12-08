@@ -105,7 +105,7 @@ public class TextUserInterface {
         addTag();
         this.bookmarkManager.addPodcast(name, title, description);
     }
-    
+
     private void addTag() throws SQLException {
         System.out.print("Tagit: ");
         String tag = reader.nextLine();
