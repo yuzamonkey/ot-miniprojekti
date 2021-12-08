@@ -23,6 +23,7 @@ public class TextUserInterface {
             System.out.println("Valitse toiminto:");
             System.out.println("[1] Lisää vinkki");
             System.out.println("[2] Tulosta vinkit");
+            System.out.println("[3] Hae kirjoja tagin perusteella");
             System.out.println("[x] Sulje sovellus");
 
             System.out.print("> ");
@@ -35,6 +36,11 @@ public class TextUserInterface {
                 printVideos();
                 printBlogs();
                 printPodcasts();
+            } else if (answer.equals("3")) {
+                System.out.print("Tagi: ");
+                String tag = reader.nextLine();
+                filterBooksByTags(tag);
+                this.bookmarkManager.getBooksByTag(tag);
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }
@@ -108,6 +114,13 @@ public class TextUserInterface {
         System.out.print("Tagit: ");
         String tag = reader.nextLine();
         this.bookmarkManager.addTag(tag, type);
+    }
+
+    private void filterBooksByTags(String tag) throws SQLException {
+        System.out.println("Kirjat: ");
+        for (Book b : bookmarkManager.getBooksByTag(tag)) {
+            System.out.println(b.toString());
+        }
     }
 
     private void printBooks() throws SQLException {

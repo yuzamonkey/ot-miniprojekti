@@ -67,6 +67,10 @@ public class BookmarkManager {
         return this.books.getAll();
     }
 
+    public ArrayList<Book> getBooksByTag(String tag) throws SQLException {
+        return this.tags.findBooksByTagName(tag);
+    }
+
     public ArrayList<Video> getVideos() throws SQLException {
         return this.videos.getAll();
     }

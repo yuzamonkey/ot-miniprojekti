@@ -1,7 +1,9 @@
 package ot.miniprojekti.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import ot.miniprojekti.domain.Book;
 
 public class Tags {
 
@@ -71,25 +73,32 @@ public class Tags {
         stmt2.close();
     }
 
-    // public void findBookByTagName(String name) throws SQLException {
-    // int tagId = tagIdByName(name);
+    public ArrayList<Book> findBooksByTagName(String name) throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:" + data);
+        PreparedStatement stmt1 = db.prepareStatement("SELECT tg.book_id, t.name FROM tagconnections tg \n"
+                + " INNER JOIN tags t ON t.id = tg.id WHERE tg.book_id IS NOT NULL AND t.name LIKE '" + name + "'");
+        ResultSet result = stmt1.executeQuery();
+        ArrayList<Integer> bookIds = new ArrayList<>();
+        ArrayList<String> tagNames = new ArrayList<>();
+        while (result.next()) {
+            bookIds.add(Integer.parseInt(result.getString("book_id")));
+            tagNames.add(result.getString("name"));
+        }
+        stmt1.close();
 
-    // db = DriverManager.getConnection("jdbc:sqlite:" + data);
-    // ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+        ArrayList<Book> books = new ArrayList<>();
+        db = DriverManager.getConnection("jdbc:sqlite:books.db");
+        for (int i = 0; i < bookIds.size(); i++) {
+            PreparedStatement stmt2 = db.prepareStatement("SELECT * FROM books WHERE id = " + bookIds.get(i));
+            ResultSet result2 = stmt2.executeQuery();
+            String author = result2.getString("author");
+            String title = result2.getString("title");
+            String isbn = result2.getString("isbn");
+            books.add(new Book(author, title, isbn));
+            stmt2.close();
+        }
 
-    // PreparedStatement stmt = db.prepareStatement("SELECT * FROM tagconnections
-    // WHERE book_id = " + tagId);
-    // ResultSet result = stmt.executeQuery();
-
-    // while (result.next()) {
-    // String author = result.getString("author");
-    // String title = result.getString("title");
-    // String isbn = result.getString("isbn");
-    // books.add(new Book(author, title, isbn));
-    // }
-
-    // db.close();
-
-    // return books;
-    // }
+        db.close();
+        return books;
+    }
 }
