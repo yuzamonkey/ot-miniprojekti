@@ -1,5 +1,6 @@
 package ot.miniprojekti;
 
+import java.sql.SQLException;
 import java.io.FileInputStream;
 import java.util.Properties;
 import java.sql.SQLException;
@@ -86,68 +87,68 @@ public class Stepdefs {
     }
     
     @Given("books is initialized")
-    public void booksIsInitialized() {
+    public void booksIsInitialized() throws SQLException {
         books = new Books("test.db");
     }
 
     @When("book is added to database")
-    public void bookIsAddedToDatabase() {
+    public void bookIsAddedToDatabase() throws SQLException {
         books.add("Arthur the Author", "How to write a book", "951-98548-9-4");
     }
     
     @Then("book should be saved to database")
-    public void bookShouldBeSavedToDatabase() {
+    public void bookShouldBeSavedToDatabase() throws SQLException {
         assertEquals("Arthur the Author", books.getAll().get(0).getAuthor());
         assertEquals("How to write a book", books.getAll().get(0).getTitle());
         assertEquals("951-98548-9-4", books.getAll().get(0).getISBN());
     }
     
     @Given("blogs is initialized")
-    public void blogsIsInitialized() {
+    public void blogsIsInitialized() throws SQLException {
         blogs = new Blogs("test.db");
     }
 
     @When("blog is added to database")
-    public void blogIsAddedToDatabase() {
+    public void blogIsAddedToDatabase() throws SQLException {
         blogs.add("Writing a blog", "Beatrice the Blogger", "www.blogs.com/beatricesblog");
     }
     
     @Then("blog should be saved to database")
-    public void blogShouldBeSavedToDatabase() {
+    public void blogShouldBeSavedToDatabase() throws SQLException {
         assertEquals("Writing a blog", blogs.getAll().get(0).getTitle());
         assertEquals("Beatrice the Blogger", blogs.getAll().get(0).getAuthor());
         assertEquals("www.blogs.com/beatricesblog", blogs.getAll().get(0).getUrl());
     }
     
     @Given("podcasts is initialized")
-    public void podcastsIsInitialized() {
+    public void podcastsIsInitialized() throws SQLException {
         podcasts = new Podcasts("test.db");
     }
 
     @When("podcast is added to database")
-    public void podcastIsAddedToDatabase() {
+    public void podcastIsAddedToDatabase() throws SQLException {
         podcasts.add("Podcast about vegetables", "How carrots grow", "In this episode experts dig deep into the world of carrots.");
     }
     
     @Then("podcast should be saved to database")
-    public void podcastShouldBeSavedToDatabase() {
+    public void podcastShouldBeSavedToDatabase() throws SQLException {
         assertEquals("Podcast about vegetables", podcasts.getAll().get(0).getTitle());
         assertEquals("How carrots grow", podcasts.getAll().get(0).getName());
         assertEquals("In this episode experts dig deep into the world of carrots.", podcasts.getAll().get(0).getDescription());
     }
     
     @Given("videos is initialized")
-    public void videosIsInitialized() {
+    public void videosIsInitialized() throws SQLException {
         videos = new Videos("test.db");
     }
 
     @When("video is added to database")
-    public void videoIsAddedToDatabase() {
+    public void videoIsAddedToDatabase() throws SQLException {
         videos.add("Washing dishes", "A nice video about washing dishes", "www.videos.com/washing_dishes");
     }
     
     @Then("video should be saved to database")
-    public void videoShouldBeSavedToDatabase() {
+    public void videoShouldBeSavedToDatabase() throws SQLException {
         assertEquals("Washing dishes", videos.getAll().get(0).getTitle());
         assertEquals("A nice video about washing dishes", videos.getAll().get(0).getComment());
         assertEquals("www.videos.com/washing_dishes", videos.getAll().get(0).getUrl());
