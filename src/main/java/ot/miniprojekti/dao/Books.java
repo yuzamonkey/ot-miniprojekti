@@ -49,15 +49,4 @@ public class Books {
 
         return books;
     }
-    
-    public void dropTable() {
-        try {
-            PreparedStatement stmt = db.prepareStatement("DROP TABLE books");
-            stmt.executeQuery();
-            stmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
 }

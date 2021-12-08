@@ -50,14 +50,4 @@ public class Videos {
 
         return videos;
     }
-    
-    public void dropTable() {
-        try {
-            PreparedStatement stmt = db.prepareStatement("DROP TABLE videos");
-            stmt.executeQuery();
-            stmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
 }
