@@ -1,6 +1,5 @@
 package ot.miniprojekti.ui;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 import ot.miniprojekti.domain.Blog;
 import ot.miniprojekti.domain.Book;
@@ -18,7 +17,7 @@ public class TextUserInterface {
         this.reader = reader;
     }
 
-    public void start() throws SQLException {
+    public void start() {
         while (true) {
             System.out.println("Valitse toiminto:");
             System.out.println("[1] Lisää vinkki");
@@ -39,15 +38,14 @@ public class TextUserInterface {
             } else if (answer.equals("3")) {
                 System.out.print("Tagi: ");
                 String tag = reader.nextLine();
-                filterBooksByTags(tag);
-                this.bookmarkManager.getBooksByTag(tag);
+                filterBooksByTag(tag);
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }
         }
     }
 
-    private void addBookmark() throws SQLException {
+    private void addBookmark() {
         System.out.println("Valitse tyyppi:");
         System.out.println("[1] Lisää kirja");
         System.out.println("[2] Lisää video");
@@ -67,10 +65,10 @@ public class TextUserInterface {
             addPodcast();
         }
 
-        addTag(answer);
+        addTag();
     }
 
-    private void addBook() throws SQLException {
+    private void addBook() {
         System.out.print("Kirjoittaja: ");
         String author = reader.nextLine();
         System.out.print("Otsikko: ");
@@ -80,7 +78,7 @@ public class TextUserInterface {
         this.bookmarkManager.addBook(author, title, isbn);
     }
 
-    private void addVideo() throws SQLException {
+    private void addVideo() {
         System.out.print("Otsikko: ");
         String title = reader.nextLine();
         System.out.print("Url: ");
@@ -90,7 +88,7 @@ public class TextUserInterface {
         this.bookmarkManager.addVideo(title, url, comment);
     }
 
-    private void addBlog() throws SQLException {
+    private void addBlog() {
         System.out.print("Otsikko: ");
         String title = reader.nextLine();
         System.out.print("Kirjoittaja: ");
@@ -100,7 +98,7 @@ public class TextUserInterface {
         this.bookmarkManager.addBlog(title, author, url);
     }
 
-    private void addPodcast() throws SQLException {
+    private void addPodcast() {
         System.out.print("Tekijän nimi: ");
         String name = reader.nextLine();
         System.out.print("Otsikko: ");
@@ -110,41 +108,41 @@ public class TextUserInterface {
         this.bookmarkManager.addPodcast(name, title, description);
     }
 
-    private void addTag(String type) throws SQLException {
+    private void addTag() {
         System.out.print("Tagit: ");
         String tag = reader.nextLine();
-        this.bookmarkManager.addTag(tag, type);
+        this.bookmarkManager.addTag(tag);
     }
-
-    private void filterBooksByTags(String tag) throws SQLException {
-        System.out.println("Kirjat: ");
+    
+    private void filterBooksByTag(String tag) {
+        System.out.println("Kirjat:");
         for (Book b : bookmarkManager.getBooksByTag(tag)) {
             System.out.println(b.toString());
         }
     }
 
-    private void printBooks() throws SQLException {
+    private void printBooks() {
         System.out.println("Kirjat:");
         for (Book b : bookmarkManager.getBooks()) {
             System.out.println(b.toString());
         }
     }
 
-    private void printVideos() throws SQLException {
+    private void printVideos() {
         System.out.println("Videot:");
         for (Video v : bookmarkManager.getVideos()) {
             System.out.println(v.toString());
         }
     }
 
-    private void printBlogs() throws SQLException {
+    private void printBlogs() {
         System.out.println("Blogit:");
         for (Blog b : bookmarkManager.getBlogs()) {
             System.out.println(b.toString());
         }
     }
 
-    private void printPodcasts() throws SQLException {
+    private void printPodcasts() {
         System.out.println("Podcastit:");
         for (Podcast p : bookmarkManager.getPodcasts()) {
             System.out.println(p.toString());

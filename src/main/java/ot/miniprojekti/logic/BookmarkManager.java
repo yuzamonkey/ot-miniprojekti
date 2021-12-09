@@ -1,13 +1,12 @@
 package ot.miniprojekti.logic;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import ot.miniprojekti.dao.Blogs;
-import ot.miniprojekti.dao.Books;
-import ot.miniprojekti.dao.Podcasts;
-import ot.miniprojekti.dao.Tags;
-import ot.miniprojekti.dao.Videos;
+import ot.miniprojekti.dao.BlogDao;
+import ot.miniprojekti.dao.BookDao;
+import ot.miniprojekti.dao.BookmarkDao;
+import ot.miniprojekti.dao.PodcastDao;
+import ot.miniprojekti.dao.VideoDao;
 import ot.miniprojekti.domain.Blog;
 import ot.miniprojekti.domain.Book;
 import ot.miniprojekti.domain.Podcast;
@@ -15,71 +14,61 @@ import ot.miniprojekti.domain.Video;
 
 public class BookmarkManager {
 
-    private Books books;
-    private Videos videos;
-    private Blogs blogs;
-    private Podcasts podcasts;
-    private Tags tags;
+    private BookmarkDao bookmarkDao;
+    private BookDao bookDao;
+    private VideoDao videoDao;
+    private BlogDao blogDao;
+    private PodcastDao podcastDao;
 
-    public BookmarkManager(Books books, Videos videos, Blogs blogs, Podcasts podcasts, Tags tags) {
-        this.books = books;
-        this.videos = videos;
-        this.blogs = blogs;
-        this.podcasts = podcasts;
-        this.tags = tags;
+    public BookmarkManager(BookmarkDao bookmarkDao, BookDao bookDao, VideoDao videoDao, BlogDao blogDao, PodcastDao podcastDao) {
+        this.bookmarkDao = bookmarkDao;
+        this.bookDao = bookDao;
+        this.videoDao = videoDao;
+        this.blogDao = blogDao;
+        this.podcastDao = podcastDao;
     }
 
-    public void addBook(String author, String title, String isbn) throws SQLException {
-        this.books.add(author, title, isbn);
+    public void addBook(String author, String title, String isbn) {
+        this.bookDao.add(author, title, isbn);
     }
 
-    public void addVideo(String title, String url, String comment) throws SQLException {
-        this.videos.add(title, url, comment);
+    public void addVideo(String title, String url, String comment) {
+        this.videoDao.add(title, url, comment);
     }
 
-    public void addBlog(String title, String author, String url) throws SQLException {
-        this.blogs.add(title, author, url);
+    public void addBlog(String title, String author, String url) {
+        this.blogDao.add(title, author, url);
     }
 
-    public void addPodcast(String name, String title, String description) throws SQLException {
-        this.podcasts.add(name, title, description);
+    public void addPodcast(String name, String title, String description) {
+        this.podcastDao.add(name, title, description);
     }
 
-    public void addTag(String tag, String type) throws SQLException {
+    public void addTag(String tag) {
         if (!tag.isEmpty()) {
-            String bookmark = "";
-            if (type.equals("1")) {
-                bookmark = "books";
-            } else if (type.equals("2")) {
-                bookmark = "videos";
-            } else if (type.equals("3")) {
-                bookmark = "blogs";
-            } else if (type.equals("4")) {
-                bookmark = "podcasts";
-            }
             // splits a comma-separated string into a list of tags
             // and removes whitespace characters before and after the commas
-            this.tags.addTag(Arrays.asList(tag.split("[ ]*,[ ]*")), bookmark);
+            this.bookmarkDao.addTag(Arrays.asList(tag.split("[ ]*,[ ]*")));
         }
     }
 
-    public ArrayList<Book> getBooks() throws SQLException {
-        return this.books.getAll();
+    public ArrayList<Book> getBooks() {
+        return this.bookDao.getAll();
+    }
+    
+    public ArrayList<Book> getBooksByTag(String tag) {
+        return bookmarkDao.findBooksByTag(tag);
     }
 
-    public ArrayList<Book> getBooksByTag(String tag) throws SQLException {
-        return this.tags.findBooksByTagName(tag);
+    public ArrayList<Video> getVideos() {
+        return this.videoDao.getAll();
     }
 
-    public ArrayList<Video> getVideos() throws SQLException {
-        return this.videos.getAll();
+    public ArrayList<Blog> getBlogs() {
+        return this.blogDao.getAll();
     }
 
-    public ArrayList<Blog> getBlogs() throws SQLException {
-        return this.blogs.getAll();
-    }
-
-    public ArrayList<Podcast> getPodcasts() throws SQLException {
-        return this.podcasts.getAll();
+    public ArrayList<Podcast> getPodcasts() {
+        return this.podcastDao.getAll();
     }
 }

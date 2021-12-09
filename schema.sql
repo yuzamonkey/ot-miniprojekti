@@ -1,47 +1,49 @@
-CREATE TABLE books (
-    id SERIAL PRIMARY KEY,
-    author TEXT,
-    title TEXT,
-    isbn TEXT
-);
-
-CREATE TABLE videos (
-    id SERIAL PRIMARY KEY,
-    title TEXT,
-    url TEXT,
+CREATE TABLE bookmark (
+    id INTEGER PRIMARY KEY,
+    visible INTEGER,
+    read INTEGER,
     comment TEXT
 );
 
-CREATE TABLE blogposts (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE book (
+    id INTEGER PRIMARY KEY,
+    bookmark_id INTEGER,
+    author TEXT,
+    title TEXT,
+    isbn TEXT,
+    FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
+);
+
+CREATE TABLE video (
+    id INTEGER PRIMARY KEY,
+    bookmark_id INTEGER,
+    title TEXT,
+    url TEXT,
+    comment TEXT,
+    FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
+);
+
+CREATE TABLE blog (
+    id INTEGER PRIMARY KEY,
+    bookmark_id INTEGER,
     title TEXT,
     author TEXT,
-    url TEXT
+    url TEXT,
+    FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
 );
 
-CREATE TABLE podcasts (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE podcast (
+    id INTEGER PRIMARY KEY,
+    bookmark_id INTEGER,
     name TEXT,
     title TEXT,
-    description TEXT
+    description TEXT,
+    FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
 );
 
-CREATE TABLE courses (
-    id SERIAL PRIMARY KEY,
-    name TEXT
+CREATE TABLE tag (
+    id INTEGER PRIMARY KEY,
+    bookmark_id INTEGER,
+    name TEXT,
+    FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
 );
-
-CREATE TABLE tags (
-    id SERIAL PRIMARY KEY,
-    name TEXT
-);
-
-CREATE TABLE tagconnections (
-    id SERIAL PRIMARY KEY,
-    tag_id INTEGER REFERENCES tags DEFAULT NULL,
-    book_id INTEGER REFERENCES books DEFAULT NULL,
-    video_id INTEGER REFERENCES videos DEFAULT NULL,
-    blog_id INTEGER REFERENCES blogposts DEFAULT NULL,
-    podcast_id INTEGER REFERENCES podcasts DEFAULT NULL
-);
-
