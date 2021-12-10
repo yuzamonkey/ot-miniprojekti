@@ -18,8 +18,9 @@ public class BookDao {
 
         try {
             conn = DriverManager.getConnection(this.db);
-            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS book (id INTEGER PRIMARY KEY, "
-                    + "bookmark_id INTEGER, author TEXT, title TEXT, isbn TEXT, FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
+            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS book "
+                    + "(id INTEGER PRIMARY KEY, bookmark_id INTEGER, author TEXT, title TEXT, isbn TEXT, "
+                    + "FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -54,6 +55,32 @@ public class BookDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                String author = r.getString("author");
+                String title = r.getString("title");
+                String isbn = r.getString("isbn");
+                books.add(new Book(author, title, isbn));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return books;
+    }
+
+    public ArrayList<Book> findByTag(String tag) {
+        ArrayList<Book> books = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT b.author, b.title, b.isbn FROM bookmark bm "
+                    + "JOIN tag t ON bm.id = t.bookmark_id JOIN book b ON bm.id = b.bookmark_id "
+                    + "WHERE t.name LIKE '" + tag + "'");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {

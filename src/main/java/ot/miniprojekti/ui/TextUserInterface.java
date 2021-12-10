@@ -22,7 +22,7 @@ public class TextUserInterface {
             System.out.println("Valitse toiminto:");
             System.out.println("[1] Lisää vinkki");
             System.out.println("[2] Tulosta vinkit");
-            System.out.println("[3] Hae kirjoja tagin perusteella");
+            System.out.println("[3] Hae tagin perusteella");
             System.out.println("[x] Sulje sovellus");
 
             System.out.print("> ");
@@ -38,7 +38,10 @@ public class TextUserInterface {
             } else if (answer.equals("3")) {
                 System.out.print("Tagi: ");
                 String tag = reader.nextLine();
-                filterBooksByTag(tag);
+                searchBooksByTagName(tag);
+                searchVideosByTagName(tag);
+                searchBlogsByTagName(tag);
+                searchPodcastsByTagName(tag);
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }
@@ -113,13 +116,6 @@ public class TextUserInterface {
         String tag = reader.nextLine();
         this.bookmarkManager.addTag(tag);
     }
-    
-    private void filterBooksByTag(String tag) {
-        System.out.println("Kirjat:");
-        for (Book b : bookmarkManager.getBooksByTag(tag)) {
-            System.out.println(b.toString());
-        }
-    }
 
     private void printBooks() {
         System.out.println("Kirjat:");
@@ -145,6 +141,30 @@ public class TextUserInterface {
     private void printPodcasts() {
         System.out.println("Podcastit:");
         for (Podcast p : bookmarkManager.getPodcasts()) {
+            System.out.println(p.toString());
+        }
+    }
+
+    private void searchBooksByTagName(String tag) {
+        for (Book b : bookmarkManager.getBooksByTagName(tag)) {
+            System.out.println(b.toString());
+        }
+    }
+
+    private void searchVideosByTagName(String tag) {
+        for (Video v : bookmarkManager.getVideosByTagName(tag)) {
+            System.out.println(v.toString());
+        }
+    }
+
+    private void searchBlogsByTagName(String tag) {
+        for (Blog b : bookmarkManager.getBlogsByTagName(tag)) {
+            System.out.println(b.toString());
+        }
+    }
+
+    private void searchPodcastsByTagName(String tag) {
+        for (Podcast p : bookmarkManager.getPodcastsByTagName(tag)) {
             System.out.println(p.toString());
         }
     }

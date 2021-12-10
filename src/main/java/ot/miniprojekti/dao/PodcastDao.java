@@ -18,8 +18,9 @@ public class PodcastDao {
 
         try {
             conn = DriverManager.getConnection(this.db);
-            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS podcast (id INTEGER PRIMARY KEY, "
-                    + "bookmark_id INTEGER, name TEXT, title TEXT, description TEXT, FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
+            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS podcast "
+                    + "(id INTEGER PRIMARY KEY, bookmark_id INTEGER, name TEXT, title TEXT, description TEXT, "
+                    + "FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -54,6 +55,32 @@ public class PodcastDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                String name = r.getString("name");
+                String title = r.getString("title");
+                String description = r.getString("description");
+                podcasts.add(new Podcast(title, name, description));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return podcasts;
+    }
+    
+    public ArrayList<Podcast> findByTag(String tag) {
+        ArrayList<Podcast> podcasts = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT p.name, p.title, p.description FROM bookmark bm "
+                    + "JOIN tag t ON bm.id = t.bookmark_id JOIN podcast p ON bm.id = p.bookmark_id "
+                    + "WHERE t.name LIKE '" + tag + "'");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {

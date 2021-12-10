@@ -18,8 +18,9 @@ public class VideoDao {
 
         try {
             conn = DriverManager.getConnection(this.db);
-            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS video (id INTEGER PRIMARY KEY, "
-                    + "bookmark_id INTEGER, title TEXT, url TEXT, comment TEXT, FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
+            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS video "
+                    + "(id INTEGER PRIMARY KEY, bookmark_id INTEGER, title TEXT, url TEXT, comment TEXT, "
+                    + "FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -54,6 +55,33 @@ public class VideoDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("id");
+                String title = r.getString("title");
+                String url = r.getString("url");
+                String comment = r.getString("comment");
+                videos.add(new Video(id, title, url, comment));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return videos;
+    }
+    
+    public ArrayList<Video> findByTag(String tag) {
+        ArrayList<Video> videos = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT v.id, v.title, v.url, v.comment FROM bookmark bm "
+                    + "JOIN tag t ON bm.id = t.bookmark_id JOIN video v ON bm.id = v.bookmark_id "
+                    + "WHERE t.name LIKE '" + tag + "'");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {

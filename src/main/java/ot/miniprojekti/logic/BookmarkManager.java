@@ -20,12 +20,12 @@ public class BookmarkManager {
     private BlogDao blogDao;
     private PodcastDao podcastDao;
 
-    public BookmarkManager(BookmarkDao bookmarkDao, BookDao bookDao, VideoDao videoDao, BlogDao blogDao, PodcastDao podcastDao) {
-        this.bookmarkDao = bookmarkDao;
-        this.bookDao = bookDao;
-        this.videoDao = videoDao;
-        this.blogDao = blogDao;
-        this.podcastDao = podcastDao;
+    public BookmarkManager(BookmarkDao bm, BookDao bo, VideoDao v, BlogDao bl, PodcastDao p) {
+        this.bookmarkDao = bm;
+        this.bookDao = bo;
+        this.videoDao = v;
+        this.blogDao = bl;
+        this.podcastDao = p;
     }
 
     public void addBook(String author, String title, String isbn) {
@@ -55,10 +55,6 @@ public class BookmarkManager {
     public ArrayList<Book> getBooks() {
         return this.bookDao.getAll();
     }
-    
-    public ArrayList<Book> getBooksByTag(String tag) {
-        return bookmarkDao.findBooksByTag(tag);
-    }
 
     public ArrayList<Video> getVideos() {
         return this.videoDao.getAll();
@@ -70,5 +66,21 @@ public class BookmarkManager {
 
     public ArrayList<Podcast> getPodcasts() {
         return this.podcastDao.getAll();
+    }
+    
+    public ArrayList<Book> getBooksByTagName(String tag) {
+        return this.bookDao.findByTag(tag);
+    }
+    
+    public ArrayList<Video> getVideosByTagName(String tag) {
+        return this.videoDao.findByTag(tag);
+    }
+    
+    public ArrayList<Blog> getBlogsByTagName(String tag) {
+        return this.blogDao.findByTag(tag);
+    }
+    
+    public ArrayList<Podcast> getPodcastsByTagName(String tag) {
+        return this.podcastDao.findByTag(tag);
     }
 }
