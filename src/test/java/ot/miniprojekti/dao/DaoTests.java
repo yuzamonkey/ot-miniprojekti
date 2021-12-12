@@ -3,7 +3,7 @@ package ot.miniprojekti.dao;
 import org.junit.Before;
 import org.junit.Test;
 
-import ot.miniprojekti.domain.Book;
+import ot.miniprojekti.domain.*;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +18,10 @@ public class DaoTests {
     private PodcastDao podcastDao;
     private VideoDao videoDao;
 
-
+    private Book book;
+    private Blog blog;
+    private Podcast podcast;
+    private Video video;
 
     @Before
     public void setUp() {
@@ -33,26 +36,49 @@ public class DaoTests {
         bookDao.deleteRows();
         podcastDao.deleteRows();
         videoDao.deleteRows();
+
+        book = new Book("Martin Fowler", "Refactoring", "9780201485677");
+        blog = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/");
+        podcast = new Podcast("OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
+        video = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
+                "Good explanation on Java");
     }
 
     @Test
     public void addingBookAddsBookToDatabase() throws SQLException {
-        String author = "Martin Fowler";
-        String title = "Refactoring";
-        String ISBN = "9780201485677";
-        bookDao.add(author, title, ISBN);
-        assertEquals(author, bookDao.getAll().get(0).getAuthor());
-        assertEquals(title, bookDao.getAll().get(0).getTitle());
-        assertEquals(ISBN, bookDao.getAll().get(0).getISBN());
+        bookDao.add(book.getAuthor(), book.getTitle(), book.getISBN());
+        assertEquals(book.getAuthor(), bookDao.getAll().get(0).getAuthor());
+        assertEquals(book.getTitle(), bookDao.getAll().get(0).getTitle());
+        assertEquals(book.getISBN(), bookDao.getAll().get(0).getISBN());
+    }
+
+    @Test
+    public void addingBlogAddsBlogToDatabase() throws SQLException {
+        blogDao.add(blog.getTitle(), blog.getAuthor(), blog.getUrl());
+        assertEquals(blog.getTitle(), blogDao.getAll().get(0).getTitle());
+        assertEquals(blog.getAuthor(), blogDao.getAll().get(0).getAuthor());
+        assertEquals(blog.getUrl(), blogDao.getAll().get(0).getUrl());
+    }
+
+    @Test
+    public void addingPodcastAddsPodcastToDatabase() throws SQLException {
+        podcastDao.add(podcast.getName(), podcast.getTitle(), podcast.getDescription());
+        assertEquals(podcast.getName(), podcastDao.getAll().get(0).getName());
+        assertEquals(podcast.getTitle(), podcastDao.getAll().get(0).getTitle());
+        assertEquals(podcast.getDescription(), podcastDao.getAll().get(0).getDescription());
+    }
+
+    @Test
+    public void addingVideoAddsVideoToDatabase() throws SQLException {
+        videoDao.add(video.getTitle(), video.getUrl(), video.getComment());
+        assertEquals(video.getTitle(), videoDao.getAll().get(0).getTitle());
+        assertEquals(video.getUrl(), videoDao.getAll().get(0).getUrl());
+        assertEquals(video.getComment(), videoDao.getAll().get(0).getComment());
     }
 
     @Test
     public void findByTagFindsCorrectBookmarks() throws SQLException {
-        String author = "Martin Fowler";
-        String title = "Refactoring";
-        String ISBN = "9780201485677";
-        bookDao.add(author, title, ISBN);
-
+        bookDao.add(book.getAuthor(), book.getTitle(), book.getISBN());
         List<String> tags = new ArrayList<String>();
         tags.add("fowler");
         tags.add("agile");
@@ -60,46 +86,12 @@ public class DaoTests {
         ArrayList<Book> books1 = bookDao.findByTag("fowler");
         ArrayList<Book> books2 = bookDao.findByTag("agile");
         ArrayList<Book> books3 = bookDao.findByTag("programming");
-        assertEquals(author, books1.get(0).getAuthor());
-        assertEquals(title, books1.get(0).getTitle());
-        assertEquals(ISBN, books1.get(0).getISBN());
+        assertEquals(book.getAuthor(), books1.get(0).getAuthor());
+        assertEquals(book.getTitle(), books1.get(0).getTitle());
+        assertEquals(book.getISBN(), books1.get(0).getISBN());
         assertEquals(books1.get(0).getAuthor(), books2.get(0).getAuthor());
         assertEquals(books1.get(0).getTitle(), books2.get(0).getTitle());
         assertEquals(books1.get(0).getISBN(), books2.get(0).getISBN());
         assertEquals(books3.size(), 0);
     }
-
-    @Test
-    public void addingBlogAddsBlogToDatabase() throws SQLException {
-        String title = "Overreacted";
-        String author = "Dan Abramov";
-        String url = "https://overreacted.io/";
-        blogDao.add(title, author, url);
-        assertEquals(title, blogDao.getAll().get(0).getTitle());
-        assertEquals(author, blogDao.getAll().get(0).getAuthor());
-        assertEquals(url, blogDao.getAll().get(0).getUrl());
-    }
-
-    @Test
-    public void addingPodcastAddsPodcastToDatabase() throws SQLException {
-        String name = "OCDevel";
-        String title = "Machine Learning Guide";
-        String description = "Machine learning fundamentals";
-        podcastDao.add(name, title, description);
-        assertEquals(name, podcastDao.getAll().get(0).getName());
-        assertEquals(title, podcastDao.getAll().get(0).getTitle());
-        assertEquals(description, podcastDao.getAll().get(0).getDescription());
-    }
-
-    @Test
-    public void addingVideoAddsVideoToDatabase() throws SQLException {
-        String title = "Java in 100 Seconds";
-        String url = "https://www.youtube.com/watch?v=l9AzO1FMgM8";
-        String comment = "Good explanation on Java";
-        videoDao.add(title, url, comment);
-        assertEquals(title, videoDao.getAll().get(0).getTitle());
-        assertEquals(url, videoDao.getAll().get(0).getUrl());
-        assertEquals(comment, videoDao.getAll().get(0).getComment());
-    }
-
 }
