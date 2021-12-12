@@ -73,7 +73,7 @@ public class BlogDao {
 
         return blogs;
     }
-    
+
     public ArrayList<Blog> findByTag(String tag) {
         ArrayList<Blog> blogs = new ArrayList<>();
 
@@ -99,5 +99,16 @@ public class BlogDao {
         }
 
         return blogs;
+    }
+
+    public void deleteRows() {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM blog");
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

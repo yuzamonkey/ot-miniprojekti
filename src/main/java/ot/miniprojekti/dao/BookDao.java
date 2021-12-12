@@ -98,4 +98,15 @@ public class BookDao {
 
         return books;
     }
+
+    public void deleteRows() {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM book");
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }

@@ -36,7 +36,8 @@ public class PodcastDao {
             stmt.executeUpdate();
             stmt = conn.prepareStatement("SELECT last_insert_rowid() AS bookmark_id");
             ResultSet r = stmt.executeQuery();
-            stmt = conn.prepareStatement("INSERT INTO podcast (bookmark_id, name, title, description) VALUES (?, ?, ?, ?)");
+            stmt = conn.prepareStatement(
+                    "INSERT INTO podcast (bookmark_id, name, title, description) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, Integer.parseInt(r.getString("bookmark_id")));
             stmt.setString(2, name);
             stmt.setString(3, title);
@@ -72,7 +73,7 @@ public class PodcastDao {
 
         return podcasts;
     }
-    
+
     public ArrayList<Podcast> findByTag(String tag) {
         ArrayList<Podcast> podcasts = new ArrayList<>();
 
@@ -97,5 +98,16 @@ public class PodcastDao {
         }
 
         return podcasts;
+    }
+
+    public void deleteRows() {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM podcast");
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

@@ -73,7 +73,7 @@ public class VideoDao {
 
         return videos;
     }
-    
+
     public ArrayList<Video> findByTag(String tag) {
         ArrayList<Video> videos = new ArrayList<>();
 
@@ -99,5 +99,16 @@ public class VideoDao {
         }
 
         return videos;
+    }
+
+    public void deleteRows() {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM video");
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

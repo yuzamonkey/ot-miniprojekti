@@ -52,4 +52,15 @@ public class BookmarkDao {
             System.out.println("Error: " + e);
         }
     }
+
+    public void deleteRows() {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM bookmark");
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }
