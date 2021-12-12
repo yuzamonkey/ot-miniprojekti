@@ -139,8 +139,8 @@ public class DaoTests {
     public void findByTagFindsCorrectVideo() throws SQLException {
         videoDao.add(video.getTitle(), video.getUrl(), video.getComment());
         List<String> tags = new ArrayList<String>();
-        tags.add("java");
-        tags.add("fireship");
+        tags.add("ml");
+        tags.add("ai");
         bookmarkDao.addTag(tags);
         ArrayList<Video> videos1 = videoDao.findByTag("ml");
         ArrayList<Video> videos2 = videoDao.findByTag("ai");
