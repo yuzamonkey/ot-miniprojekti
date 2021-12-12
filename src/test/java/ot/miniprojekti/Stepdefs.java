@@ -31,6 +31,7 @@ public class Stepdefs {
     @Before
     public void setUp() {
         bookmarkDao = new BookmarkDao("test.db");
+        bookmarkDao.deleteRows();
     }
 
     @Given("blog is initialized")
@@ -86,6 +87,7 @@ public class Stepdefs {
     @Given("books is initialized")
     public void booksIsInitialized() {
         bookDao = new BookDao("test.db");
+        bookDao.deleteRows();
     }
 
     @When("book is added to database")
@@ -103,6 +105,7 @@ public class Stepdefs {
     @Given("blogs is initialized")
     public void blogsIsInitialized() {
         blogDao = new BlogDao("test.db");
+        blogDao.deleteRows();
     }
 
     @When("blog is added to database")
@@ -120,6 +123,7 @@ public class Stepdefs {
     @Given("podcasts is initialized")
     public void podcastsIsInitialized() {
         podcastDao = new PodcastDao("test.db");
+        podcastDao.deleteRows();
     }
 
     @When("podcast is added to database")
@@ -139,6 +143,7 @@ public class Stepdefs {
     @Given("videos is initialized")
     public void videosIsInitialized() {
         videoDao = new VideoDao("test.db");
+        videoDao.deleteRows();
     }
 
     @When("video is added to database")
