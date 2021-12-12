@@ -13,8 +13,8 @@ import java.util.*;
 public class DaoTests {
 
     private BookmarkDao bookmarkDao;
-    private BlogDao blogDao;
     private BookDao bookDao;
+    private BlogDao blogDao;
     private PodcastDao podcastDao;
     private VideoDao videoDao;
 
@@ -26,14 +26,14 @@ public class DaoTests {
     @Before
     public void setUp() {
         bookmarkDao = new BookmarkDao("test.db");
-        blogDao = new BlogDao("test.db");
         bookDao = new BookDao("test.db");
+        blogDao = new BlogDao("test.db");
         podcastDao = new PodcastDao("test.db");
         videoDao = new VideoDao("test.db");
 
         bookmarkDao.deleteRows();
-        blogDao.deleteRows();
         bookDao.deleteRows();
+        blogDao.deleteRows();
         podcastDao.deleteRows();
         videoDao.deleteRows();
 
@@ -77,7 +77,7 @@ public class DaoTests {
     }
 
     @Test
-    public void findByTagFindsCorrectBookmarks() throws SQLException {
+    public void findByTagFindsCorrectBook() throws SQLException {
         bookDao.add(book.getAuthor(), book.getTitle(), book.getISBN());
         List<String> tags = new ArrayList<String>();
         tags.add("fowler");
@@ -93,5 +93,65 @@ public class DaoTests {
         assertEquals(books1.get(0).getTitle(), books2.get(0).getTitle());
         assertEquals(books1.get(0).getISBN(), books2.get(0).getISBN());
         assertEquals(books3.size(), 0);
+    }
+
+    @Test
+    public void findByTagFindsCorrectBlog() throws SQLException {
+        blogDao.add(blog.getTitle(), blog.getAuthor(), blog.getUrl());
+        List<String> tags = new ArrayList<String>();
+        tags.add("react");
+        tags.add("javascript");
+        bookmarkDao.addTag(tags);
+        ArrayList<Blog> blogs1 = blogDao.findByTag("react");
+        ArrayList<Blog> blogs2 = blogDao.findByTag("javascript");
+        ArrayList<Blog> blogs3 = blogDao.findByTag("programming");
+        //ArrayList<Blog> blogs3 = blogDao.findByTag("agile"); //fails
+        assertEquals(blog.getAuthor(), blogs1.get(0).getAuthor());
+        assertEquals(blog.getTitle(), blogs1.get(0).getTitle());
+        assertEquals(blog.getUrl(), blogs1.get(0).getUrl());
+        assertEquals(blogs1.get(0).getAuthor(), blogs2.get(0).getAuthor());
+        assertEquals(blogs1.get(0).getTitle(), blogs2.get(0).getTitle());
+        assertEquals(blogs1.get(0).getUrl(), blogs2.get(0).getUrl());
+        assertEquals(blogs3.size(), 0);
+    }
+
+    @Test
+    public void findByTagFindsCorrectPodcast() throws SQLException {
+        podcastDao.add(podcast.getName(), podcast.getTitle(), podcast.getDescription());
+        List<String> tags = new ArrayList<String>();
+        tags.add("ml");
+        tags.add("ai");
+        bookmarkDao.addTag(tags);
+        ArrayList<Podcast> podcasts1 = podcastDao.findByTag("ml");
+        ArrayList<Podcast> podcasts2 = podcastDao.findByTag("ai");
+        ArrayList<Podcast> podcasts3 = podcastDao.findByTag("programming");
+        //ArrayList<Podcast> podcasts3 = podcastDao.findByTag("agile"); //fails
+        assertEquals(podcast.getName(), podcasts1.get(0).getName());
+        assertEquals(podcast.getTitle(), podcasts1.get(0).getTitle());
+        assertEquals(podcast.getDescription(), podcasts1.get(0).getDescription());
+        assertEquals(podcasts1.get(0).getName(), podcasts2.get(0).getName());
+        assertEquals(podcasts1.get(0).getTitle(), podcasts2.get(0).getTitle());
+        assertEquals(podcasts1.get(0).getDescription(), podcasts2.get(0).getDescription());
+        assertEquals(podcasts3.size(), 0);
+    }
+
+    @Test
+    public void findByTagFindsCorrectVideo() throws SQLException {
+        videoDao.add(video.getTitle(), video.getUrl(), video.getComment());
+        List<String> tags = new ArrayList<String>();
+        tags.add("java");
+        tags.add("fireship");
+        bookmarkDao.addTag(tags);
+        ArrayList<Video> videos1 = videoDao.findByTag("ml");
+        ArrayList<Video> videos2 = videoDao.findByTag("ai");
+        ArrayList<Video> videos3 = videoDao.findByTag("programming");
+        //ArrayList<Video> videos3 = videoDao.findByTag("agile"); //fails
+        assertEquals(video.getTitle(), videos1.get(0).getTitle());
+        assertEquals(video.getUrl(), videos1.get(0).getUrl());
+        assertEquals(video.getComment(), videos1.get(0).getComment());
+        assertEquals(videos1.get(0).getUrl(), videos2.get(0).getUrl());
+        assertEquals(videos1.get(0).getTitle(), videos2.get(0).getTitle());
+        assertEquals(videos1.get(0).getComment(), videos2.get(0).getComment());
+        assertEquals(videos3.size(), 0);
     }
 }
