@@ -2,9 +2,13 @@ package ot.miniprojekti.dao;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import ot.miniprojekti.domain.Book;
+
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.*;
 
 public class DaoTests {
 
@@ -13,6 +17,8 @@ public class DaoTests {
     private BookDao bookDao;
     private PodcastDao podcastDao;
     private VideoDao videoDao;
+
+
 
     @Before
     public void setUp() {
@@ -38,6 +44,29 @@ public class DaoTests {
         assertEquals(author, bookDao.getAll().get(0).getAuthor());
         assertEquals(title, bookDao.getAll().get(0).getTitle());
         assertEquals(ISBN, bookDao.getAll().get(0).getISBN());
+    }
+
+    @Test
+    public void findByTagFindsCorrectBookmarks() throws SQLException {
+        String author = "Martin Fowler";
+        String title = "Refactoring";
+        String ISBN = "9780201485677";
+        bookDao.add(author, title, ISBN);
+
+        List<String> tags = new ArrayList<String>();
+        tags.add("fowler");
+        tags.add("agile");
+        bookmarkDao.addTag(tags);
+        ArrayList<Book> books1 = bookDao.findByTag("fowler");
+        ArrayList<Book> books2 = bookDao.findByTag("agile");
+        ArrayList<Book> books3 = bookDao.findByTag("programming");
+        assertEquals(author, books1.get(0).getAuthor());
+        assertEquals(title, books1.get(0).getTitle());
+        assertEquals(ISBN, books1.get(0).getISBN());
+        assertEquals(books1.get(0).getAuthor(), books2.get(0).getAuthor());
+        assertEquals(books1.get(0).getTitle(), books2.get(0).getTitle());
+        assertEquals(books1.get(0).getISBN(), books2.get(0).getISBN());
+        assertEquals(books3.size(), 0);
     }
 
     @Test
