@@ -1,6 +1,7 @@
 package ot.miniprojekti.ui;
 
 import java.util.Scanner;
+
 import ot.miniprojekti.domain.Blog;
 import ot.miniprojekti.domain.Book;
 import ot.miniprojekti.domain.Podcast;
@@ -63,23 +64,38 @@ public class TextUserInterface {
     }
 
     private void addBookmark() {
-        System.out.println("Valitse tyyppi:");
-        System.out.println("[1] Lisää kirja");
-        System.out.println("[2] Lisää video");
-        System.out.println("[3] Lisää blogi");
-        System.out.println("[4] Lisää podcast");
+        boolean jatkaLooppia = true;
 
-        System.out.print("> ");
-        String answer = reader.nextLine();
+        while (jatkaLooppia) {
+            System.out.println("Valitse tyyppi:");
+            System.out.println("[1] Lisää kirja");
+            System.out.println("[2] Lisää video");
+            System.out.println("[3] Lisää blogi");
+            System.out.println("[4] Lisää podcast");
 
-        if (answer.equals("1")) {
-            addBook();
-        } else if (answer.equals("2")) {
-            addVideo();
-        } else if (answer.equals("3")) {
-            addBlog();
-        } else if (answer.equals("4")) {
-            addPodcast();
+            System.out.print("> ");
+            String answer = reader.nextLine();
+
+            switch(answer) {
+                case "1":
+                    addBook();
+                    jatkaLooppia = false;
+                    break;
+                case "2":
+                    addVideo();
+                    jatkaLooppia = false;
+                    break;
+                case "3":
+                    addBlog();
+                    jatkaLooppia = false;
+                    break;
+                case "4":
+                    addPodcast();
+                    jatkaLooppia = false;
+                    break;
+                default:
+                    System.out.println("\n== Valintaa ei tunnistettu, valitse numero väliltä 1-4 ==\n");
+            }
         }
 
         addTag();
