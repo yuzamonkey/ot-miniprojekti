@@ -44,3 +44,6 @@ Jar tiedosto tallentuu kansioon **build/libs/**. Sen voi käynnistää kansiossa
 ```
 java -jar build/libs/ot-miniprojekti-all.jar
 ```
+
+
+
