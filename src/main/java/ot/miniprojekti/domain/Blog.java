@@ -32,7 +32,7 @@ public class Blog {
 
     @Override
     public String toString() {
-        String s = title + "\n" + "tekijä: " + author + "\n" + "url: " + url + "\n";
+        String s = title + "\ntekijä: " + author + "\nurl: " + url + "\nid: " + id + "\n";
         return s;
     }
 }

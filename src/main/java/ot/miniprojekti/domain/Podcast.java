@@ -2,11 +2,13 @@ package ot.miniprojekti.domain;
 
 public class Podcast {
     
+    private int id;
     private String title;
     private String name;
     private String description;
 
-    public Podcast(String title, String name, String description) {
+    public Podcast(int id, String title, String name, String description) {
+        this.id = id;
         this.title = title;
         this.name = name;
         this.description = description;
@@ -26,7 +28,7 @@ public class Podcast {
 
     @Override
     public String toString() {
-        String s = title + "\n" + "tekijä: " + name + "\n" + "kuvaus: " + description + "\n";
+        String s = title + "\ntekijä: " + name + "\nkuvaus: " + description + "\nid: " + id;
         return s;
     }
 

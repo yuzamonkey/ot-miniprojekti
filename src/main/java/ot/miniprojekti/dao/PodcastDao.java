@@ -59,10 +59,11 @@ public class PodcastDao {
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
+                int id = r.getInt("bookmark_id");
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(title, name, description));
+                podcasts.add(new Podcast(id, title, name, description));
             }
 
             stmt.close();
@@ -79,16 +80,17 @@ public class PodcastDao {
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT p.name, p.title, p.description FROM bookmark bm "
+            PreparedStatement stmt = conn.prepareStatement("SELECT p.id, p.name, p.title, p.description FROM bookmark bm "
                     + "JOIN tag t ON bm.id = t.bookmark_id JOIN podcast p ON bm.id = p.bookmark_id "
                     + "WHERE t.name LIKE '" + tag + "'");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
+                int id = r.getInt("id");
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(title, name, description));
+                podcasts.add(new Podcast(id, title, name, description));
             }
 
             stmt.close();

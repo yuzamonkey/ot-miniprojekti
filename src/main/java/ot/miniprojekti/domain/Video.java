@@ -32,7 +32,7 @@ public class Video {
 
     @Override
     public String toString() {
-        String s = title + "\n" + "url: " + url + "\n" + "kommentti: " + comment + "\n";
+        String s = title + "\nurl: " + url + "\nkommentti: " + comment + "\nid: " + id;
         return s;
     }
 }

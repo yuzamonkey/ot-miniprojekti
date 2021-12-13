@@ -14,9 +14,9 @@ public class DomainTests {
     @Before
     public void setUp() {
         this.bl = new Blog(0, "otsikko", "kirjoittaja", "url");
-        this.p = new Podcast("otsikko", "nimi", "kuvaus");
+        this.p = new Podcast(0, "otsikko", "nimi", "kuvaus");
         this.v = new Video(0, "otsikko", "url", "kommentti");
-        this.bo = new Book("kirjoittaja", "otsikko", "0000");
+        this.bo = new Book(0, "kirjoittaja", "otsikko", "0000");
     }
 
     @Test
@@ -25,6 +25,7 @@ public class DomainTests {
         String expected = "otsikko\n"
                 + "tekijä: kirjoittaja\n"
                 + "url: url\n"
+                + "id: 0\n"
                 + "";
 
         assertEquals(result, expected);
@@ -36,6 +37,7 @@ public class DomainTests {
         String expected = "otsikko\n"
                 + "url: url\n"
                 + "kommentti: kommentti\n"
+                + "id: 0"
                 + "";
 
         assertEquals(result, expected);
@@ -47,6 +49,7 @@ public class DomainTests {
         String expected = "otsikko\n"
                 + "tekijä: kirjoittaja\n"
                 + "isbn: 0000\n"
+                + "id: 0"
                 + "";
 
         assertEquals(result, expected);
@@ -57,7 +60,8 @@ public class DomainTests {
         String result = p.toString();
         String expected = "otsikko\n"
                 + "tekijä: nimi\n"
-                + "kuvaus: kuvaus\n";
+                + "kuvaus: kuvaus\n"
+                + "id: 0";
 
         assertEquals(result, expected);
     }

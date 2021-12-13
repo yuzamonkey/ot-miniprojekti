@@ -2,11 +2,13 @@ package ot.miniprojekti.domain;
 
 public class Book {
 
+    private int id;
     private String author;
     private String title;
     private String isbn;
 
-    public Book(String author, String title, String isbn) {
+    public Book(int id, String author, String title, String isbn) {
+        this.id = id;
         this.author = author;
         this.title = title;
         this.isbn = isbn;
@@ -26,7 +28,7 @@ public class Book {
 
     @Override
     public String toString() {
-        String s = title + "\n" + "tekijä: " + author + "\n" + "isbn: " + isbn + "\n";
+        String s = title + "\ntekijä: " + author + "\nisbn: " + isbn + "\nid: " + id;
         return s;
     }
 

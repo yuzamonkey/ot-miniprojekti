@@ -23,6 +23,7 @@ public class TextUserInterface {
             System.out.println("[1] Lisää vinkki");
             System.out.println("[2] Tulosta vinkit");
             System.out.println("[3] Hae tagin perusteella");
+            System.out.println("[4] Poista vinkki");
             System.out.println("[x] Sulje sovellus");
 
             System.out.print("> ");
@@ -42,6 +43,19 @@ public class TextUserInterface {
                 searchVideosByTagName(tag);
                 searchBlogsByTagName(tag);
                 searchPodcastsByTagName(tag);
+            } else if (answer.equals("4")) {
+                printBooks();
+                printVideos();
+                printBlogs();
+                printPodcasts();
+                System.out.println("Kirjoita poistettavan vinkin id");
+                System.out.print("> ");
+                String id = reader.nextLine();
+                if (this.bookmarkManager.deleteBookmarkById(id)) {
+                    System.out.println("Vinkki jonka id oli " + id + " poistettu");
+                } else {
+                    System.out.println("Vinkkiä ei voitu poistaa");
+                }
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }

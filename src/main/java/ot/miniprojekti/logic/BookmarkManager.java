@@ -83,4 +83,14 @@ public class BookmarkManager {
     public ArrayList<Podcast> getPodcastsByTagName(String tag) {
         return this.podcastDao.findByTag(tag);
     }
+
+    public boolean deleteBookmarkById(String stringId) {
+        try {
+            int id = Integer.valueOf(stringId);
+            // Here code to delete bookmark
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
 }

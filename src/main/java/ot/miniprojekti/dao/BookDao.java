@@ -58,10 +58,11 @@ public class BookDao {
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
+                int id = r.getInt("bookmark_id");
                 String author = r.getString("author");
                 String title = r.getString("title");
                 String isbn = r.getString("isbn");
-                books.add(new Book(author, title, isbn));
+                books.add(new Book(id, author, title, isbn));
             }
 
             stmt.close();
@@ -78,16 +79,17 @@ public class BookDao {
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT b.author, b.title, b.isbn FROM bookmark bm "
+            PreparedStatement stmt = conn.prepareStatement("SELECT b.id, b.author, b.title, b.isbn FROM bookmark bm "
                     + "JOIN tag t ON bm.id = t.bookmark_id JOIN book b ON bm.id = b.bookmark_id "
                     + "WHERE t.name LIKE '" + tag + "'");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
+                int id = r.getInt("id");
                 String author = r.getString("author");
                 String title = r.getString("title");
                 String isbn = r.getString("isbn");
-                books.add(new Book(author, title, isbn));
+                books.add(new Book(id, author, title, isbn));
             }
 
             stmt.close();

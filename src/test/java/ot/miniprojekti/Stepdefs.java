@@ -49,7 +49,7 @@ public class Stepdefs {
 
     @Given("book is initialized")
     public void bookIsInitialized() {
-        book = new Book("Martin Fowler", "Refactoring", "9780201485677");
+        book = new Book(1, "Martin Fowler", "Refactoring", "9780201485677");
     }
 
     @Then("book fields should be correct")
@@ -61,7 +61,7 @@ public class Stepdefs {
 
     @Given("podcast is initialized")
     public void podcastIsInitialized() {
-        podcast = new Podcast("Machine Learning Guide", "OCDevel", "Machine learning fundamentals");
+        podcast = new Podcast(1, "Machine Learning Guide", "OCDevel", "Machine learning fundamentals");
     }
 
     @Then("podcast fields should be correct")

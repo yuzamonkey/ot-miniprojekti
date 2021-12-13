@@ -37,9 +37,9 @@ public class DaoTests {
         podcastDao.deleteRows();
         videoDao.deleteRows();
 
-        book = new Book("Martin Fowler", "Refactoring", "9780201485677");
+        book = new Book(0, "Martin Fowler", "Refactoring", "9780201485677");
         blog = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/");
-        podcast = new Podcast("OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
+        podcast = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
         video = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
                 "Good explanation on Java");
     }
