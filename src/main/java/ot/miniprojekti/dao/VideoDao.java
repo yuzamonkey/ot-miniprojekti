@@ -107,6 +107,7 @@ public class VideoDao {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM video");
             stmt.executeUpdate();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

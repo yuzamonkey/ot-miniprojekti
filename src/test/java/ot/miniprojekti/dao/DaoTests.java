@@ -105,7 +105,7 @@ public class DaoTests {
         ArrayList<Blog> blogs1 = blogDao.findByTag("react");
         ArrayList<Blog> blogs2 = blogDao.findByTag("javascript");
         ArrayList<Blog> blogs3 = blogDao.findByTag("programming");
-        //ArrayList<Blog> blogs3 = blogDao.findByTag("agile"); //fails
+        ArrayList<Blog> blogs4 = blogDao.findByTag("agile");
         assertEquals(blog.getAuthor(), blogs1.get(0).getAuthor());
         assertEquals(blog.getTitle(), blogs1.get(0).getTitle());
         assertEquals(blog.getUrl(), blogs1.get(0).getUrl());
@@ -113,6 +113,7 @@ public class DaoTests {
         assertEquals(blogs1.get(0).getTitle(), blogs2.get(0).getTitle());
         assertEquals(blogs1.get(0).getUrl(), blogs2.get(0).getUrl());
         assertEquals(blogs3.size(), 0);
+        assertEquals(blogs4.size(), 0);
     }
 
     @Test
@@ -125,7 +126,7 @@ public class DaoTests {
         ArrayList<Podcast> podcasts1 = podcastDao.findByTag("ml");
         ArrayList<Podcast> podcasts2 = podcastDao.findByTag("ai");
         ArrayList<Podcast> podcasts3 = podcastDao.findByTag("programming");
-        //ArrayList<Podcast> podcasts3 = podcastDao.findByTag("agile"); //fails
+        ArrayList<Podcast> podcasts4 = podcastDao.findByTag("agile");
         assertEquals(podcast.getName(), podcasts1.get(0).getName());
         assertEquals(podcast.getTitle(), podcasts1.get(0).getTitle());
         assertEquals(podcast.getDescription(), podcasts1.get(0).getDescription());
@@ -133,6 +134,7 @@ public class DaoTests {
         assertEquals(podcasts1.get(0).getTitle(), podcasts2.get(0).getTitle());
         assertEquals(podcasts1.get(0).getDescription(), podcasts2.get(0).getDescription());
         assertEquals(podcasts3.size(), 0);
+        assertEquals(podcasts4.size(), 0);
     }
 
     @Test
@@ -145,7 +147,7 @@ public class DaoTests {
         ArrayList<Video> videos1 = videoDao.findByTag("ml");
         ArrayList<Video> videos2 = videoDao.findByTag("ai");
         ArrayList<Video> videos3 = videoDao.findByTag("programming");
-        //ArrayList<Video> videos3 = videoDao.findByTag("agile"); //fails
+        ArrayList<Video> videos4 = videoDao.findByTag("agile");
         assertEquals(video.getTitle(), videos1.get(0).getTitle());
         assertEquals(video.getUrl(), videos1.get(0).getUrl());
         assertEquals(video.getComment(), videos1.get(0).getComment());
@@ -153,5 +155,6 @@ public class DaoTests {
         assertEquals(videos1.get(0).getTitle(), videos2.get(0).getTitle());
         assertEquals(videos1.get(0).getComment(), videos2.get(0).getComment());
         assertEquals(videos3.size(), 0);
+        assertEquals(videos4.size(), 0);
     }
 }

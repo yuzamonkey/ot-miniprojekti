@@ -56,9 +56,10 @@ public class BookmarkDao {
     public void deleteRows() {
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM bookmark");
-            stmt.executeUpdate();
-            stmt.close();
+            Statement s = conn.createStatement();
+            s.execute("DELETE FROM bookmark");
+            s.execute("DELETE FROM tag");
+            s.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

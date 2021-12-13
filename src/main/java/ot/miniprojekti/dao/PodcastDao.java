@@ -108,6 +108,7 @@ public class PodcastDao {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM podcast");
             stmt.executeUpdate();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

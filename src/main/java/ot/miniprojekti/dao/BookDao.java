@@ -107,6 +107,7 @@ public class BookDao {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM book");
             stmt.executeUpdate();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
