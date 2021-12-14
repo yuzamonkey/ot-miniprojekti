@@ -11,10 +11,6 @@ import ot.miniprojekti.dao.BookDao;
 import ot.miniprojekti.dao.BookmarkDao;
 import ot.miniprojekti.dao.PodcastDao;
 import ot.miniprojekti.dao.VideoDao;
-import ot.miniprojekti.domain.Blog;
-import ot.miniprojekti.domain.Book;
-import ot.miniprojekti.domain.Podcast;
-import ot.miniprojekti.domain.Video;
 
 public class Stepdefs {
 
