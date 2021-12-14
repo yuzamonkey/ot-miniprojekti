@@ -19,6 +19,15 @@ public class LogicTests {
 
     private BookmarkManager bookmarkManager;
 
+    Book book1;
+    Book book2;
+    Blog blog1;
+    Blog blog2;
+    Podcast podcast1;
+    Podcast podcast2;
+    Video video1;
+    Video video2;
+
     @Before
     public void setUp() {
         bookmarkDao = new BookmarkDao("test.db");
@@ -34,6 +43,19 @@ public class LogicTests {
         videoDao.deleteRows();
 
         bookmarkManager = new BookmarkManager(bookmarkDao, bookDao, videoDao, blogDao, podcastDao);
+
+        book1 = new Book(0, "Martin Fowler", "Refactoring", "9780201485677");
+        book2 = new Book(0, "JK Rowling", "Harry Potter and the Philosopher's Stone", "9780747532743");
+        blog1 = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/");
+        blog2 = new Blog(4, "Bloggier", "John Doe", "https://johndoesblog.com/");
+        podcast1 = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
+        podcast2 = new Podcast(1, "MKBHD", "Waveform", "Tech stuff");
+        video1 = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
+                "Good explanation on Java");
+        video2 = new Video(1, "Crypto expert explain the Blockchain",
+                "https://www.youtube.com/watch?v=pSTNhBlfV_s&t=3s",
+                "Good explanation on crypto");
+
     }
 
     @Test
@@ -46,9 +68,6 @@ public class LogicTests {
 
     @Test
     public void addBookAddsBook() {
-        Book book1 = new Book(0, "Martin Fowler", "Refactoring", "9780201485677");
-        Book book2 = new Book(0, "JK Rowling", "Harry Potter and the Philosopher's Stone", "9780747532743");
-
         bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
         bookmarkManager.addBook(book2.getAuthor(), book2.getTitle(), book2.getISBN());
 
@@ -66,9 +85,6 @@ public class LogicTests {
 
     @Test
     public void addBlogAddsBlog() {
-        Blog blog1 = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/");
-        Blog blog2 = new Blog(4, "Bloggier", "John Doe", "https://johndoesblog.com/");
-
         bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
         bookmarkManager.addBlog(blog2.getTitle(), blog2.getAuthor(), blog2.getUrl());
 
@@ -86,9 +102,6 @@ public class LogicTests {
 
     @Test
     public void addPodcastAddsPodcast() {
-        Podcast podcast1 = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
-        Podcast podcast2 = new Podcast(1, "MKBHD", "Waveform", "Tech stuff");
-
         bookmarkManager.addPodcast(podcast1.getName(), podcast1.getTitle(), podcast1.getDescription());
         bookmarkManager.addPodcast(podcast2.getName(), podcast2.getTitle(), podcast2.getDescription());
 
@@ -106,12 +119,6 @@ public class LogicTests {
 
     @Test
     public void addVideoAddsVideo() {
-        Video video1 = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
-                "Good explanation on Java");
-        Video video2 = new Video(1, "Crypto expert explain the Blockchain",
-                "https://www.youtube.com/watch?v=pSTNhBlfV_s&t=3s",
-                "Good explanation on crypto");
-
         bookmarkManager.addVideo(video1.getTitle(), video1.getUrl(), video1.getComment());
         bookmarkManager.addVideo(video2.getTitle(), video2.getUrl(), video2.getComment());
 
