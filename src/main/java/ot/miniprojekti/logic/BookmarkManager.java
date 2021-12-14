@@ -67,19 +67,19 @@ public class BookmarkManager {
     public ArrayList<Podcast> getPodcasts() {
         return this.podcastDao.getAll();
     }
-    
+
     public ArrayList<Book> getBooksByTagName(String tag) {
         return this.bookDao.findByTag(tag);
     }
-    
+
     public ArrayList<Video> getVideosByTagName(String tag) {
         return this.videoDao.findByTag(tag);
     }
-    
+
     public ArrayList<Blog> getBlogsByTagName(String tag) {
         return this.blogDao.findByTag(tag);
     }
-    
+
     public ArrayList<Podcast> getPodcastsByTagName(String tag) {
         return this.podcastDao.findByTag(tag);
     }
@@ -89,7 +89,7 @@ public class BookmarkManager {
             int id = Integer.valueOf(stringId);
             // Here code to delete bookmark
             return true;
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
