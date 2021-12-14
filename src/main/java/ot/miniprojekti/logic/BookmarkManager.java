@@ -87,8 +87,7 @@ public class BookmarkManager {
     public boolean deleteBookmarkById(String stringId) {
         try {
             int id = Integer.valueOf(stringId);
-            // Here code to delete bookmark
-            return true;
+            return this.bookDao.deleteByBookmarkId(id);
         } catch (NumberFormatException e) {
             return false;
         }
