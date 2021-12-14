@@ -134,4 +134,88 @@ public class LogicTests {
         assertEquals(videos.get(1).getComment(), video2.getComment());
     }
 
+    @Test
+    public void addingTagsReturnsCorrectBookmarks() {
+        bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
+        bookmarkManager.addTag("fowler, agile, book");
+        bookmarkManager.addBook(book2.getAuthor(), book2.getTitle(), book2.getISBN());
+        bookmarkManager.addTag("potter, rowling, book");
+
+        bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
+        bookmarkManager.addTag("react, javascript, blog");
+        bookmarkManager.addBlog(blog2.getTitle(), blog2.getAuthor(), blog2.getUrl());
+        bookmarkManager.addTag("john, doe, blog");
+
+        bookmarkManager.addPodcast(podcast1.getName(), podcast1.getTitle(), podcast1.getDescription());
+        bookmarkManager.addTag("ml, ai, podcast");
+        bookmarkManager.addPodcast(podcast2.getName(), podcast2.getTitle(), podcast2.getDescription());
+        bookmarkManager.addTag("tech, podcast");
+
+        bookmarkManager.addVideo(video1.getTitle(), video1.getUrl(), video1.getComment());
+        bookmarkManager.addTag("java, programming, video");
+        bookmarkManager.addVideo(video2.getTitle(), video2.getUrl(), video2.getComment());
+        bookmarkManager.addTag("crypto, decentralization, video");
+
+        ArrayList<Book> books1 = bookmarkManager.getBooksByTagName("fowler");
+        ArrayList<Book> books2 = bookmarkManager.getBooksByTagName("potter");
+        ArrayList<Book> books3 = bookmarkManager.getBooksByTagName("book");
+        ArrayList<Book> books4 = bookmarkManager.getBooksByTagName("java");
+
+        assertEquals(books1.size(), 1);
+        assertEquals(books2.size(), 1);
+        assertEquals(books3.size(), 2);
+        assertEquals(books4.size(), 0);
+
+        assertEquals(books1.get(0).getTitle(), book1.getTitle());
+        assertEquals(books2.get(0).getTitle(), book2.getTitle());
+        assertEquals(books3.get(0).getTitle(), book1.getTitle());
+        assertEquals(books3.get(1).getTitle(), book2.getTitle());
+
+        ArrayList<Blog> blogs1 = bookmarkManager.getBlogsByTagName("react");
+        ArrayList<Blog> blogs2 = bookmarkManager.getBlogsByTagName("doe");
+        ArrayList<Blog> blogs3 = bookmarkManager.getBlogsByTagName("blog");
+        ArrayList<Blog> blogs4 = bookmarkManager.getBlogsByTagName("agile");
+
+        assertEquals(blogs1.size(), 1);
+        assertEquals(blogs2.size(), 1);
+        assertEquals(blogs3.size(), 2);
+        assertEquals(blogs4.size(), 0);
+
+        assertEquals(blogs1.get(0).getTitle(), blog1.getTitle());
+        assertEquals(blogs2.get(0).getTitle(), blog2.getTitle());
+        assertEquals(blogs3.get(0).getTitle(), blog1.getTitle());
+        assertEquals(blogs3.get(1).getTitle(), blog2.getTitle());
+
+        ArrayList<Podcast> podcasts1 = bookmarkManager.getPodcastsByTagName("ml");
+        ArrayList<Podcast> podcasts2 = bookmarkManager.getPodcastsByTagName("tech");
+        ArrayList<Podcast> podcasts3 = bookmarkManager.getPodcastsByTagName("podcast");
+        ArrayList<Podcast> podcasts4 = bookmarkManager.getPodcastsByTagName("agile");
+
+        assertEquals(podcasts1.size(), 1);
+        assertEquals(podcasts2.size(), 1);
+        assertEquals(podcasts3.size(), 2);
+        assertEquals(podcasts4.size(), 0);
+
+        assertEquals(podcasts1.get(0).getTitle(), podcast1.getTitle());
+        assertEquals(podcasts2.get(0).getTitle(), podcast2.getTitle());
+        assertEquals(podcasts3.get(0).getTitle(), podcast1.getTitle());
+        assertEquals(podcasts3.get(1).getTitle(), podcast2.getTitle());
+
+        ArrayList<Video> videos1 = bookmarkManager.getVideosByTagName("java");
+        ArrayList<Video> videos2 = bookmarkManager.getVideosByTagName("crypto");
+        ArrayList<Video> videos3 = bookmarkManager.getVideosByTagName("video");
+        ArrayList<Video> videos4 = bookmarkManager.getVideosByTagName("agile");
+
+        assertEquals(videos1.size(), 1);
+        assertEquals(videos2.size(), 1);
+        assertEquals(videos3.size(), 2);
+        assertEquals(videos4.size(), 0);
+
+        assertEquals(videos1.get(0).getTitle(), video1.getTitle());
+        assertEquals(videos2.get(0).getTitle(), video2.getTitle());
+        assertEquals(videos3.get(0).getTitle(), video1.getTitle());
+        assertEquals(videos3.get(1).getTitle(), video2.getTitle());
+
+    }
+
 }
