@@ -18,10 +18,6 @@ import ot.miniprojekti.domain.Video;
 
 public class Stepdefs {
 
-    private Blog blog;
-    private Book book;
-    private Podcast podcast;
-    private Video video;
     private BookmarkDao bookmarkDao;
     private BlogDao blogDao;
     private BookDao bookDao;
@@ -32,56 +28,6 @@ public class Stepdefs {
     public void setUp() {
         bookmarkDao = new BookmarkDao("test.db");
         bookmarkDao.deleteRows();
-    }
-
-    @Given("blog is initialized")
-    public void blogIsInitialized() {
-        blog = new Blog(123, "Overreacted", "Dan Abramov", "https://overreacted.io/");
-    }
-
-    @Then("blog fields should be correct")
-    public void blogFieldsShouldBeCorrect() {
-        assertEquals(123, blog.getId());
-        assertEquals("Overreacted", blog.getTitle());
-        assertEquals("Dan Abramov", blog.getAuthor());
-        assertEquals("https://overreacted.io/", blog.getUrl());
-    }
-
-    @Given("book is initialized")
-    public void bookIsInitialized() {
-        book = new Book(1, "Martin Fowler", "Refactoring", "9780201485677");
-    }
-
-    @Then("book fields should be correct")
-    public void bookFieldsShouldBeCorrect() {
-        assertEquals("Martin Fowler", book.getAuthor());
-        assertEquals("Refactoring", book.getTitle());
-        assertEquals("9780201485677", book.getISBN());
-    }
-
-    @Given("podcast is initialized")
-    public void podcastIsInitialized() {
-        podcast = new Podcast(1, "Machine Learning Guide", "OCDevel", "Machine learning fundamentals");
-    }
-
-    @Then("podcast fields should be correct")
-    public void podcastFieldsShouldBeCorrect() {
-        assertEquals("Machine Learning Guide", podcast.getTitle());
-        assertEquals("OCDevel", podcast.getName());
-        assertEquals("Machine learning fundamentals", podcast.getDescription());
-    }
-
-    @Given("video is initialized")
-    public void videoIsInitialized() {
-        video = new Video(123, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8", "Good vid");
-    }
-
-    @Then("video fields should be correct")
-    public void videoFieldsShouldBeCorrect() {
-        assertEquals(123, video.getId());
-        assertEquals("Java in 100 Seconds", video.getTitle());
-        assertEquals("https://www.youtube.com/watch?v=l9AzO1FMgM8", video.getUrl());
-        assertEquals("Good vid", video.getComment());
     }
 
     @Given("books is initialized")
