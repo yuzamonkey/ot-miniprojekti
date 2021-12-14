@@ -58,7 +58,7 @@ public class BlogDao {
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
-                int id = r.getInt("id");
+                int id = r.getInt("bookmark_id");
                 String title = r.getString("title");
                 String author = r.getString("author");
                 String url = r.getString("url");
@@ -110,6 +110,26 @@ public class BlogDao {
             conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public boolean deleteByBookmarkId(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM blog WHERE bookmark_id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            boolean deleted = r.next();
+            
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM blog WHERE bookmark_id='" + id + "'");
+                stmt.executeUpdate();
+            }
+
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }

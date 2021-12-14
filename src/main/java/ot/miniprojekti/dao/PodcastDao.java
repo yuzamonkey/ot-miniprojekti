@@ -113,4 +113,24 @@ public class PodcastDao {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    public boolean deleteByBookmarkId(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM podcast WHERE bookmark_id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            boolean deleted = r.next();
+            
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM podcast WHERE bookmark_id='" + id + "'");
+                stmt.executeUpdate();
+            }
+            
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

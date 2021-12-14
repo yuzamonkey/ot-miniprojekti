@@ -129,7 +129,6 @@ public class BookDao {
             conn.close();
             return deleted;
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
             return false;
         }
     }
