@@ -65,23 +65,43 @@ public class BookmarkDao {
         }
     }
 
-    // public boolean deleteBookmarkById(int id) {
-    //     try {
-    //         conn = DriverManager.getConnection(db);
-    //         PreparedStatement stmt = conn.prepareStatement("SELECT id FROM bookmark WHERE id='" + id + "'");
-    //         ResultSet r = stmt.executeQuery();
-    //         boolean deleted = r.next();
+    public boolean deleteBookmarkById(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM bookmark WHERE id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            boolean deleted = r.next();
             
-    //         if (deleted) {
-    //             stmt = conn.prepareStatement("DELETE FROM bookmark WHERE bookmark_id='" + id + "'");
-    //             stmt.executeUpdate();
-    //         }
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM bookmark WHERE id='" + id + "'");
+                stmt.executeUpdate();
+            }
 
-    //         stmt.close();
-    //         conn.close();
-    //         return deleted;
-    //     } catch (SQLException e) {
-    //         return false;
-    //     }
-    // }
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean deleteTagByBookmarkId(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM tag WHERE bookmark_id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            boolean deleted = r.next();
+            
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM tag WHERE bookmark_id='" + id + "'");
+                stmt.executeUpdate();
+            }
+
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }
