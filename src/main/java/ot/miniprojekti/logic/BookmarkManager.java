@@ -31,17 +31,17 @@ public class BookmarkManager {
     public void addBook(String author, String title, String isbn) {
         this.bookDao.add(author, title, isbn);
     }
-
-    public void addVideo(String title, String url, String comment) {
-        this.videoDao.add(title, url, comment);
-    }
-
+    
     public void addBlog(String title, String author, String url) {
         this.blogDao.add(title, author, url);
     }
-
+    
     public void addPodcast(String name, String title, String description) {
         this.podcastDao.add(name, title, description);
+    }
+
+    public void addVideo(String title, String url, String comment) {
+        this.videoDao.add(title, url, comment);
     }
 
     public void addTag(String tag) {

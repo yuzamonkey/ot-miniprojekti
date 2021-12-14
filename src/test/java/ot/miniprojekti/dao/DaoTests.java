@@ -2,10 +2,9 @@ package ot.miniprojekti.dao;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import ot.miniprojekti.domain.*;
-
-import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -42,6 +41,14 @@ public class DaoTests {
         podcast = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
         video = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
                 "Good explanation on Java");
+    }
+
+    @Test
+    public void dbIsEmptyWhenNothingIsAdded() {
+        assertEquals(bookDao.getAll().size(), 0);
+        assertEquals(blogDao.getAll().size(), 0);
+        assertEquals(podcastDao.getAll().size(), 0);
+        assertEquals(videoDao.getAll().size(), 0);
     }
 
     @Test
