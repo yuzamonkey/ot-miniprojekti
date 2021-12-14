@@ -51,11 +51,7 @@ public class TextUserInterface {
                 System.out.println("Kirjoita poistettavan vinkin id");
                 System.out.print("> ");
                 String id = reader.nextLine();
-                if (this.bookmarkManager.deleteBookmarkById(id)) {
-                    System.out.println("Vinkki jonka id oli " + id + " poistettu");
-                } else {
-                    System.out.println("Vinkkiä ei voitu poistaa");
-                }
+                System.out.println(this.bookmarkManager.deleteBookmarkById(id));
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }

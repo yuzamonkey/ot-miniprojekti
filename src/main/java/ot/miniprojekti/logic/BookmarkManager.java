@@ -84,19 +84,21 @@ public class BookmarkManager {
         return this.podcastDao.findByTag(tag);
     }
 
-    public boolean deleteBookmarkById(String stringId) {
+    public String deleteBookmarkById(String stringId) {
         try {
             int id = Integer.valueOf(stringId);
 
             this.bookmarkDao.deleteBookmarkById(id);
             this.bookmarkDao.deleteTagByBookmarkId(id);
-
-            return this.bookDao.deleteByBookmarkId(id)
-                || this.blogDao.deleteByBookmarkId(id)
-                || this.podcastDao.deleteByBookmarkId(id)
-                || this.videoDao.deleteByBookmarkId(id);
+            
+            boolean deleted = this.podcastDao.deleteByBookmarkId(id)
+                            || this.blogDao.deleteByBookmarkId(id)
+                            || this.bookDao.deleteByBookmarkId(id)
+                            || this.videoDao.deleteByBookmarkId(id);
+            if (!deleted) return "Vinkkiä ei löytynyt tällä id:llä";
+            return "Vinkki poistettu";
         } catch (NumberFormatException e) {
-            return false;
+            return "Annetu id ei ollut numero";
         }
     }
 }
