@@ -19,14 +19,14 @@ public class LogicTests {
 
     private BookmarkManager bookmarkManager;
 
-    Book book1;
-    Book book2;
-    Blog blog1;
-    Blog blog2;
-    Podcast podcast1;
-    Podcast podcast2;
-    Video video1;
-    Video video2;
+    private Book book1;
+    private Book book2;
+    private Blog blog1;
+    private Blog blog2;
+    private Podcast podcast1;
+    private Podcast podcast2;
+    private Video video1;
+    private Video video2;
 
     @Before
     public void setUp() {
