@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookmarkDao {
@@ -71,7 +72,7 @@ public class BookmarkDao {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM bookmark WHERE id='" + id + "'");
             ResultSet r = stmt.executeQuery();
             boolean deleted = r.next();
-            
+
             if (deleted) {
                 stmt = conn.prepareStatement("DELETE FROM bookmark WHERE id='" + id + "'");
                 stmt.executeUpdate();
@@ -91,7 +92,7 @@ public class BookmarkDao {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM tag WHERE bookmark_id='" + id + "'");
             ResultSet r = stmt.executeQuery();
             boolean deleted = r.next();
-            
+
             if (deleted) {
                 stmt = conn.prepareStatement("DELETE FROM tag WHERE bookmark_id='" + id + "'");
                 stmt.executeUpdate();
@@ -100,6 +101,44 @@ public class BookmarkDao {
             stmt.close();
             conn.close();
             return deleted;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean isBookmark(int id) {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM bookmark");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int bmId = r.getInt("id");
+                ids.add(bmId);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return ids.contains(id);
+    }
+
+    public boolean markAsRead(int id, String comment) {
+        try {
+            conn = DriverManager.getConnection(db);
+            Statement s = conn.createStatement();
+            s.execute("UPDATE bookmark SET read = 1 WHERE id ='" + id + "'");
+            if (!"".equals(comment)) {
+                s.execute("UPDATE bookmark SET comment = '" + comment + "' WHERE id = '" + id + "'");
+            }
+            s.close();
+            conn.close();
+            return true;
         } catch (SQLException e) {
             return false;
         }

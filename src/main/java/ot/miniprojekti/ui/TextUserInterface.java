@@ -23,7 +23,8 @@ public class TextUserInterface {
             System.out.println("[1] Lisää vinkki");
             System.out.println("[2] Tulosta vinkit");
             System.out.println("[3] Hae tagin perusteella");
-            System.out.println("[4] Poista vinkki");
+            System.out.println("[4] Merkitse vinkki luetuksi");
+            System.out.println("[5] Poista vinkki");
             System.out.println("[x] Sulje sovellus");
 
             System.out.print("> ");
@@ -44,6 +45,18 @@ public class TextUserInterface {
                 searchBlogsByTagName(tag);
                 searchPodcastsByTagName(tag);
             } else if (answer.equals("4")) {
+                printBooks();
+                printVideos();
+                printBlogs();
+                printPodcasts();
+                System.out.println("Kirjoita luetun vinkin id");
+                System.out.print("> ");
+                String id = reader.nextLine();
+                System.out.println("Kirjoita muistiinpano tai jatka painamalla enter");
+                System.out.print("> ");
+                String comment = reader.nextLine();
+                System.out.println(this.bookmarkManager.markBookmarkAsRead(id, comment));
+            } else if (answer.equals("5")) {
                 printBooks();
                 printVideos();
                 printBlogs();
