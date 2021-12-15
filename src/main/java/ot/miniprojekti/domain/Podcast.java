@@ -13,6 +13,10 @@ public class Podcast {
         this.name = name;
         this.description = description;
     }
+    
+    public int getId() {
+        return this.id;
+    }
 
     public String getTitle() {
         return this.title;

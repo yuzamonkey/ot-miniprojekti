@@ -183,14 +183,14 @@ public class TextUserInterface {
             System.out.println(p.toString());
         }
     }
-    
+
     private void markAsRead() {
         System.out.println("Kirjoita luetun vinkin id");
-                System.out.print("> ");
-                String id = reader.nextLine();
-                System.out.println("Kirjoita muistiinpano tai jatka painamalla enter");
-                System.out.print("> ");
-                String comment = reader.nextLine();
-                System.out.println(this.bookmarkManager.markBookmarkAsRead(id, comment));
+        System.out.print("> ");
+        String id = reader.nextLine();
+        System.out.println("Kirjoita muistiinpano tai jatka painamalla enter");
+        System.out.print("> ");
+        String comment = reader.nextLine();
+        System.out.println(this.bookmarkManager.markBookmarkAsRead(id, comment));
     }
 }
