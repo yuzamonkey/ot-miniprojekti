@@ -6,6 +6,8 @@ public class Video {
     private String title;
     private String comment;
     private String url;
+    private boolean isRead;
+    private String note;
 
     public Video(int id, String title, String url, String comment) {
         this.id = id;
@@ -30,9 +32,20 @@ public class Video {
         return this.url;
     }
 
+    public void setRead(boolean read) {
+        this.isRead = read;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         String s = title + "\nurl: " + url + "\nkommentti: " + comment + "\nid: " + id;
+        if (isRead) {
+            s += "\nmuistiinpano: " + note;
+        }
         return s;
     }
 }
