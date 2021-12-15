@@ -164,4 +164,40 @@ public class DaoTests {
         assertEquals(videos3.size(), 0);
         assertEquals(videos4.size(), 0);
     }
+
+    @Test
+    public void deletingBlogRemovesItFromDatabase() throws SQLException {
+        blogDao.add(blog.getTitle(), blog.getAuthor(), blog.getUrl());
+        assertEquals(blogDao.getAll().size(), 1);
+        blog = blogDao.getAll().get(0);
+        blogDao.deleteByBookmarkId(blog.getId());
+        assertEquals(blogDao.getAll().size(), 0);
+    }
+
+    @Test
+    public void deletingBookRemovesItFromDatabase() throws SQLException {
+        bookDao.add(book.getTitle(), book.getAuthor(), book.getISBN());
+        assertEquals(bookDao.getAll().size(), 1);
+        book = bookDao.getAll().get(0);
+        bookDao.deleteByBookmarkId(book.getId());
+        assertEquals(bookDao.getAll().size(), 0);
+    }
+
+    @Test
+    public void deletingPodcastRemovesItFromDatabase() throws SQLException {
+        podcastDao.add(podcast.getTitle(), podcast.getName(), podcast.getDescription());
+        assertEquals(podcastDao.getAll().size(), 1);
+        podcast = podcastDao.getAll().get(0);
+        podcastDao.deleteByBookmarkId(book.getId());
+        assertEquals(bookDao.getAll().size(), 0);
+    }
+
+    @Test
+    public void deletingVideoRemovesItFromDatabase() throws SQLException {
+        videoDao.add(video.getTitle(), video.getUrl(), video.getComment());
+        assertEquals(videoDao.getAll().size(), 1);
+        video = videoDao.getAll().get(0);
+        videoDao.deleteByBookmarkId(book.getId());
+        assertEquals(bookDao.getAll().size(), 0);
+    }
 }

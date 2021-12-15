@@ -7,7 +7,13 @@ import static org.junit.Assert.*;
 import ot.miniprojekti.domain.*;
 import ot.miniprojekti.dao.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 public class LogicTests {
 
@@ -218,4 +224,68 @@ public class LogicTests {
 
     }
 
+    @Test
+    public void deletingWithNonIntegerIdGivesRightReturn() {
+        assertEquals(bookmarkManager.deleteBookmarkById("not integer"), "Annetu id ei ollut numero");
+    }
+    
+    @Test
+    public void deletingWithNonexistingIdGivesRightReturn() {
+        assertEquals(bookmarkManager.deleteBookmarkById("10000"), "Vinkkiä ei löytynyt tällä id:llä");
+    }
+
+    @Test
+    public void deletingWithGoodIdGivesRightReturn() {
+        bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
+        Book book = bookmarkManager.getBooks().get(0);
+        assertEquals(bookmarkManager.deleteBookmarkById(String.valueOf(book.getId())), "Vinkki poistettu");
+    }
+
+    @Test
+    public void deletingWithIdDeletesRightItem() {
+        bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
+        bookmarkManager.addBlog(blog2.getTitle(), blog2.getAuthor(), blog2.getUrl());
+
+        ArrayList<Blog> blogsInDb = bookmarkManager.getBlogs();
+
+        bookmarkManager.deleteBookmarkById(String.valueOf(blogsInDb.get(1).getId()));
+        Blog remainingBlog = bookmarkManager.getBlogs().get(0);
+        assertEquals(remainingBlog.getTitle(), blogsInDb.get(0).getTitle());
+    }
+
+    @Test
+    public void deletingBookmarkDeletesItsBookmarkRow() throws SQLException {
+        blogDao.add(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
+        bookmarkManager.addTag("react, javascript, blog");
+        Blog blog = blogDao.getAll().get(0);
+
+        
+        int blogId = blog.getId();
+        bookmarkManager.deleteBookmarkById(String.valueOf(blogId));
+
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM bookmark WHERE id='" + blogId + "'");
+        ResultSet r = stmt.executeQuery();
+        assertFalse(r.next());
+        stmt.close();
+        conn.close();
+    }
+
+    @Test
+    public void deletingBookmarkDeletesItsTag() throws SQLException {
+        blogDao.add(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
+        bookmarkManager.addTag("react, javascript, blog");
+        Blog blog = blogDao.getAll().get(0);
+
+        
+        int blogId = blog.getId();
+        bookmarkManager.deleteBookmarkById(String.valueOf(blogId));
+
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM tag WHERE bookmark_id='" + blogId + "'");
+        ResultSet r = stmt.executeQuery();
+        assertFalse(r.next());
+        stmt.close();
+        conn.close();
+    }
 }
