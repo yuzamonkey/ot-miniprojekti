@@ -33,10 +33,7 @@ public class TextUserInterface {
             if (answer.equals("1")) {
                 addBookmark();
             } else if (answer.equals("2")) {
-                printBooks();
-                printVideos();
-                printBlogs();
-                printPodcasts();
+                printAll();
             } else if (answer.equals("3")) {
                 System.out.print("Tagi: ");
                 String tag = reader.nextLine();
@@ -45,22 +42,10 @@ public class TextUserInterface {
                 searchBlogsByTagName(tag);
                 searchPodcastsByTagName(tag);
             } else if (answer.equals("4")) {
-                printBooks();
-                printVideos();
-                printBlogs();
-                printPodcasts();
-                System.out.println("Kirjoita luetun vinkin id");
-                System.out.print("> ");
-                String id = reader.nextLine();
-                System.out.println("Kirjoita muistiinpano tai jatka painamalla enter");
-                System.out.print("> ");
-                String comment = reader.nextLine();
-                System.out.println(this.bookmarkManager.markBookmarkAsRead(id, comment));
+                printAll();
+                markAsRead();
             } else if (answer.equals("5")) {
-                printBooks();
-                printVideos();
-                printBlogs();
-                printPodcasts();
+                printAll();
                 System.out.println("Kirjoita poistettavan vinkin id");
                 System.out.print("> ");
                 String id = reader.nextLine();
@@ -69,6 +54,13 @@ public class TextUserInterface {
                 break;
             }
         }
+    }
+
+    private void printAll() {
+        printBooks();
+        printVideos();
+        printBlogs();
+        printPodcasts();
     }
 
     private void addBookmark() {
@@ -190,5 +182,15 @@ public class TextUserInterface {
         for (Podcast p : bookmarkManager.getPodcastsByTagName(tag)) {
             System.out.println(p.toString());
         }
+    }
+    
+    private void markAsRead() {
+        System.out.println("Kirjoita luetun vinkin id");
+                System.out.print("> ");
+                String id = reader.nextLine();
+                System.out.println("Kirjoita muistiinpano tai jatka painamalla enter");
+                System.out.print("> ");
+                String comment = reader.nextLine();
+                System.out.println(this.bookmarkManager.markBookmarkAsRead(id, comment));
     }
 }
