@@ -80,16 +80,20 @@ public class VideoDao {
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video v, bookmark b WHERE v.bookmark_id = b.id "
-                    + "AND b.read = 1");
+            PreparedStatement stmt = conn.prepareStatement("SELECT bm.id, v.title, v.url, v.comment, bm.comment as note "
+                    + "FROM bookmark bm JOIN video v ON bm.id = v.bookmark_id WHERE bm.read = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
-                int id = r.getInt("bookmark_id");
+                int id = r.getInt("id");
                 String title = r.getString("title");
                 String url = r.getString("url");
                 String comment = r.getString("comment");
-                videos.add(new Video(id, title, url, comment, true));
+                String note = r.getString("note");
+                
+                Video v = new Video(id, title, url, comment, true);
+                v.setNote(note);
+                videos.add(v);
             }
 
             stmt.close();

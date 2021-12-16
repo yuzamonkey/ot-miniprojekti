@@ -80,16 +80,20 @@ public class BlogDao {
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blog bl, bookmark bm WHERE bl.bookmark_id = bm.id "
-                    + "AND bm.read = 1");
+            PreparedStatement stmt = conn.prepareStatement("SELECT bm.id, b.title, b.author, b.url, bm.comment "
+                    + "FROM bookmark bm JOIN blog b ON bm.id = b.bookmark_id WHERE bm.read = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
-                int id = r.getInt("bookmark_id");
+                int id = r.getInt("id");
                 String title = r.getString("title");
                 String author = r.getString("author");
                 String url = r.getString("url");
-                blogs.add(new Blog(id, title, author, url, true));
+                String note = r.getString("comment");
+
+                Blog b = new Blog(id, title, author, url, true);
+                b.setNote(note);
+                blogs.add(b);
             }
 
             stmt.close();
@@ -100,7 +104,7 @@ public class BlogDao {
 
         return blogs;
     }
-    
+
     public ArrayList<Blog> findByTag(String tag) {
         ArrayList<Blog> blogs = new ArrayList<>();
 
@@ -146,7 +150,7 @@ public class BlogDao {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM blog WHERE bookmark_id='" + id + "'");
             ResultSet r = stmt.executeQuery();
             boolean deleted = r.next();
-            
+
             if (deleted) {
                 stmt = conn.prepareStatement("DELETE FROM blog WHERE bookmark_id='" + id + "'");
                 stmt.executeUpdate();

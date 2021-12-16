@@ -81,16 +81,20 @@ public class PodcastDao {
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast p, bookmark b WHERE p.bookmark_id = b.id "
-                    + "AND b.read = 1");
+            PreparedStatement stmt = conn.prepareStatement("SELECT bm.id, p.name, p.title, p.description, bm.comment "
+                    + "FROM bookmark bm JOIN podcast p ON bm.id = p.bookmark_id WHERE bm.read = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
-                int id = r.getInt("bookmark_id");
+                int id = r.getInt("id");
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(id, title, name, description, true));
+                String note = r.getString("comment");
+                
+                Podcast p = new Podcast(id, title, name, description, true);
+                p.setNote(note);
+                podcasts.add(p);
             }
 
             stmt.close();
