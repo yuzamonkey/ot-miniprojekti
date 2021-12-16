@@ -9,11 +9,12 @@ public class Book {
     private boolean isRead;
     private String note;
 
-    public Book(int id, String author, String title, String isbn) {
+    public Book(int id, String author, String title, String isbn, boolean read) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.isbn = isbn;
+        this.isRead = read;
     }
 
     public int getId() {

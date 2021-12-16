@@ -49,12 +49,13 @@ public class VideoDao {
         }
     }
 
-    public ArrayList<Video> getAll() {
+    public ArrayList<Video> getUnread() {
         ArrayList<Video> videos = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video v, bookmark b WHERE v.bookmark_id = b.id "
+                    + "AND b.read = 0 AND b.visible = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -62,7 +63,33 @@ public class VideoDao {
                 String title = r.getString("title");
                 String url = r.getString("url");
                 String comment = r.getString("comment");
-                videos.add(new Video(id, title, url, comment));
+                videos.add(new Video(id, title, url, comment, false));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return videos;
+    }
+    
+    public ArrayList<Video> getRead() {
+        ArrayList<Video> videos = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video v, bookmark b WHERE v.bookmark_id = b.id "
+                    + "AND b.read = 1 AND b.visible = 1");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("bookmark_id");
+                String title = r.getString("title");
+                String url = r.getString("url");
+                String comment = r.getString("comment");
+                videos.add(new Video(id, title, url, comment, true));
             }
 
             stmt.close();
@@ -89,7 +116,7 @@ public class VideoDao {
                 String title = r.getString("title");
                 String url = r.getString("url");
                 String comment = r.getString("comment");
-                videos.add(new Video(id, title, url, comment));
+                videos.add(new Video(id, title, url, comment, false));
             }
 
             stmt.close();

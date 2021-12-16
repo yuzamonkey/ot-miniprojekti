@@ -50,12 +50,13 @@ public class PodcastDao {
         }
     }
 
-    public ArrayList<Podcast> getAll() {
+    public ArrayList<Podcast> getUnread() {
         ArrayList<Podcast> podcasts = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast p, bookmark b WHERE p.bookmark_id = b.id "
+                    + "AND b.read = 0 AND b.visible = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -63,7 +64,33 @@ public class PodcastDao {
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(id, title, name, description));
+                podcasts.add(new Podcast(id, title, name, description, false));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return podcasts;
+    }
+    
+    public ArrayList<Podcast> getRead() {
+        ArrayList<Podcast> podcasts = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast p, bookmark b WHERE p.bookmark_id = b.id "
+                    + "AND b.read = 1 AND b.visible = 1");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("bookmark_id");
+                String name = r.getString("name");
+                String title = r.getString("title");
+                String description = r.getString("description");
+                podcasts.add(new Podcast(id, title, name, description, true));
             }
 
             stmt.close();
@@ -90,7 +117,7 @@ public class PodcastDao {
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(id, title, name, description));
+                podcasts.add(new Podcast(id, title, name, description, false));
             }
 
             stmt.close();

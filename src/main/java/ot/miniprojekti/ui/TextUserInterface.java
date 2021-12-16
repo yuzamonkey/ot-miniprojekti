@@ -57,10 +57,16 @@ public class TextUserInterface {
     }
 
     private void printAll() {
-        printBooks();
-        printVideos();
-        printBlogs();
-        printPodcasts();
+        System.out.println("Lukemattomat vinkit:");
+        printUnreadBooks();
+        printUnreadVideos();
+        printUnreadBlogs();
+        printUnreadPodcasts();
+        System.out.println("Luetut vinkit:");
+        printReadBooks();
+        printReadVideos();
+        printReadBlogs();
+        printReadPodcasts();
     }
 
     private void addBookmark() {
@@ -132,30 +138,58 @@ public class TextUserInterface {
         this.bookmarkManager.addTag(tag);
     }
 
-    private void printBooks() {
+    private void printUnreadBooks() {
         System.out.println("Kirjat:");
-        for (Book b : bookmarkManager.getBooks()) {
+        for (Book b : bookmarkManager.getUnreadBooks()) {
             System.out.println(b.toString());
         }
     }
 
-    private void printVideos() {
+    private void printUnreadVideos() {
         System.out.println("Videot:");
-        for (Video v : bookmarkManager.getVideos()) {
+        for (Video v : bookmarkManager.getUnreadVideos()) {
             System.out.println(v.toString());
         }
     }
 
-    private void printBlogs() {
+    private void printUnreadBlogs() {
         System.out.println("Blogit:");
-        for (Blog b : bookmarkManager.getBlogs()) {
+        for (Blog b : bookmarkManager.getUnreadBlogs()) {
             System.out.println(b.toString());
         }
     }
 
-    private void printPodcasts() {
+    private void printUnreadPodcasts() {
         System.out.println("Podcastit:");
-        for (Podcast p : bookmarkManager.getPodcasts()) {
+        for (Podcast p : bookmarkManager.getUnreadPodcasts()) {
+            System.out.println(p.toString());
+        }
+    }
+    
+    private void printReadBooks() {
+        System.out.println("Kirjat:");
+        for (Book b : bookmarkManager.getReadBooks()) {
+            System.out.println(b.toString());
+        }
+    }
+
+    private void printReadVideos() {
+        System.out.println("Videot:");
+        for (Video v : bookmarkManager.getReadVideos()) {
+            System.out.println(v.toString());
+        }
+    }
+
+    private void printReadBlogs() {
+        System.out.println("Blogit:");
+        for (Blog b : bookmarkManager.getReadBlogs()) {
+            System.out.println(b.toString());
+        }
+    }
+
+    private void printReadPodcasts() {
+        System.out.println("Podcastit:");
+        for (Podcast p : bookmarkManager.getReadPodcasts()) {
             System.out.println(p.toString());
         }
     }

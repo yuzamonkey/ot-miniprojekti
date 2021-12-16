@@ -49,12 +49,13 @@ public class BookDao {
         }
     }
 
-    public ArrayList<Book> getAll() {
+    public ArrayList<Book> getUnread() {
         ArrayList<Book> books = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book b, bookmark bm WHERE b.bookmark_id = bm.id "
+                    + "AND bm.read = 0 AND bm.visible = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -62,7 +63,7 @@ public class BookDao {
                 String author = r.getString("author");
                 String title = r.getString("title");
                 String isbn = r.getString("isbn");
-                books.add(new Book(id, author, title, isbn));
+                books.add(new Book(id, author, title, isbn, false));
             }
 
             stmt.close();
@@ -74,6 +75,32 @@ public class BookDao {
         return books;
     }
 
+    public ArrayList<Book> getRead() {
+        ArrayList<Book> books = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book b, bookmark bm WHERE b.bookmark_id = bm.id "
+                    + "AND bm.read = 1 AND bm.visible = 1");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("bookmark_id");
+                String author = r.getString("author");
+                String title = r.getString("title");
+                String isbn = r.getString("isbn");
+                books.add(new Book(id, author, title, isbn, true));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return books;
+    }
+    
     public ArrayList<Book> findByTag(String tag) {
         ArrayList<Book> books = new ArrayList<>();
 
@@ -89,7 +116,7 @@ public class BookDao {
                 String author = r.getString("author");
                 String title = r.getString("title");
                 String isbn = r.getString("isbn");
-                books.add(new Book(id, author, title, isbn));
+                books.add(new Book(id, author, title, isbn, false));
             }
 
             stmt.close();

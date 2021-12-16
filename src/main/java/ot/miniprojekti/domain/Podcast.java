@@ -9,11 +9,12 @@ public class Podcast {
     private boolean isRead;
     private String note;
 
-    public Podcast(int id, String title, String name, String description) {
+    public Podcast(int id, String title, String name, String description, boolean read) {
         this.id = id;
         this.title = title;
         this.name = name;
         this.description = description;
+        this.isRead = read;
     }
 
     public int getId() {

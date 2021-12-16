@@ -51,21 +51,37 @@ public class BookmarkManager {
             this.bookmarkDao.addTag(Arrays.asList(tag.split("[ ]*,[ ]*")));
         }
     }
-
-    public ArrayList<Book> getBooks() {
-        return this.bookDao.getAll();
+    
+    public ArrayList<Book> getReadBooks() {
+        return this.bookDao.getRead();
     }
 
-    public ArrayList<Video> getVideos() {
-        return this.videoDao.getAll();
+    public ArrayList<Book> getUnreadBooks() {
+        return this.bookDao.getUnread();
+    }
+    
+    public ArrayList<Video> getReadVideos() {
+        return this.videoDao.getRead();
     }
 
-    public ArrayList<Blog> getBlogs() {
-        return this.blogDao.getAll();
+    public ArrayList<Video> getUnreadVideos() {
+        return this.videoDao.getUnread();
+    }
+    
+    public ArrayList<Blog> getReadBlogs() {
+        return this.blogDao.getRead();
     }
 
-    public ArrayList<Podcast> getPodcasts() {
-        return this.podcastDao.getAll();
+    public ArrayList<Blog> getUnreadBlogs() {
+        return this.blogDao.getUnread();
+    }
+    
+    public ArrayList<Podcast> getReadPodcasts() {
+        return this.podcastDao.getRead();
+    }
+
+    public ArrayList<Podcast> getUnreadPodcasts() {
+        return this.podcastDao.getUnread();
     }
 
     public ArrayList<Book> getBooksByTagName(String tag) {

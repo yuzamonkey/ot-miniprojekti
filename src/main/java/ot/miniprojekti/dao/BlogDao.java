@@ -49,12 +49,13 @@ public class BlogDao {
         }
     }
 
-    public ArrayList<Blog> getAll() {
+    public ArrayList<Blog> getUnread() {
         ArrayList<Blog> blogs = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blog");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blog bl, bookmark bm WHERE bl.bookmark_id = bm.id "
+                    + "AND bm.read = 0 AND bm.visible = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -62,7 +63,7 @@ public class BlogDao {
                 String title = r.getString("title");
                 String author = r.getString("author");
                 String url = r.getString("url");
-                blogs.add(new Blog(id, title, author, url));
+                blogs.add(new Blog(id, title, author, url, false));
             }
 
             stmt.close();
@@ -74,6 +75,32 @@ public class BlogDao {
         return blogs;
     }
 
+    public ArrayList<Blog> getRead() {
+        ArrayList<Blog> blogs = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blog bl, bookmark bm WHERE bl.bookmark_id = bm.id "
+                    + "AND bm.read = 1 AND bm.visible = 1");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("bookmark_id");
+                String title = r.getString("title");
+                String author = r.getString("author");
+                String url = r.getString("url");
+                blogs.add(new Blog(id, title, author, url, true));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return blogs;
+    }
+    
     public ArrayList<Blog> findByTag(String tag) {
         ArrayList<Blog> blogs = new ArrayList<>();
 
@@ -89,7 +116,7 @@ public class BlogDao {
                 String title = r.getString("title");
                 String author = r.getString("author");
                 String url = r.getString("url");
-                blogs.add(new Blog(id, title, author, url));
+                blogs.add(new Blog(id, title, author, url, false));
             }
 
             stmt.close();

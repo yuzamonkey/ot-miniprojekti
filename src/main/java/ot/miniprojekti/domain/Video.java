@@ -9,11 +9,12 @@ public class Video {
     private boolean isRead;
     private String note;
 
-    public Video(int id, String title, String url, String comment) {
+    public Video(int id, String title, String url, String comment, boolean read) {
         this.id = id;
         this.title = title;
         this.url = url;
         this.comment = comment;
+        this.isRead = read;
     }
 
     public int getId() {

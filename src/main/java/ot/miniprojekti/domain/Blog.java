@@ -9,11 +9,12 @@ public class Blog {
     private boolean isRead;
     private String note;
 
-    public Blog(int id, String title, String author, String url) {
+    public Blog(int id, String title, String author, String url, boolean read) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.url = url;
+        this.isRead = read;
     }
 
     public int getId() {

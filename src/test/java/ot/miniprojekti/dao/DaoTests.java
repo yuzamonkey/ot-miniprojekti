@@ -36,51 +36,51 @@ public class DaoTests {
         podcastDao.deleteRows();
         videoDao.deleteRows();
 
-        book = new Book(0, "Martin Fowler", "Refactoring", "9780201485677");
-        blog = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/");
-        podcast = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
+        book = new Book(0, "Martin Fowler", "Refactoring", "9780201485677", false);
+        blog = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/", false);
+        podcast = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals", false);
         video = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
-                "Good explanation on Java");
+                "Good explanation on Java", false);
     }
 
     @Test
     public void dbIsEmptyWhenNothingIsAdded() {
-        assertEquals(bookDao.getAll().size(), 0);
-        assertEquals(blogDao.getAll().size(), 0);
-        assertEquals(podcastDao.getAll().size(), 0);
-        assertEquals(videoDao.getAll().size(), 0);
+        assertEquals(bookDao.getUnread().size(), 0);
+        assertEquals(blogDao.getUnread().size(), 0);
+        assertEquals(podcastDao.getUnread().size(), 0);
+        assertEquals(videoDao.getUnread().size(), 0);
     }
 
     @Test
     public void addingBookAddsBookToDatabase() throws SQLException {
         bookDao.add(book.getAuthor(), book.getTitle(), book.getISBN());
-        assertEquals(book.getAuthor(), bookDao.getAll().get(0).getAuthor());
-        assertEquals(book.getTitle(), bookDao.getAll().get(0).getTitle());
-        assertEquals(book.getISBN(), bookDao.getAll().get(0).getISBN());
+        assertEquals(book.getAuthor(), bookDao.getUnread().get(0).getAuthor());
+        assertEquals(book.getTitle(), bookDao.getUnread().get(0).getTitle());
+        assertEquals(book.getISBN(), bookDao.getUnread().get(0).getISBN());
     }
 
     @Test
     public void addingBlogAddsBlogToDatabase() throws SQLException {
         blogDao.add(blog.getTitle(), blog.getAuthor(), blog.getUrl());
-        assertEquals(blog.getTitle(), blogDao.getAll().get(0).getTitle());
-        assertEquals(blog.getAuthor(), blogDao.getAll().get(0).getAuthor());
-        assertEquals(blog.getUrl(), blogDao.getAll().get(0).getUrl());
+        assertEquals(blog.getTitle(), blogDao.getUnread().get(0).getTitle());
+        assertEquals(blog.getAuthor(), blogDao.getUnread().get(0).getAuthor());
+        assertEquals(blog.getUrl(), blogDao.getUnread().get(0).getUrl());
     }
 
     @Test
     public void addingPodcastAddsPodcastToDatabase() throws SQLException {
         podcastDao.add(podcast.getName(), podcast.getTitle(), podcast.getDescription());
-        assertEquals(podcast.getName(), podcastDao.getAll().get(0).getName());
-        assertEquals(podcast.getTitle(), podcastDao.getAll().get(0).getTitle());
-        assertEquals(podcast.getDescription(), podcastDao.getAll().get(0).getDescription());
+        assertEquals(podcast.getName(), podcastDao.getUnread().get(0).getName());
+        assertEquals(podcast.getTitle(), podcastDao.getUnread().get(0).getTitle());
+        assertEquals(podcast.getDescription(), podcastDao.getUnread().get(0).getDescription());
     }
 
     @Test
     public void addingVideoAddsVideoToDatabase() throws SQLException {
         videoDao.add(video.getTitle(), video.getUrl(), video.getComment());
-        assertEquals(video.getTitle(), videoDao.getAll().get(0).getTitle());
-        assertEquals(video.getUrl(), videoDao.getAll().get(0).getUrl());
-        assertEquals(video.getComment(), videoDao.getAll().get(0).getComment());
+        assertEquals(video.getTitle(), videoDao.getUnread().get(0).getTitle());
+        assertEquals(video.getUrl(), videoDao.getUnread().get(0).getUrl());
+        assertEquals(video.getComment(), videoDao.getUnread().get(0).getComment());
     }
 
     @Test
@@ -168,36 +168,36 @@ public class DaoTests {
     @Test
     public void deletingBlogRemovesItFromDatabase() throws SQLException {
         blogDao.add(blog.getTitle(), blog.getAuthor(), blog.getUrl());
-        assertEquals(blogDao.getAll().size(), 1);
-        blog = blogDao.getAll().get(0);
+        assertEquals(blogDao.getUnread().size(), 1);
+        blog = blogDao.getUnread().get(0);
         blogDao.deleteByBookmarkId(blog.getId());
-        assertEquals(blogDao.getAll().size(), 0);
+        assertEquals(blogDao.getUnread().size(), 0);
     }
 
     @Test
     public void deletingBookRemovesItFromDatabase() throws SQLException {
         bookDao.add(book.getTitle(), book.getAuthor(), book.getISBN());
-        assertEquals(bookDao.getAll().size(), 1);
-        book = bookDao.getAll().get(0);
+        assertEquals(bookDao.getUnread().size(), 1);
+        book = bookDao.getUnread().get(0);
         bookDao.deleteByBookmarkId(book.getId());
-        assertEquals(bookDao.getAll().size(), 0);
+        assertEquals(bookDao.getUnread().size(), 0);
     }
 
     @Test
     public void deletingPodcastRemovesItFromDatabase() throws SQLException {
         podcastDao.add(podcast.getTitle(), podcast.getName(), podcast.getDescription());
-        assertEquals(podcastDao.getAll().size(), 1);
-        podcast = podcastDao.getAll().get(0);
+        assertEquals(podcastDao.getUnread().size(), 1);
+        podcast = podcastDao.getUnread().get(0);
         podcastDao.deleteByBookmarkId(book.getId());
-        assertEquals(bookDao.getAll().size(), 0);
+        assertEquals(bookDao.getUnread().size(), 0);
     }
 
     @Test
     public void deletingVideoRemovesItFromDatabase() throws SQLException {
         videoDao.add(video.getTitle(), video.getUrl(), video.getComment());
-        assertEquals(videoDao.getAll().size(), 1);
-        video = videoDao.getAll().get(0);
+        assertEquals(videoDao.getUnread().size(), 1);
+        video = videoDao.getUnread().get(0);
         videoDao.deleteByBookmarkId(book.getId());
-        assertEquals(bookDao.getAll().size(), 0);
+        assertEquals(bookDao.getUnread().size(), 0);
     }
 }
