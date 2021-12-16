@@ -20,7 +20,7 @@ public class TextUserInterface {
     public void start() {
         while (true) {
             printCommands();
-          
+
             System.out.print("> ");
             String answer = reader.nextLine();
 
@@ -50,7 +50,6 @@ public class TextUserInterface {
         }
     }
 
-
     private void printCommands() {
         System.out.println("Valitse toiminto:");
         System.out.println("[1] Lisää vinkki");
@@ -59,6 +58,7 @@ public class TextUserInterface {
         System.out.println("[4] Merkitse vinkki luetuksi");
         System.out.println("[5] Poista vinkki");
         System.out.println("[x] Sulje sovellus");
+    }
 
     private void printAll() {
         System.out.println("Lukemattomat vinkit:");
@@ -179,7 +179,7 @@ public class TextUserInterface {
             System.out.println(p.toString());
         }
     }
-    
+
     private void printReadBooks() {
         System.out.println("Kirjat:");
         for (Book b : bookmarkManager.getReadBooks()) {
