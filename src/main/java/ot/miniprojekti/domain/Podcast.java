@@ -42,11 +42,10 @@ public class Podcast {
 
     @Override
     public String toString() {
-        String s = title + "\ntekijä: " + name + "\nkuvaus: " + description + "\nid: " + id;
         if (isRead) {
-            s = title + "\ntekijä: " + name + "\nkuvaus: " + description + "\nmuistiinpano: " + note + "\nid: " + id;
+            return "[" + id + "] " + title + "\nTekijä: " + name + "\nKuvaus: " + description + "\nMuistiinpano: " + note;
+        } else {
+            return "[" + id + "] " + title + "\nTekijä: " + name + "\nKuvaus: " + description;
         }
-        return s;
     }
-
 }

@@ -42,10 +42,10 @@ public class Blog {
 
     @Override
     public String toString() {
-        String s = title + "\ntekijä: " + author + "\nurl: " + url + "\nid: " + id;
         if (isRead) {
-            s = title + "\ntekijä: " + author + "\nurl: " + url + "\nmuistiinpano: " + note + "\nid: " + id;
+            return "[" + id + "] " + title + "\nTekijä: " + author + "\nURL: " + url + "\nMuistiinpano: " + note;
+        } else {
+            return "[" + id + "] " + title + "\nTekijä: " + author + "\nURL: " + url;
         }
-        return s;
     }
 }

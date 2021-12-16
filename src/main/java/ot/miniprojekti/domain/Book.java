@@ -42,11 +42,10 @@ public class Book {
 
     @Override
     public String toString() {
-        String s = title + "\ntekijä: " + author + "\nisbn: " + isbn + "\nid: " + id;
         if (isRead) {
-            s = title + "\ntekijä: " + author + "\nisbn: " + isbn + "\nmuistiinpano: " + note + "\nid: " + id;
+            return "[" + id + "] " + title + "\nTekijä: " + author + "\nISBN: " + isbn + "\nMuistiinpano: " + note;
+        } else {
+            return "[" + id + "] " + title + "\nTekijä: " + author + "\nISBN: " + isbn;
         }
-        return s;
     }
-
 }
