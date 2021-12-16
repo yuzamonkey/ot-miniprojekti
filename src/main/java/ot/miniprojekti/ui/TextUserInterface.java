@@ -19,14 +19,8 @@ public class TextUserInterface {
 
     public void start() {
         while (true) {
-            System.out.println("Valitse toiminto:");
-            System.out.println("[1] Lisää vinkki");
-            System.out.println("[2] Tulosta vinkit");
-            System.out.println("[3] Hae tagin perusteella");
-            System.out.println("[4] Merkitse vinkki luetuksi");
-            System.out.println("[5] Poista vinkki");
-            System.out.println("[x] Sulje sovellus");
-
+            printCommands();
+          
             System.out.print("> ");
             String answer = reader.nextLine();
 
@@ -55,6 +49,16 @@ public class TextUserInterface {
             }
         }
     }
+
+
+    private void printCommands() {
+        System.out.println("Valitse toiminto:");
+        System.out.println("[1] Lisää vinkki");
+        System.out.println("[2] Tulosta vinkit");
+        System.out.println("[3] Hae tagin perusteella");
+        System.out.println("[4] Merkitse vinkki luetuksi");
+        System.out.println("[5] Poista vinkki");
+        System.out.println("[x] Sulje sovellus");
 
     private void printAll() {
         System.out.println("Lukemattomat vinkit:");
