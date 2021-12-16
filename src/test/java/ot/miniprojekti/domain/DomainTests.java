@@ -21,7 +21,7 @@ public class DomainTests {
         this.bo = new Book(2, "kirjoittaja", "otsikko", "0000", false);
         this.p = new Podcast(3, "otsikko", "nimi", "kuvaus", false);
         this.v = new Video(4, "otsikko", "url", "kommentti", false);
-        
+
         this.blr = new Blog(1, "otsikko", "kirjoittaja", "url", true);
         this.blr.setNote("muistiinpano");
         this.bor = new Book(2, "kirjoittaja", "otsikko", "0000", true);
@@ -35,32 +35,26 @@ public class DomainTests {
     @Test
     public void blogToStringTest() {
         String result = bl.toString();
-        String expected = "otsikko\n"
-                + "tekijä: kirjoittaja\n"
-                + "url: url\n"
-                + "id: 1"
-                + "";
+        String expected = "[1] otsikko\n"
+                + "Tekijä: kirjoittaja\n"
+                + "URL: url";
 
         assertEquals(result, expected);
-        
+
         result = blr.toString();
-        expected = "otsikko\n"
-                + "tekijä: kirjoittaja\n"
-                + "url: url\n"
-                + "muistiinpano: muistiinpano\n"
-                + "id: 1"
-                + "";
+        expected = "[1] otsikko\n"
+                + "Tekijä: kirjoittaja\n"
+                + "URL: url\n"
+                + "Muistiinpano: muistiinpano";
 
         assertEquals(result, expected);
-        
+
         blr.setNote(null);
         result = blr.toString();
-        expected = "otsikko\n"
-                + "tekijä: kirjoittaja\n"
-                + "url: url\n"
-                + "muistiinpano: -\n"
-                + "id: 1"
-                + "";
+        expected = "[1] otsikko\n"
+                + "Tekijä: kirjoittaja\n"
+                + "URL: url\n"
+                + "Muistiinpano: -";
 
         assertEquals(result, expected);
     }
@@ -68,97 +62,81 @@ public class DomainTests {
     @Test
     public void bookToStringTest() {
         String result = bo.toString();
-        String expected = "otsikko\n"
-                + "tekijä: kirjoittaja\n"
-                + "isbn: 0000\n"
-                + "id: 2"
-                + "";
+        String expected = "[2] otsikko\n"
+                + "Tekijä: kirjoittaja\n"
+                + "ISBN: 0000";
 
         assertEquals(result, expected);
-        
+
         result = bor.toString();
-        expected = "otsikko\n"
-                + "tekijä: kirjoittaja\n"
-                + "isbn: 0000\n"
-                + "muistiinpano: muistiinpano\n"
-                + "id: 2"
-                + "";
+        expected = "[2] otsikko\n"
+                + "Tekijä: kirjoittaja\n"
+                + "ISBN: 0000\n"
+                + "Muistiinpano: muistiinpano";
 
         assertEquals(result, expected);
-        
+
         bor.setNote(null);
         result = bor.toString();
-        expected = "otsikko\n"
-                + "tekijä: kirjoittaja\n"
-                + "isbn: 0000\n"
-                + "muistiinpano: -\n"
-                + "id: 2"
-                + "";
+        expected = "[2] otsikko\n"
+                + "Tekijä: kirjoittaja\n"
+                + "ISBN: 0000\n"
+                + "Muistiinpano: -";
 
         assertEquals(result, expected);
-        
+
     }
 
     @Test
     public void podcastToStringTest() {
         String result = p.toString();
-        String expected = "otsikko\n"
-                + "tekijä: nimi\n"
-                + "kuvaus: kuvaus\n"
-                + "id: 3";
+        String expected = "[3] otsikko\n"
+                + "Tekijä: nimi\n"
+                + "Kuvaus: kuvaus";
 
         assertEquals(result, expected);
-        
+
         result = pr.toString();
-        expected = "otsikko\n"
-                + "tekijä: nimi\n"
-                + "kuvaus: kuvaus\n"
-                + "muistiinpano: muistiinpano\n"
-                + "id: 3";
+        expected = "[3] otsikko\n"
+                + "Tekijä: nimi\n"
+                + "Kuvaus: kuvaus\n"
+                + "Muistiinpano: muistiinpano";
 
         assertEquals(result, expected);
-        
+
         pr.setNote(null);
         result = pr.toString();
-        expected = "otsikko\n"
-                + "tekijä: nimi\n"
-                + "kuvaus: kuvaus\n"
-                + "muistiinpano: -\n"
-                + "id: 3";
+        expected = "[3] otsikko\n"
+                + "Tekijä: nimi\n"
+                + "Kuvaus: kuvaus\n"
+                + "Muistiinpano: -";
 
         assertEquals(result, expected);
     }
-    
-    
+
     @Test
     public void videoToStringTest() {
         String result = v.toString();
-        String expected = "otsikko\n"
-                + "url: url\n"
-                + "kommentti: kommentti\n"
-                + "id: 4"
-                + "";
+        String expected = "[4] otsikko\n"
+                + "URL: url\n"
+                + "Kommentti: kommentti";
 
         assertEquals(result, expected);
-        
+
         result = vr.toString();
-        expected = "otsikko\n"
-                + "url: url\n"
-                + "kommentti: kommentti\n"
-                + "muistiinpano: muistiinpano\n"
-                + "id: 4"
-                + "";
+        expected = "[4] otsikko\n"
+                + "URL: url\n"
+                + "Kommentti: kommentti\n"
+                + "Muistiinpano: muistiinpano";
 
         assertEquals(result, expected);
-        
+
         vr.setNote(null);
         result = vr.toString();
-        expected = "otsikko\n"
-                + "url: url\n"
-                + "kommentti: kommentti\n"
-                + "muistiinpano: -\n"
-                + "id: 4"
-                + "";
+        expected = "[4] otsikko\n"
+                + "URL: url\n"
+                + "Kommentti: kommentti\n"
+                + "Muistiinpano: -";
 
         assertEquals(result, expected);
     }

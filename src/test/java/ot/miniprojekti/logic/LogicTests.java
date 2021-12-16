@@ -225,6 +225,14 @@ public class LogicTests {
     }
 
     @Test
+    public void emptyTagStringDoesNotAddTags() {
+        bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
+        bookmarkManager.addTag("");
+        ArrayList<Book> books = bookmarkManager.getBooksByTagName("");
+        assertEquals(books.size(), 0);
+    }
+    
+    @Test
     public void deletingWithNonIntegerIdGivesRightReturn() {
         assertEquals(bookmarkManager.deleteBookmarkById("not integer"), "Annetu id ei ollut numero");
     }

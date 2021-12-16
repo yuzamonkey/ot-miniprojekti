@@ -42,10 +42,10 @@ public class Video {
 
     @Override
     public String toString() {
-        String s = title + "\nurl: " + url + "\nkommentti: " + comment + "\nid: " + id;
         if (isRead) {
-            s = title + "\nurl: " + url + "\nkommentti: " + comment + "\nmuistiinpano: " + note + "\nid: " + id;
+            return "[" + id + "] " + title + "\nURL: " + url + "\nKommentti: " + comment + "\nMuistiinpano: " + note;
+        } else {
+            return "[" + id + "] " + title + "\nURL: " + url + "\nKommentti: " + comment;
         }
-        return s;
     }
 }

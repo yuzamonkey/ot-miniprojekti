@@ -1,7 +1,6 @@
 CREATE TABLE bookmark (
     id INTEGER PRIMARY KEY,
-    visible INTEGER,
-    read INTEGER,
+    read INTEGER DEFAULT 0,
     comment TEXT
 );
 
