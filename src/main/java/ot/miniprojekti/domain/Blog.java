@@ -6,12 +6,15 @@ public class Blog {
     private String title;
     private String author;
     private String url;
+    private boolean isRead;
+    private String note;
 
-    public Blog(int id, String title, String author, String url) {
+    public Blog(int id, String title, String author, String url, boolean read) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.url = url;
+        this.isRead = read;
     }
 
     public int getId() {
@@ -30,9 +33,19 @@ public class Blog {
         return this.url;
     }
 
+    public void setNote(String note) {
+        this.note = note;
+        if (note == null) {
+            this.note = "-";
+        }
+    }
+
     @Override
     public String toString() {
-        String s = title + "\ntekijä: " + author + "\nurl: " + url + "\nid: " + id + "\n";
+        String s = title + "\ntekijä: " + author + "\nurl: " + url + "\nid: " + id;
+        if (isRead) {
+            s = title + "\ntekijä: " + author + "\nurl: " + url + "\nmuistiinpano: " + note + "\nid: " + id;
+        }
         return s;
     }
 }

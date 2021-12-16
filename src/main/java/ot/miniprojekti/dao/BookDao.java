@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import ot.miniprojekti.domain.Book;
 
 public class BookDao {
-
+    
     private Connection conn;
     private String db;
-
+    
     public BookDao(String db) {
         this.db = "jdbc:sqlite:" + db;
-
+        
         try {
             conn = DriverManager.getConnection(this.db);
             PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS book "
@@ -28,7 +28,7 @@ public class BookDao {
             System.out.println("Error: " + e);
         }
     }
-
+    
     public void add(String author, String title, String isbn) {
         try {
             conn = DriverManager.getConnection(db);
@@ -48,59 +48,91 @@ public class BookDao {
             System.out.println("Error: " + e);
         }
     }
-
-    public ArrayList<Book> getAll() {
+    
+    public ArrayList<Book> getUnread() {
         ArrayList<Book> books = new ArrayList<>();
-
+        
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book b, bookmark bm WHERE b.bookmark_id = bm.id "
+                    + "AND bm.read = 0");
             ResultSet r = stmt.executeQuery();
-
+            
             while (r.next()) {
                 int id = r.getInt("bookmark_id");
                 String author = r.getString("author");
                 String title = r.getString("title");
                 String isbn = r.getString("isbn");
-                books.add(new Book(id, author, title, isbn));
+                books.add(new Book(id, author, title, isbn, false));
             }
-
+            
             stmt.close();
             conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e);
         }
-
+        
         return books;
     }
-
+    
+    public ArrayList<Book> getRead() {
+        ArrayList<Book> books = new ArrayList<>();
+        
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT bm.id, b.author, b.title, b.isbn, bm.comment "
+                    + "FROM bookmark bm JOIN book b ON bm.id = b.bookmark_id WHERE bm.read = 1");
+            
+            ResultSet r = stmt.executeQuery();
+            
+            while (r.next()) {
+                int id = r.getInt("id");
+                String author = r.getString("author");
+                String title = r.getString("title");
+                String isbn = r.getString("isbn");
+                String note = r.getString("comment");
+                
+                Book b = new Book(id, author, title, isbn, true);
+                b.setNote(note);
+                books.add(b);
+            }
+            
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return books;
+    }
+    
     public ArrayList<Book> findByTag(String tag) {
         ArrayList<Book> books = new ArrayList<>();
-
+        
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT b.id, b.author, b.title, b.isbn FROM bookmark bm "
                     + "JOIN tag t ON bm.id = t.bookmark_id JOIN book b ON bm.id = b.bookmark_id "
                     + "WHERE t.name LIKE '" + tag + "'");
             ResultSet r = stmt.executeQuery();
-
+            
             while (r.next()) {
                 int id = r.getInt("id");
                 String author = r.getString("author");
                 String title = r.getString("title");
                 String isbn = r.getString("isbn");
-                books.add(new Book(id, author, title, isbn));
+                books.add(new Book(id, author, title, isbn, false));
             }
-
+            
             stmt.close();
             conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e);
         }
-
+        
         return books;
     }
-
+    
     public void deleteRows() {
         try {
             conn = DriverManager.getConnection(db);
@@ -110,6 +142,26 @@ public class BookDao {
             conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+    public boolean deleteByBookmarkId(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM book WHERE bookmark_id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            
+            boolean deleted = r.next();
+            
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM book WHERE bookmark_id='" + id + "'");
+                stmt.executeUpdate();
+            }
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }

@@ -50,12 +50,13 @@ public class PodcastDao {
         }
     }
 
-    public ArrayList<Podcast> getAll() {
+    public ArrayList<Podcast> getUnread() {
         ArrayList<Podcast> podcasts = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM podcast p, bookmark b WHERE p.bookmark_id = b.id "
+                    + "AND b.read = 0");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -63,7 +64,37 @@ public class PodcastDao {
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(id, title, name, description));
+                podcasts.add(new Podcast(id, title, name, description, false));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return podcasts;
+    }
+    
+    public ArrayList<Podcast> getRead() {
+        ArrayList<Podcast> podcasts = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT bm.id, p.name, p.title, p.description, bm.comment "
+                    + "FROM bookmark bm JOIN podcast p ON bm.id = p.bookmark_id WHERE bm.read = 1");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("id");
+                String name = r.getString("name");
+                String title = r.getString("title");
+                String description = r.getString("description");
+                String note = r.getString("comment");
+                
+                Podcast p = new Podcast(id, title, name, description, true);
+                p.setNote(note);
+                podcasts.add(p);
             }
 
             stmt.close();
@@ -90,7 +121,7 @@ public class PodcastDao {
                 String name = r.getString("name");
                 String title = r.getString("title");
                 String description = r.getString("description");
-                podcasts.add(new Podcast(id, title, name, description));
+                podcasts.add(new Podcast(id, title, name, description, false));
             }
 
             stmt.close();
@@ -111,6 +142,26 @@ public class PodcastDao {
             conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public boolean deleteByBookmarkId(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM podcast WHERE bookmark_id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            boolean deleted = r.next();
+            
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM podcast WHERE bookmark_id='" + id + "'");
+                stmt.executeUpdate();
+            }
+            
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }

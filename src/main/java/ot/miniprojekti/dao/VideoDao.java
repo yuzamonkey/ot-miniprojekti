@@ -49,12 +49,39 @@ public class VideoDao {
         }
     }
 
-    public ArrayList<Video> getAll() {
+    public ArrayList<Video> getUnread() {
         ArrayList<Video> videos = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(db);
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video v, bookmark b WHERE v.bookmark_id = b.id "
+                    + "AND b.read = 0");
+            ResultSet r = stmt.executeQuery();
+
+            while (r.next()) {
+                int id = r.getInt("bookmark_id");
+                String title = r.getString("title");
+                String url = r.getString("url");
+                String comment = r.getString("comment");
+                videos.add(new Video(id, title, url, comment, false));
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        return videos;
+    }
+    
+    public ArrayList<Video> getRead() {
+        ArrayList<Video> videos = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT bm.id, v.title, v.url, v.comment, bm.comment as note "
+                    + "FROM bookmark bm JOIN video v ON bm.id = v.bookmark_id WHERE bm.read = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -62,7 +89,11 @@ public class VideoDao {
                 String title = r.getString("title");
                 String url = r.getString("url");
                 String comment = r.getString("comment");
-                videos.add(new Video(id, title, url, comment));
+                String note = r.getString("note");
+                
+                Video v = new Video(id, title, url, comment, true);
+                v.setNote(note);
+                videos.add(v);
             }
 
             stmt.close();
@@ -89,7 +120,7 @@ public class VideoDao {
                 String title = r.getString("title");
                 String url = r.getString("url");
                 String comment = r.getString("comment");
-                videos.add(new Video(id, title, url, comment));
+                videos.add(new Video(id, title, url, comment, false));
             }
 
             stmt.close();
@@ -110,6 +141,26 @@ public class VideoDao {
             conn.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public boolean deleteByBookmarkId(int id) {
+        try {
+            conn = DriverManager.getConnection(db);
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM video WHERE bookmark_id='" + id + "'");
+            ResultSet r = stmt.executeQuery();
+            boolean deleted = r.next();
+            
+            if (deleted) {
+                stmt = conn.prepareStatement("DELETE FROM video WHERE bookmark_id='" + id + "'");
+                stmt.executeUpdate();
+            }
+            
+            stmt.close();
+            conn.close();
+            return deleted;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }

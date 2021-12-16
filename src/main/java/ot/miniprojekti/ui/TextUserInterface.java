@@ -20,16 +20,14 @@ public class TextUserInterface {
     public void start() {
         while (true) {
             printCommands();
+          
             System.out.print("> ");
             String answer = reader.nextLine();
 
             if (answer.equals("1")) {
                 addBookmark();
             } else if (answer.equals("2")) {
-                printBooks();
-                printVideos();
-                printBlogs();
-                printPodcasts();
+                printAll();
             } else if (answer.equals("3")) {
                 System.out.print("Tagi: ");
                 String tag = reader.nextLine();
@@ -38,31 +36,51 @@ public class TextUserInterface {
                 searchBlogsByTagName(tag);
                 searchPodcastsByTagName(tag);
             } else if (answer.equals("4")) {
-                printBooks();
-                printVideos();
-                printBlogs();
-                printPodcasts();
+                printAll();
+                markAsRead();
+            } else if (answer.equals("5")) {
+                printAll();
                 System.out.println("Kirjoita poistettavan vinkin id");
                 System.out.print("> ");
                 String id = reader.nextLine();
-                if (this.bookmarkManager.deleteBookmarkById(id)) {
-                    System.out.println("Vinkki jonka id oli " + id + " poistettu");
-                } else {
-                    System.out.println("Vinkkiä ei voitu poistaa");
-                }
+                System.out.println(this.bookmarkManager.deleteBookmarkById(id));
             } else if (answer.equals("x") || answer.equals("")) {
                 break;
             }
         }
     }
 
+
     private void printCommands() {
         System.out.println("Valitse toiminto:");
         System.out.println("[1] Lisää vinkki");
         System.out.println("[2] Tulosta vinkit");
         System.out.println("[3] Hae tagin perusteella");
-        System.out.println("[4] Poista vinkki");
+        System.out.println("[4] Merkitse vinkki luetuksi");
+        System.out.println("[5] Poista vinkki");
         System.out.println("[x] Sulje sovellus");
+
+    private void printAll() {
+        System.out.println("Lukemattomat vinkit:");
+        System.out.println("");
+        printUnreadBooks();
+        System.out.println("");
+        printUnreadVideos();
+        System.out.println("");
+        printUnreadBlogs();
+        System.out.println("");
+        printUnreadPodcasts();
+        System.out.println("");
+        System.out.println("Luetut vinkit:");
+        System.out.println("");
+        printReadBooks();
+        System.out.println("");
+        printReadVideos();
+        System.out.println("");
+        printReadBlogs();
+        System.out.println("");
+        printReadPodcasts();
+        System.out.println("");
     }
 
     private void addBookmark() {
@@ -134,30 +152,58 @@ public class TextUserInterface {
         this.bookmarkManager.addTag(tag);
     }
 
-    private void printBooks() {
+    private void printUnreadBooks() {
         System.out.println("Kirjat:");
-        for (Book b : bookmarkManager.getBooks()) {
+        for (Book b : bookmarkManager.getUnreadBooks()) {
             System.out.println(b.toString());
         }
     }
 
-    private void printVideos() {
+    private void printUnreadVideos() {
         System.out.println("Videot:");
-        for (Video v : bookmarkManager.getVideos()) {
+        for (Video v : bookmarkManager.getUnreadVideos()) {
             System.out.println(v.toString());
         }
     }
 
-    private void printBlogs() {
+    private void printUnreadBlogs() {
         System.out.println("Blogit:");
-        for (Blog b : bookmarkManager.getBlogs()) {
+        for (Blog b : bookmarkManager.getUnreadBlogs()) {
             System.out.println(b.toString());
         }
     }
 
-    private void printPodcasts() {
+    private void printUnreadPodcasts() {
         System.out.println("Podcastit:");
-        for (Podcast p : bookmarkManager.getPodcasts()) {
+        for (Podcast p : bookmarkManager.getUnreadPodcasts()) {
+            System.out.println(p.toString());
+        }
+    }
+    
+    private void printReadBooks() {
+        System.out.println("Kirjat:");
+        for (Book b : bookmarkManager.getReadBooks()) {
+            System.out.println(b.toString());
+        }
+    }
+
+    private void printReadVideos() {
+        System.out.println("Videot:");
+        for (Video v : bookmarkManager.getReadVideos()) {
+            System.out.println(v.toString());
+        }
+    }
+
+    private void printReadBlogs() {
+        System.out.println("Blogit:");
+        for (Blog b : bookmarkManager.getReadBlogs()) {
+            System.out.println(b.toString());
+        }
+    }
+
+    private void printReadPodcasts() {
+        System.out.println("Podcastit:");
+        for (Podcast p : bookmarkManager.getReadPodcasts()) {
             System.out.println(p.toString());
         }
     }
@@ -184,5 +230,16 @@ public class TextUserInterface {
         for (Podcast p : bookmarkManager.getPodcastsByTagName(tag)) {
             System.out.println(p.toString());
         }
+    }
+
+    private void markAsRead() {
+        System.out.println("Vinkin uudelleen merkitseminen korvaa entisen muistiinpanon");
+        System.out.println("Kirjoita luetun vinkin id");
+        System.out.print("> ");
+        String id = reader.nextLine();
+        System.out.println("Kirjoita muistiinpano tai jatka painamalla enter");
+        System.out.print("> ");
+        String comment = reader.nextLine();
+        System.out.println(this.bookmarkManager.markBookmarkAsRead(id, comment));
     }
 }

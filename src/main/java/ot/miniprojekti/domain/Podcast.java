@@ -1,17 +1,24 @@
 package ot.miniprojekti.domain;
 
 public class Podcast {
-    
+
     private int id;
     private String title;
     private String name;
     private String description;
+    private boolean isRead;
+    private String note;
 
-    public Podcast(int id, String title, String name, String description) {
+    public Podcast(int id, String title, String name, String description, boolean read) {
         this.id = id;
         this.title = title;
         this.name = name;
         this.description = description;
+        this.isRead = read;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public String getTitle() {
@@ -26,9 +33,19 @@ public class Podcast {
         return this.description;
     }
 
+    public void setNote(String note) {
+        this.note = note;
+        if (note == null) {
+            this.note = "-";
+        }
+    }
+
     @Override
     public String toString() {
         String s = title + "\ntekijä: " + name + "\nkuvaus: " + description + "\nid: " + id;
+        if (isRead) {
+            s = title + "\ntekijä: " + name + "\nkuvaus: " + description + "\nmuistiinpano: " + note + "\nid: " + id;
+        }
         return s;
     }
 
