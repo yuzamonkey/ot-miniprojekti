@@ -101,6 +101,8 @@ public class TextUserInterface {
             addBlog();
         } else if (answer.equals("4")) {
             addPodcast();
+        } else {
+            return;
         }
 
         addTag();
