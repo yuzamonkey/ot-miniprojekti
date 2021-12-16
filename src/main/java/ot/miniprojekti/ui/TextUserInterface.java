@@ -58,15 +58,25 @@ public class TextUserInterface {
 
     private void printAll() {
         System.out.println("Lukemattomat vinkit:");
+        System.out.println("");
         printUnreadBooks();
+        System.out.println("");
         printUnreadVideos();
+        System.out.println("");
         printUnreadBlogs();
+        System.out.println("");
         printUnreadPodcasts();
+        System.out.println("");
         System.out.println("Luetut vinkit:");
+        System.out.println("");
         printReadBooks();
+        System.out.println("");
         printReadVideos();
+        System.out.println("");
         printReadBlogs();
+        System.out.println("");
         printReadPodcasts();
+        System.out.println("");
     }
 
     private void addBookmark() {
@@ -219,6 +229,7 @@ public class TextUserInterface {
     }
 
     private void markAsRead() {
+        System.out.println("Vinkin uudelleen merkitseminen korvaa entisen muistiinpanon");
         System.out.println("Kirjoita luetun vinkin id");
         System.out.print("> ");
         String id = reader.nextLine();

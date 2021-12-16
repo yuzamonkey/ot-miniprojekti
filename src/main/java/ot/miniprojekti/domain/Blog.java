@@ -32,20 +32,19 @@ public class Blog {
     public String getUrl() {
         return this.url;
     }
-    
-    public void setRead(boolean read) {
-        this.isRead = read;
-    }
-    
+
     public void setNote(String note) {
         this.note = note;
+        if (note == null) {
+            this.note = "-";
+        }
     }
 
     @Override
     public String toString() {
-        String s = title + "\ntekijä: " + author + "\nurl: " + url + "\nid: " + id + "\n";
+        String s = title + "\ntekijä: " + author + "\nurl: " + url + "\nid: " + id;
         if (isRead) {
-            s += "\nmuistiinpano: " + note;
+            s = title + "\ntekijä: " + author + "\nurl: " + url + "\nmuistiinpano: " + note + "\nid: " + id;
         }
         return s;
     }

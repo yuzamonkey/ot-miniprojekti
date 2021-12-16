@@ -33,19 +33,18 @@ public class Book {
         return this.isbn;
     }
 
-    public void setRead(boolean read) {
-        this.isRead = read;
-    }
-
     public void setNote(String note) {
         this.note = note;
+        if (note == null) {
+            this.note = "-";
+        }
     }
 
     @Override
     public String toString() {
         String s = title + "\ntekijä: " + author + "\nisbn: " + isbn + "\nid: " + id;
         if (isRead) {
-            s += "\nmuistiinpano: " + note;
+            s = title + "\ntekijä: " + author + "\nisbn: " + isbn + "\nmuistiinpano: " + note + "\nid: " + id;
         }
         return s;
     }

@@ -33,19 +33,18 @@ public class Video {
         return this.url;
     }
 
-    public void setRead(boolean read) {
-        this.isRead = read;
-    }
-
     public void setNote(String note) {
         this.note = note;
+        if (note == null) {
+            this.note = "-";
+        }
     }
 
     @Override
     public String toString() {
         String s = title + "\nurl: " + url + "\nkommentti: " + comment + "\nid: " + id;
         if (isRead) {
-            s += "\nmuistiinpano: " + note;
+            s = title + "\nurl: " + url + "\nkommentti: " + comment + "\nmuistiinpano: " + note + "\nid: " + id;
         }
         return s;
     }
