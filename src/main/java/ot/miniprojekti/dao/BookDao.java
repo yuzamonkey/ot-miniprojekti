@@ -55,7 +55,7 @@ public class BookDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book b, bookmark bm WHERE b.bookmark_id = bm.id "
-                    + "AND bm.read = 0 AND bm.visible = 1");
+                    + "AND bm.read = 0");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -81,7 +81,7 @@ public class BookDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM book b, bookmark bm WHERE b.bookmark_id = bm.id "
-                    + "AND bm.read = 1 AND bm.visible = 1");
+                    + "AND bm.read = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {

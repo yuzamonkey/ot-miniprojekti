@@ -55,7 +55,7 @@ public class VideoDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video v, bookmark b WHERE v.bookmark_id = b.id "
-                    + "AND b.read = 0 AND b.visible = 1");
+                    + "AND b.read = 0");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
@@ -81,7 +81,7 @@ public class VideoDao {
         try {
             conn = DriverManager.getConnection(db);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM video v, bookmark b WHERE v.bookmark_id = b.id "
-                    + "AND b.read = 1 AND b.visible = 1");
+                    + "AND b.read = 1");
             ResultSet r = stmt.executeQuery();
 
             while (r.next()) {
