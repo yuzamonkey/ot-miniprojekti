@@ -21,7 +21,7 @@ public class BookmarkDao {
             conn = DriverManager.getConnection(this.db);
             Statement s = conn.createStatement();
             s.execute("CREATE TABLE IF NOT EXISTS bookmark "
-                    + "(id INTEGER PRIMARY KEY, visible INTEGER, read INTEGER DEFAULT 0, comment TEXT)");
+                    + "(id INTEGER PRIMARY KEY, read INTEGER DEFAULT 0, comment TEXT)");
             s.execute("CREATE TABLE IF NOT EXISTS tag (id INTEGER PRIMARY KEY, "
                     + "bookmark_id INTEGER, name TEXT, FOREIGN KEY(bookmark_id) REFERENCES bookmark(id))");
             s.close();
