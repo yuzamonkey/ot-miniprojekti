@@ -288,4 +288,69 @@ public class LogicTests {
         stmt.close();
         conn.close();
     }
+    
+    @Test
+    public void markingBookmarkAsReadWithNonIntegerGivesRightReturn() {
+        assertEquals(bookmarkManager.markAsRead("not integer", ""), "Annetu id ei ollut numero");
+    }
+    
+    @Test
+    public void markingBookmarkAsReadWithNonexistingIdGivesRightReturn() {
+        assertEquals(bookmarkManager.markAsRead("10000", ""), "Vinkkiä ei löytynyt tällä id:llä");
+    }
+    
+    @Test
+    public void markingBookmarkAsReadWithGoodIdGivesRightReturn() {
+        bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
+        Book book = bookmarkManager.getUnreadBooks().get(0);
+        assertEquals(bookmarkManager.markAsRead(String.valueOf(book.getId()), ""), "Vinkki merkitty luetuksi");
+    }
+    
+    @Test
+    public void markingBlogAsReadMarksItAsRead() {
+        bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
+        Blog blog = bookmarkManager.getUnreadBlogs().get(0);
+        bookmarkManager.markAsRead(String.valueOf(blog.getId()), "");
+        ArrayList<Blog> blogs = bookmarkManager.getReadBlogs();
+        assertEquals(blogs.size(), 1);
+        assertEquals(blogs.get(0).getAuthor(), blog1.getAuthor());
+        assertEquals(blogs.get(0).getTitle(), blog1.getTitle());
+        assertEquals(blogs.get(0).getUrl(), blog1.getUrl());
+    }
+    
+    @Test
+    public void markingBookAsReadMarksItAsRead() {
+        bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
+        Book book = bookmarkManager.getUnreadBooks().get(0);
+        bookmarkManager.markAsRead(String.valueOf(book.getId()), "");
+        ArrayList<Book> books = bookmarkManager.getReadBooks();
+        assertEquals(books.size(), 1);
+        assertEquals(books.get(0).getAuthor(), book1.getAuthor());
+        assertEquals(books.get(0).getTitle(), book1.getTitle());
+        assertEquals(books.get(0).getISBN(), book1.getISBN());
+    }
+    
+    @Test
+    public void markingPodcastAsReadMarksItAsRead() {
+        bookmarkManager.addPodcast(podcast1.getName(), podcast1.getTitle(), podcast1.getDescription());
+        Podcast podcast = bookmarkManager.getUnreadPodcasts().get(0);
+        bookmarkManager.markAsRead(String.valueOf(podcast.getId()), "");
+        ArrayList<Podcast> podcasts = bookmarkManager.getReadPodcasts();
+        assertEquals(podcasts.size(), 1);
+        assertEquals(podcasts.get(0).getName(), podcast1.getName());
+        assertEquals(podcasts.get(0).getTitle(), podcast1.getTitle());
+        assertEquals(podcasts.get(0).getDescription(), podcast1.getDescription());
+    }
+    
+    @Test
+    public void markingVideoAsReadMarksItAsRead() {
+        bookmarkManager.addVideo(video1.getTitle(), video1.getUrl(), video1.getComment());
+        Video video = bookmarkManager.getUnreadVideos().get(0);
+        bookmarkManager.markAsRead(String.valueOf(video.getId()), "");
+        ArrayList<Video> videos = bookmarkManager.getReadVideos();
+        assertEquals(videos.size(), 1);
+        assertEquals(videos.get(0).getTitle(), video1.getTitle());
+        assertEquals(videos.get(0).getUrl(), video1.getUrl());
+        assertEquals(videos.get(0).getComment(), video1.getComment());
+    }
 }
