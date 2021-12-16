@@ -39,9 +39,9 @@ public class Stepdefs {
 
     @Then("book should be saved to database")
     public void bookShouldBeSavedToDatabase() throws SQLException {
-        assertEquals("Arthur the Author", bookDao.getAll().get(0).getAuthor());
-        assertEquals("How to write a book", bookDao.getAll().get(0).getTitle());
-        assertEquals("951-98548-9-4", bookDao.getAll().get(0).getISBN());
+        assertEquals("Arthur the Author", bookDao.getUnread().get(0).getAuthor());
+        assertEquals("How to write a book", bookDao.getUnread().get(0).getTitle());
+        assertEquals("951-98548-9-4", bookDao.getUnread().get(0).getISBN());
     }
 
     @Given("blogs is initialized")
@@ -57,9 +57,9 @@ public class Stepdefs {
 
     @Then("blog should be saved to database")
     public void blogShouldBeSavedToDatabase() {
-        assertEquals("Writing a blog", blogDao.getAll().get(0).getTitle());
-        assertEquals("Beatrice the Blogger", blogDao.getAll().get(0).getAuthor());
-        assertEquals("www.blogs.com/beatricesblog", blogDao.getAll().get(0).getUrl());
+        assertEquals("Writing a blog", blogDao.getUnread().get(0).getTitle());
+        assertEquals("Beatrice the Blogger", blogDao.getUnread().get(0).getAuthor());
+        assertEquals("www.blogs.com/beatricesblog", blogDao.getUnread().get(0).getUrl());
     }
 
     @Given("podcasts is initialized")
@@ -76,10 +76,10 @@ public class Stepdefs {
 
     @Then("podcast should be saved to database")
     public void podcastShouldBeSavedToDatabase() {
-        assertEquals("Podcast about vegetables", podcastDao.getAll().get(0).getName());
-        assertEquals("How carrots grow", podcastDao.getAll().get(0).getTitle());
+        assertEquals("Podcast about vegetables", podcastDao.getUnread().get(0).getName());
+        assertEquals("How carrots grow", podcastDao.getUnread().get(0).getTitle());
         assertEquals("In this episode experts dig deep into the world of carrots.",
-                podcastDao.getAll().get(0).getDescription());
+                podcastDao.getUnread().get(0).getDescription());
     }
 
     @Given("videos is initialized")
@@ -95,8 +95,8 @@ public class Stepdefs {
 
     @Then("video should be saved to database")
     public void videoShouldBeSavedToDatabase() {
-        assertEquals("Washing dishes", videoDao.getAll().get(0).getTitle());
-        assertEquals("A nice video about washing dishes", videoDao.getAll().get(0).getComment());
-        assertEquals("www.videos.com/washing_dishes", videoDao.getAll().get(0).getUrl());
+        assertEquals("Washing dishes", videoDao.getUnread().get(0).getTitle());
+        assertEquals("A nice video about washing dishes", videoDao.getUnread().get(0).getComment());
+        assertEquals("www.videos.com/washing_dishes", videoDao.getUnread().get(0).getUrl());
     }
 }

@@ -50,26 +50,26 @@ public class LogicTests {
 
         bookmarkManager = new BookmarkManager(bookmarkDao, bookDao, videoDao, blogDao, podcastDao);
 
-        book1 = new Book(0, "Martin Fowler", "Refactoring", "9780201485677");
-        book2 = new Book(0, "JK Rowling", "Harry Potter and the Philosopher's Stone", "9780747532743");
-        blog1 = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/");
-        blog2 = new Blog(4, "Bloggier", "John Doe", "https://johndoesblog.com/");
-        podcast1 = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals");
-        podcast2 = new Podcast(1, "MKBHD", "Waveform", "Tech stuff");
+        book1 = new Book(0, "Martin Fowler", "Refactoring", "9780201485677", false);
+        book2 = new Book(0, "JK Rowling", "Harry Potter and the Philosopher's Stone", "9780747532743", false);
+        blog1 = new Blog(0, "Overreacted", "Dan Abramov", "https://overreacted.io/", false);
+        blog2 = new Blog(4, "Bloggier", "John Doe", "https://johndoesblog.com/", false);
+        podcast1 = new Podcast(0, "OCDevel", "Machine Learning Guide", "Machine learning fundamentals", false);
+        podcast2 = new Podcast(1, "MKBHD", "Waveform", "Tech stuff", false);
         video1 = new Video(0, "Java in 100 Seconds", "https://www.youtube.com/watch?v=l9AzO1FMgM8",
-                "Good explanation on Java");
+                "Good explanation on Java", false);
         video2 = new Video(1, "Crypto expert explain the Blockchain",
                 "https://www.youtube.com/watch?v=pSTNhBlfV_s&t=3s",
-                "Good explanation on crypto");
+                "Good explanation on crypto", false);
 
     }
 
     @Test
     public void dbIsEmptyWhenNothingIsAdded() {
-        assertEquals(bookmarkManager.getBooks().size(), 0);
-        assertEquals(bookmarkManager.getBlogs().size(), 0);
-        assertEquals(bookmarkManager.getPodcasts().size(), 0);
-        assertEquals(bookmarkManager.getVideos().size(), 0);
+        assertEquals(bookmarkManager.getUnreadBooks().size(), 0);
+        assertEquals(bookmarkManager.getUnreadBlogs().size(), 0);
+        assertEquals(bookmarkManager.getUnreadPodcasts().size(), 0);
+        assertEquals(bookmarkManager.getUnreadVideos().size(), 0);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class LogicTests {
         bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
         bookmarkManager.addBook(book2.getAuthor(), book2.getTitle(), book2.getISBN());
 
-        ArrayList<Book> books = bookmarkManager.getBooks();
+        ArrayList<Book> books = bookmarkManager.getUnreadBooks();
         assertEquals(books.size(), 2);
 
         assertEquals(books.get(0).getAuthor(), book1.getAuthor());
@@ -94,7 +94,7 @@ public class LogicTests {
         bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
         bookmarkManager.addBlog(blog2.getTitle(), blog2.getAuthor(), blog2.getUrl());
 
-        ArrayList<Blog> blogs = bookmarkManager.getBlogs();
+        ArrayList<Blog> blogs = bookmarkManager.getUnreadBlogs();
         assertEquals(blogs.size(), 2);
 
         assertEquals(blogs.get(0).getAuthor(), blog1.getAuthor());
@@ -111,7 +111,7 @@ public class LogicTests {
         bookmarkManager.addPodcast(podcast1.getName(), podcast1.getTitle(), podcast1.getDescription());
         bookmarkManager.addPodcast(podcast2.getName(), podcast2.getTitle(), podcast2.getDescription());
 
-        ArrayList<Podcast> podcasts = bookmarkManager.getPodcasts();
+        ArrayList<Podcast> podcasts = bookmarkManager.getUnreadPodcasts();
         assertEquals(podcasts.size(), 2);
 
         assertEquals(podcasts.get(0).getName(), podcast1.getName());
@@ -128,7 +128,7 @@ public class LogicTests {
         bookmarkManager.addVideo(video1.getTitle(), video1.getUrl(), video1.getComment());
         bookmarkManager.addVideo(video2.getTitle(), video2.getUrl(), video2.getComment());
 
-        ArrayList<Video> videos = bookmarkManager.getVideos();
+        ArrayList<Video> videos = bookmarkManager.getUnreadVideos();
         assertEquals(videos.size(), 2);
 
         assertEquals(videos.get(0).getTitle(), video1.getTitle());
@@ -237,7 +237,7 @@ public class LogicTests {
     @Test
     public void deletingWithGoodIdGivesRightReturn() {
         bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
-        Book book = bookmarkManager.getBooks().get(0);
+        Book book = bookmarkManager.getUnreadBooks().get(0);
         assertEquals(bookmarkManager.deleteBookmarkById(String.valueOf(book.getId())), "Vinkki poistettu");
     }
 
@@ -246,10 +246,10 @@ public class LogicTests {
         bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
         bookmarkManager.addBlog(blog2.getTitle(), blog2.getAuthor(), blog2.getUrl());
 
-        ArrayList<Blog> blogsInDb = bookmarkManager.getBlogs();
+        ArrayList<Blog> blogsInDb = bookmarkManager.getUnreadBlogs();
 
         bookmarkManager.deleteBookmarkById(String.valueOf(blogsInDb.get(1).getId()));
-        Blog remainingBlog = bookmarkManager.getBlogs().get(0);
+        Blog remainingBlog = bookmarkManager.getUnreadBlogs().get(0);
         assertEquals(remainingBlog.getTitle(), blogsInDb.get(0).getTitle());
     }
 
@@ -257,7 +257,7 @@ public class LogicTests {
     public void deletingBookmarkDeletesItsBookmarkRow() throws SQLException {
         blogDao.add(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
         bookmarkManager.addTag("react, javascript, blog");
-        Blog blog = blogDao.getAll().get(0);
+        Blog blog = blogDao.getUnread().get(0);
 
         
         int blogId = blog.getId();
@@ -275,7 +275,7 @@ public class LogicTests {
     public void deletingBookmarkDeletesItsTag() throws SQLException {
         blogDao.add(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
         bookmarkManager.addTag("react, javascript, blog");
-        Blog blog = blogDao.getAll().get(0);
+        Blog blog = blogDao.getUnread().get(0);
 
         
         int blogId = blog.getId();

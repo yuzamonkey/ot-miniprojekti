@@ -13,10 +13,10 @@ public class DomainTests {
 
     @Before
     public void setUp() {
-        this.bl = new Blog(0, "otsikko", "kirjoittaja", "url");
-        this.p = new Podcast(0, "otsikko", "nimi", "kuvaus");
-        this.v = new Video(0, "otsikko", "url", "kommentti");
-        this.bo = new Book(0, "kirjoittaja", "otsikko", "0000");
+        this.bl = new Blog(0, "otsikko", "kirjoittaja", "url", false);
+        this.p = new Podcast(0, "otsikko", "nimi", "kuvaus", false);
+        this.v = new Video(0, "otsikko", "url", "kommentti", false);
+        this.bo = new Book(0, "kirjoittaja", "otsikko", "0000", false);
     }
 
     @Test
