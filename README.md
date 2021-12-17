@@ -2,7 +2,7 @@
 ![GitHub Actions](https://github.com/yuzamonkey/ot-miniprojekti/actions/workflows/gradle.yml/badge.svg)
 [![codecov](https://codecov.io/gh/yuzamonkey/ot-miniprojekti/branch/main/graph/badge.svg?token=FzoGfVPtB8)](https://codecov.io/gh/yuzamonkey/ot-miniprojekti)
 
-[Loppuraportti](https://github.com/yuzamonkey/ot-miniprojekti/blob/main/RAPORTTI.md)
+## [Loppuraportti](https://github.com/yuzamonkey/ot-miniprojekti/blob/main/RAPORTTI.md)
 
 ## Definition of done
 - Testikattavuus on vähintään 80%
