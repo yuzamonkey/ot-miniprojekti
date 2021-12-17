@@ -32,6 +32,10 @@ public class Video {
     public String getUrl() {
         return this.url;
     }
+    
+    public String getNote() {
+        return this.note;
+    }
 
     public void setNote(String note) {
         this.note = note;

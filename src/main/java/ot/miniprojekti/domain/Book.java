@@ -32,6 +32,10 @@ public class Book {
     public String getISBN() {
         return this.isbn;
     }
+    
+    public String getNote() {
+        return this.note;
+    }
 
     public void setNote(String note) {
         this.note = note;

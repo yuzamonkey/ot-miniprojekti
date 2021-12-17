@@ -32,6 +32,10 @@ public class Podcast {
     public String getDescription() {
         return this.description;
     }
+    
+    public String getNote() {
+        return this.note;
+    }
 
     public void setNote(String note) {
         this.note = note;

@@ -361,4 +361,36 @@ public class LogicTests {
         assertEquals(videos.get(0).getUrl(), video1.getUrl());
         assertEquals(videos.get(0).getComment(), video1.getComment());
     }
+    
+    @Test
+    public void addingNoteAddsNoteToBlog() {
+        bookmarkManager.addBlog(blog1.getTitle(), blog1.getAuthor(), blog1.getUrl());
+        Blog blog = bookmarkManager.getUnreadBlogs().get(0);
+        bookmarkManager.markBookmarkAsRead(String.valueOf(blog.getId()), "Käy läpi ennen koetta.");
+        assertEquals(bookmarkManager.getReadBlogs().get(0).getNote(), "Käy läpi ennen koetta.");
+    }
+    
+    @Test
+    public void addingNoteAddsNoteToBook() {
+        bookmarkManager.addBook(book1.getAuthor(), book1.getTitle(), book1.getISBN());
+        Book book = bookmarkManager.getUnreadBooks().get(0);
+        bookmarkManager.markBookmarkAsRead(String.valueOf(book.getId()), "Käy läpi ennen koetta.");
+        assertEquals(bookmarkManager.getReadBooks().get(0).getNote(), "Käy läpi ennen koetta.");
+    }
+    
+    @Test
+    public void addingNoteAddsNoteToPodcast() {
+        bookmarkManager.addPodcast(podcast1.getName(), podcast1.getTitle(), podcast1.getDescription());
+        Podcast podcast = bookmarkManager.getUnreadPodcasts().get(0);
+        bookmarkManager.markBookmarkAsRead(String.valueOf(podcast.getId()), "Käy läpi ennen koetta.");
+        assertEquals(bookmarkManager.getReadPodcasts().get(0).getNote(), "Käy läpi ennen koetta.");
+    }
+    
+    @Test
+    public void addingNoteAddsNoteToVideo() {
+        bookmarkManager.addVideo(video1.getTitle(), video1.getUrl(), video1.getComment());
+        Video video = bookmarkManager.getUnreadVideos().get(0);
+        bookmarkManager.markBookmarkAsRead(String.valueOf(video.getId()), "Käy läpi ennen koetta.");
+        assertEquals(bookmarkManager.getReadVideos().get(0).getNote(), "Käy läpi ennen koetta.");
+    }
 }
