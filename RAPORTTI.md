@@ -33,7 +33,7 @@ Branchien käyttö olisi saattanut helpottaa joidenkin merge-konfliktien hallint
 
 ### Hyvää
 
-Ryhmätyöskentely toimi hyvin. Sprintteihin valittiin sopiva määrä user storyja, jotta kaikille ryhmäläisille oli tekemistä. Backlogista oli helppo katsoa, mitä kannattaa tehdä seuraavaksi. Oli myös hyvä, että backlogille oli valmis pohja, ettei excel-velhoilua vaadittu. Ajankäyttö oli järkevää. Kukaan ryhmän jäsenistä ei tehnyt pitkiä pätkiä kerrallaan, vaan projekti rakentui tasaisesti sprintin aikana. Hyvä ajankäyttö lienee myös syy sille, että päällekkäisyyksiä tai ristiriitoja ei kirjoitettu koodiin. Vaaditut ominaisuudet saatiin toteutettua, mitään kriittistä ei jäänyt uupumaan. Lisäksi Telegram toimi hyvin ryhmän keskustelukanavana. Telegramiin usein päivitettiin pienimmätkin muutokset projektiin, jonka ansiosta kaikki ryhmässä oli kartalla hyvin.
+Ryhmätyöskentely toimi hyvin. Sprintteihin valittiin sopiva määrä user storyja, jotta kaikille ryhmäläisille oli tekemistä. Backlogista oli helppo katsoa, mitä kannattaa tehdä seuraavaksi. Oli myös hyvä, että backlogille oli valmis pohja, ettei excel-velhoilua vaadittu. Ajankäyttö oli järkevää. Kukaan ryhmän jäsenistä ei tehnyt pitkiä pätkiä kerrallaan, vaan projekti rakentui tasaisesti sprintin aikana. Hyvä ajankäyttö lienee myös syy sille, ettei päällekkäisyyksiä tai ristiriitoja koodissa tullut vastaan. Vaaditut ominaisuudet saatiin toteutettua, mitään kriittistä ei jäänyt uupumaan. Lisäksi Telegram toimi hyvin ryhmän keskustelukanavana. Telegramiin usein päivitettiin pienimmätkin muutokset projektiin, jonka ansiosta kaikki ryhmässä oli hyvin kartalla.
 
 Ryhmän yleinen fiilis on, että kurssin aikataulun puitteissa projekti meni hyvin.
 
@@ -41,7 +41,7 @@ Ryhmän yleinen fiilis on, että kurssin aikataulun puitteissa projekti meni hyv
 
 Työnjakoa olisi voinut selkeyttää. Tosin kurssin aikataulu ei sellaista juurikaan olisi sallinut, ja backlogista pystyi priorisoimaan mitä kannattaa tehdä seuraavaksi.
 
-Tietokantaskeeman olisi voinut suunnitella paremmaksi aikaisemmin. Pohdimme kuitenkin, olisiko se johtanut vesiputousmallimaiseen ajatteluun. 
+Tietokantaskeeman olisi voinut suunnitella paremmaksi aikaisemmin. Pohdimme kuitenkin, olisiko se johtanut vesiputousmallimaiseen ajatteluun. Skeeman olisi saattanut joutua päivittämään muistakin syistä, kuten asiakkaan toiveiden takia.
 
 Cucumber-testejä ei juurikaan tehty. Lisäksi ne testit mitä cucumberilla testattiin, ovat testattu yksikkötesteinä.
 
