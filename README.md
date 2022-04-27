@@ -49,3 +49,4 @@ java -jar build/libs/ot-miniprojekti-all.jar
 
 
 
+
