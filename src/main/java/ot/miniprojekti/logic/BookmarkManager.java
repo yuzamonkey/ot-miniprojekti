@@ -20,12 +20,12 @@ public class BookmarkManager {
     private BlogDao blogDao;
     private PodcastDao podcastDao;
 
-    public BookmarkManager(BookmarkDao bm, BookDao bo, VideoDao v, BlogDao bl, PodcastDao p) {
-        this.bookmarkDao = bm;
-        this.bookDao = bo;
-        this.videoDao = v;
-        this.blogDao = bl;
-        this.podcastDao = p;
+    public BookmarkManager(BookmarkDao bookmark, BookDao book, VideoDao video, BlogDao blog, PodcastDao podcast) {
+        this.bookmarkDao = bookmark;
+        this.bookDao = book;
+        this.videoDao = video;
+        this.blogDao = blog;
+        this.podcastDao = podcast;
     }
 
     public void addBook(String author, String title, String isbn) {
